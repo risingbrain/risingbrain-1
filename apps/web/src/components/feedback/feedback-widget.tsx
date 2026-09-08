@@ -6,6 +6,7 @@ import { MessageSquarePlus, X } from "lucide-react";
 import type { FeedbackQuota } from "@/lib/feedback";
 import { FeedbackPanel } from "./feedback-panel";
 import { RatingStars } from "./rating-stars";
+import { apiFetch } from "@/lib/api-fetch";
 
 /**
  * The floating "send feedback" button, plus the one-time nudge that asks for a
@@ -261,7 +262,7 @@ function useOneTimeNudge(userId: string, paused: boolean): { nudging: boolean; r
     let cancelled = false;
     void (async () => {
       try {
-        const res = await fetch("/api/feedback");
+        const res = await apiFetch("/api/feedback");
         if (!res.ok) return;
         const quota = (await res.json()) as FeedbackQuota;
         // Someone who has already told us something doesn't get asked for a

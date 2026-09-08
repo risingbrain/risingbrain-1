@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Loader2, Search, X } from "lucide-react";
 import type { DomainSubject } from "@risingbrain/database/enums";
 import { domainTopicHref } from "../_categories";
+import { apiFetch } from "@/lib/api-fetch";
 
 type Suggestion = {
   id: string;
@@ -47,7 +48,7 @@ export function DomainSearch() {
     const ctrl = new AbortController();
     const timer = setTimeout(async () => {
       try {
-        const res = await fetch(`/api/domain/search?q=${encodeURIComponent(q)}`, {
+        const res = await apiFetch(`/api/domain/search?q=${encodeURIComponent(q)}`, {
           signal: ctrl.signal,
         });
         if (!res.ok) throw new Error("search failed");

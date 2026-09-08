@@ -7,6 +7,7 @@ import { cn } from "@risingbrain/ui/cn";
 import { Select } from "../../_components/fields";
 import { ConfirmDialog } from "../../_components/confirm-dialog";
 import { adminMutate } from "../../_lib/mutate";
+import { apiFetch } from "@/lib/api-fetch";
 
 type AdminUser = {
   id: string;
@@ -49,7 +50,7 @@ export function UsersManager({ currentUserId }: { currentUserId: string }) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/admin/users?email=${encodeURIComponent(q)}`);
+      const res = await apiFetch(`/api/admin/users?email=${encodeURIComponent(q)}`);
       const data = (await res.json()) as { users?: AdminUser[]; error?: string };
       if (!res.ok) {
         setError(data.error ?? "Search failed.");

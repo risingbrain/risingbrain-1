@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import { AdminNav } from "./_components/admin-nav";
@@ -23,7 +23,14 @@ export const metadata: Metadata = {
  */
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await getCurrentUser();
-  if (user?.role !== "ADMIN") notFound();
+  // "No token" and "not an admin" are different questions and must not share an
+  // answer. `getCurrentUser` is access-token-only, so a lapsed 15-minute cookie
+  // reads as null here — collapsing both into notFound() rendered a 404 at an
+  // admin who was still signed in, whenever a request reached this layout without
+  // the proxy having renewed first. 404-to-hide-the-surface still applies to a
+  // VERIFIED non-admin below.
+  if (!user) redirect("/login?callbackUrl=/admin");
+  if (user.role !== "ADMIN") notFound();
 
   return (
     <div data-fills-scrollport className="flex h-full min-h-0 flex-1 flex-col">

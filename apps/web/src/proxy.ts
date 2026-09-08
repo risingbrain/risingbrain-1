@@ -85,6 +85,20 @@ export default async function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // A denied PREFETCH must never be answered with a redirect. It is a guess about
+  // where the user might click, and the router can serve that answer on the real
+  // click — so sending /login here logs out someone whose refresh cookie is alive
+  // and simply was not renewed, because renewal is deliberately skipped on
+  // prefetches (see `recoverable` above). That combination is reachable only on a
+  // gated prefix, and /admin is the one that also prefetches six siblings from its
+  // own nav, so 15 idle minutes there was enough to strand a live session.
+  //
+  // 204 means "no prefetch data": the router caches nothing, and the real
+  // navigation arrives as a non-prefetch GET, which IS `recoverable` and repairs
+  // itself. Applies to `forbidden` too — a speculative request must not be able to
+  // drive the user anywhere, including /?forbidden=1.
+  if (isPrefetch) return new NextResponse(null, { status: 204 });
+
   if (access.reason === "unauthenticated") {
     // Expired/absent access token but a live refresh cookie? Rotate and bounce
     // back instead of logging the user out. The refresh route clears cookies and

@@ -34,6 +34,12 @@ export function AdminNav() {
           <Link
             key={t.href}
             href={t.href}
+            // All seven tabs are in the viewport at once, so the default
+            // viewport-prefetch fires six extra RSC requests on every admin page
+            // render. This is a LOAD saving, not the fix for the logout that came
+            // out of it — the proxy is what makes a denied prefetch harmless (see
+            // the isPrefetch branch in proxy.ts).
+            prefetch={false}
             aria-current={active ? "page" : undefined}
             className={cn(
               "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",

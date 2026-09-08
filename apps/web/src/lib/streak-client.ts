@@ -1,5 +1,7 @@
 "use client";
 
+import { apiFetch } from "@/lib/api-fetch";
+
 /**
  * Refresh the navbar streak flame from the server's AUTHORITATIVE value after
  * the user records activity (solving a problem, submitting an aptitude test),
@@ -13,7 +15,7 @@
 export async function refreshStreakBadge(): Promise<void> {
   if (typeof window === "undefined") return;
   try {
-    const res = await fetch("/api/streak", { cache: "no-store" });
+    const res = await apiFetch("/api/streak", { cache: "no-store" });
     if (!res.ok) return;
     const data = (await res.json()) as { streak: number | null };
     if (typeof data.streak === "number") {

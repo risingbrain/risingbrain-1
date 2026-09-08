@@ -7,6 +7,7 @@ import {
   RichTextEditor,
   type RichTextEditorHandle,
 } from "@/components/editor/rich-text-editor";
+import { apiFetch } from "@/lib/api-fetch";
 
 type SaveStatus = "idle" | "unsaved" | "saving" | "saved";
 
@@ -70,7 +71,7 @@ export function NoteModal({
     const content = editor.getText().trim() ? editor.getHTML() : "";
     setStatus("saving");
     try {
-      const res = await fetch(`/api/sheet/notes/${problemId}`, {
+      const res = await apiFetch(`/api/sheet/notes/${problemId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content }),

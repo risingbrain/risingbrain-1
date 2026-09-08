@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { Heart } from "lucide-react";
+import { apiFetch } from "@/lib/api-fetch";
 
 /**
  * Optimistic like toggle. Used both inside card links (where it must not
@@ -46,7 +47,7 @@ export function LikeButton({
     setCount((c) => c + (nextLiked ? 1 : -1));
     setBusy(true);
     try {
-      const res = await fetch(`/api/interview/${experienceId}/like`, { method: "POST" });
+      const res = await apiFetch(`/api/interview/${experienceId}/like`, { method: "POST" });
       if (!res.ok) throw new Error();
       const data = (await res.json()) as { liked: boolean; likeCount: number };
       setLiked(data.liked);

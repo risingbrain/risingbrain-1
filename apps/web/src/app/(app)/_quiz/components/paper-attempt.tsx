@@ -13,6 +13,7 @@ import type { AptReviewEntry } from "../data";
 import { redirectToLogin } from "@/lib/auth/redirect";
 import { refreshStreakBadge } from "@/lib/streak-client";
 import { useAttemptDraft } from "@/lib/attempt-draft";
+import { apiFetch } from "@/lib/api-fetch";
 
 /**
  * Owns ONE topic paper's attempt. Each QuestionCard reads/writes its slice here
@@ -167,7 +168,7 @@ export function PaperAttemptProvider({
       }));
     void (async () => {
       try {
-        const res = await fetch("/api/screening/submit", {
+        const res = await apiFetch("/api/screening/submit", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ topicId, answers }),

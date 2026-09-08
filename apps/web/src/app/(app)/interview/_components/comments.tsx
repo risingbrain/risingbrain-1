@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Loader2, MessageCircle, Send } from "lucide-react";
 import { Avatar } from "@/components/marketing/primitives";
 import type { CommentItem } from "../_lib/types";
+import { apiFetch } from "@/lib/api-fetch";
 
 /**
  * Comments island for the detail page. Renders the existing thread and, for
@@ -31,7 +32,7 @@ export function Comments({
     setError(null);
     setPosting(true);
     try {
-      const res = await fetch(`/api/interview/${experienceId}/comments`, {
+      const res = await apiFetch(`/api/interview/${experienceId}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ body: text }),

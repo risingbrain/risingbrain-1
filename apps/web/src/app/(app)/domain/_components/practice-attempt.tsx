@@ -6,6 +6,7 @@ import type { DomainReviewEntry } from "../_data";
 import { redirectToLogin } from "@/lib/auth/redirect";
 import { refreshStreakBadge } from "@/lib/streak-client";
 import { useAttemptDraft } from "@/lib/attempt-draft";
+import { apiFetch } from "@/lib/api-fetch";
 
 /**
  * Owns ONE topic's practice attempt. Each question card reads/writes its slice
@@ -132,7 +133,7 @@ export function PracticeAttemptProvider({
       .map((x) => ({ questionId: x.id, selectedKey: x.st.selectedKey as string }));
     void (async () => {
       try {
-        const res = await fetch("/api/domain/submit", {
+        const res = await apiFetch("/api/domain/submit", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ topicId, answers }),

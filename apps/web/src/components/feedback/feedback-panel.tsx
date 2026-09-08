@@ -17,6 +17,7 @@ import {
   type RichTextEditorHandle,
 } from "@/components/editor/rich-text-editor";
 import { RatingStars } from "./rating-stars";
+import { apiFetch } from "@/lib/api-fetch";
 
 /**
  * The feedback composer — the modal behind the floating button and behind a
@@ -73,7 +74,7 @@ export function FeedbackPanel({
     let cancelled = false;
     void (async () => {
       try {
-        const res = await fetch("/api/feedback");
+        const res = await apiFetch("/api/feedback");
         if (res.status === 401) {
           router.push("/login");
           return;
@@ -109,7 +110,7 @@ export function FeedbackPanel({
 
     setSending(true);
     try {
-      const res = await fetch("/api/feedback", {
+      const res = await apiFetch("/api/feedback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ body: hasText ? html : "", rating: rating || null }),

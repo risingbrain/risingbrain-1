@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, Pencil, Trash2, TriangleAlert, X } from "lucide-react";
 import { Composer, type ExperienceDraft } from "./composer";
+import { apiFetch } from "@/lib/api-fetch";
 
 /**
  * Edit / delete controls, rendered only for the author of an experience.
@@ -25,7 +26,7 @@ export function OwnerActions({ experienceId }: { experienceId: string }) {
     setError(null);
     setLoading(true);
     try {
-      const res = await fetch(`/api/interview/${experienceId}`, { cache: "no-store" });
+      const res = await apiFetch(`/api/interview/${experienceId}`, { cache: "no-store" });
       if (!res.ok) throw new Error(String(res.status));
       setDraft((await res.json()) as ExperienceDraft);
     } catch {
@@ -39,7 +40,7 @@ export function OwnerActions({ experienceId }: { experienceId: string }) {
     setError(null);
     setDeleting(true);
     try {
-      const res = await fetch(`/api/interview/${experienceId}`, { method: "DELETE" });
+      const res = await apiFetch(`/api/interview/${experienceId}`, { method: "DELETE" });
       if (!res.ok) throw new Error(String(res.status));
       setConfirming(false);
       // Back to the feed — the post no longer resolves.

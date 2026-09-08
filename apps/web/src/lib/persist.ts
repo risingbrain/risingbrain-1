@@ -10,9 +10,17 @@
  *   - give up immediately on a genuine 4xx (bad payload / unknown id) since a
  *     retry can't fix it.
  *
+ * A 401 is the exception to that last rule and used to be swallowed by it: these
+ * routes are outside the edge proxy's matcher, so a lapsed 15-minute access token
+ * made every solve toggle and bookmark fail permanently and silently revert, with
+ * a 30-day refresh cookie sitting right there. `apiFetch` rotates once and
+ * replays, so only a genuinely dead session reaches the 4xx bail below.
+ *
  * Returns true only when the server confirmed the write (2xx). The caller keeps
  * its optimistic state on true and reverts on false.
  */
+import { apiFetch } from "@/lib/api-fetch";
+
 export async function persistJSON(
   url: string,
   body: unknown,
@@ -22,7 +30,7 @@ export async function persistJSON(
 
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: payload,
