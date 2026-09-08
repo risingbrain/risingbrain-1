@@ -8,6 +8,11 @@
  *
  *   bun run scripts/update-dsa.ts            # upsert + prune rows absent from JSON
  *   bun run scripts/update-dsa.ts --no-prune # upsert only, never delete
+ *   bun run scripts/update-dsa.ts --dry-run  # run for real against the DB, inside a
+ *                                             # transaction that is always rolled back —
+ *                                             # prints the exact same diff/prune summary
+ *                                             # with nothing committed. Combine with
+ *                                             # --no-prune to preview upserts only.
  *
  * Why upsert (not delete + recreate): UserProblemProgress and UserProblemNote
  * FK to DsaProblem.id (cuid) with onDelete: Cascade. We upsert every row by its
@@ -32,7 +37,7 @@
  * Company tags are reconciled the same way — only for problems whose tag set
  * changed — instead of being dropped and rebuilt for all 623 every time.
  */
-import { PrismaClient, Difficulty } from "../generated/prisma/client";
+import { PrismaClient, Difficulty, Prisma } from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 import dsaData from "../seed/dsa.json";
@@ -41,6 +46,19 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
 const PRUNE = !process.argv.includes("--no-prune");
+const DRY_RUN = process.argv.includes("--dry-run");
+
+/** The subset of the client every function below actually calls — satisfied by
+ * both the real PrismaClient and an interactive-transaction client, so the
+ * whole pipeline can run unmodified against either. */
+type Db = Pick<
+  PrismaClient,
+  "company" | "dsaSheet" | "dsaTopic" | "dsaPattern" | "dsaProblem" | "problemCompany"
+>;
+
+/** Thrown at the end of a dry-run transaction to force Prisma to roll it back
+ * without treating the run itself as an error. */
+class DryRunRollback extends Error {}
 
 /**
  * How many UPDATEs we let run at once. There is no single-statement bulk update
@@ -263,7 +281,7 @@ type DsaSheetJson = {
 
 const sheets = (dsaData as { sheets: DsaSheetJson[] }).sheets;
 
-async function upsertCompanies(): Promise<Map<string, string>> {
+async function upsertCompanies(db: Db): Promise<Map<string, string>> {
   const names = new Map<string, string | undefined>();
   for (const sheet of sheets)
     for (const topic of sheet.topics)
@@ -279,20 +297,20 @@ async function upsertCompanies(): Promise<Map<string, string>> {
     "companies"
   );
 
-  const existing = await prisma.company.findMany({
+  const existing = await db.company.findMany({
     select: { id: true, slug: true, name: true, logoUrl: true },
   });
   const bySlug = new Map(existing.map((c) => [c.slug, c]));
 
   const { creates, updates, unchanged } = diffRows(desired, bySlug);
   for (const rows of chunk(creates, INSERT_CHUNK))
-    await prisma.company.createMany({ data: rows.map((r) => ({ slug: r.key, ...r.fields })) });
-  await inBatches(updates, (u) => prisma.company.update({ where: { id: u.id }, data: u.fields }));
+    await db.company.createMany({ data: rows.map((r) => ({ slug: r.key, ...r.fields })) });
+  await inBatches(updates, (u) => db.company.update({ where: { id: u.id }, data: u.fields }));
   summarise("companies", { creates, updates, unchanged });
 
   // Only refetch when we inserted — otherwise the read above already has every id.
   const all = creates.length
-    ? await prisma.company.findMany({ select: { id: true, slug: true } })
+    ? await db.company.findMany({ select: { id: true, slug: true } })
     : existing;
   const idBySlug = new Map(all.map((c) => [c.slug, c.id]));
 
@@ -303,7 +321,7 @@ async function upsertCompanies(): Promise<Map<string, string>> {
   return new Map([...names.keys()].map((name) => [name, idBySlug.get(slugify(name))!]));
 }
 
-async function updateDsa(companyIds: Map<string, string>) {
+async function updateDsa(db: Db, companyIds: Map<string, string>) {
   // ---- sheets ----
   const desiredSheets = dedupe(
     sheets.map((sheet, i) => ({
@@ -317,22 +335,22 @@ async function updateDsa(companyIds: Map<string, string>) {
     "sheets"
   );
 
-  const sheetRows = await prisma.dsaSheet.findMany({
+  const sheetRows = await db.dsaSheet.findMany({
     select: { id: true, slug: true, name: true, description: true, order: true },
   });
   const sheetDiff = diffRows(desiredSheets, new Map(sheetRows.map((r) => [r.slug, r])));
   // isPublished is intentionally absent from `fields`: it's a DB default on create
   // and an admin toggle after that, so a re-run must never clobber it.
   for (const rows of chunk(sheetDiff.creates, INSERT_CHUNK))
-    await prisma.dsaSheet.createMany({ data: rows.map((r) => ({ slug: r.key, ...r.fields })) });
+    await db.dsaSheet.createMany({ data: rows.map((r) => ({ slug: r.key, ...r.fields })) });
   await inBatches(sheetDiff.updates, (u) =>
-    prisma.dsaSheet.update({ where: { id: u.id }, data: u.fields })
+    db.dsaSheet.update({ where: { id: u.id }, data: u.fields })
   );
   summarise("sheets", sheetDiff);
 
   const sheetIds = new Map(
     (sheetDiff.creates.length
-      ? await prisma.dsaSheet.findMany({ select: { id: true, slug: true } })
+      ? await db.dsaSheet.findMany({ select: { id: true, slug: true } })
       : sheetRows
     ).map((r) => [r.slug, r.id])
   );
@@ -358,7 +376,7 @@ async function updateDsa(companyIds: Map<string, string>) {
 
   const desiredTopics = dedupe(desiredTopicRows, "topics");
 
-  const topicRows = await prisma.dsaTopic.findMany({
+  const topicRows = await db.dsaTopic.findMany({
     select: { id: true, sheetId: true, slug: true, name: true, description: true, order: true },
   });
   const topicDiff = diffRows(
@@ -366,15 +384,15 @@ async function updateDsa(companyIds: Map<string, string>) {
     new Map(topicRows.map((r) => [`${r.sheetId} ${r.slug}`, r]))
   );
   for (const rows of chunk(topicDiff.creates, INSERT_CHUNK))
-    await prisma.dsaTopic.createMany({ data: rows.map((r) => r.fields) });
+    await db.dsaTopic.createMany({ data: rows.map((r) => r.fields) });
   await inBatches(topicDiff.updates, (u) =>
-    prisma.dsaTopic.update({ where: { id: u.id }, data: u.fields })
+    db.dsaTopic.update({ where: { id: u.id }, data: u.fields })
   );
   summarise("topics", topicDiff);
 
   const topicIds = new Map(
     (topicDiff.creates.length
-      ? await prisma.dsaTopic.findMany({ select: { id: true, sheetId: true, slug: true } })
+      ? await db.dsaTopic.findMany({ select: { id: true, sheetId: true, slug: true } })
       : topicRows
     ).map((r) => [`${r.sheetId} ${r.slug}`, r.id])
   );
@@ -404,7 +422,7 @@ async function updateDsa(companyIds: Map<string, string>) {
 
   const desiredPatterns = dedupe(desiredPatternRows, "patterns");
 
-  const patternRows = await prisma.dsaPattern.findMany({
+  const patternRows = await db.dsaPattern.findMany({
     select: {
       id: true,
       topicId: true,
@@ -420,15 +438,15 @@ async function updateDsa(companyIds: Map<string, string>) {
     new Map(patternRows.map((r) => [`${r.topicId} ${r.slug}`, r]))
   );
   for (const rows of chunk(patternDiff.creates, INSERT_CHUNK))
-    await prisma.dsaPattern.createMany({ data: rows.map((r) => r.fields) });
+    await db.dsaPattern.createMany({ data: rows.map((r) => r.fields) });
   await inBatches(patternDiff.updates, (u) =>
-    prisma.dsaPattern.update({ where: { id: u.id }, data: u.fields })
+    db.dsaPattern.update({ where: { id: u.id }, data: u.fields })
   );
   summarise("patterns", patternDiff);
 
   const patternIds = new Map(
     (patternDiff.creates.length
-      ? await prisma.dsaPattern.findMany({ select: { id: true, topicId: true, slug: true } })
+      ? await db.dsaPattern.findMany({ select: { id: true, topicId: true, slug: true } })
       : patternRows
     ).map((r) => [`${r.topicId} ${r.slug}`, r.id])
   );
@@ -491,7 +509,7 @@ async function updateDsa(companyIds: Map<string, string>) {
 
   const desiredProblems = dedupe(desiredProblemRows, "problems");
 
-  const problemRows = await prisma.dsaProblem.findMany({
+  const problemRows = await db.dsaProblem.findMany({
     select: {
       id: true,
       patternId: true,
@@ -507,15 +525,15 @@ async function updateDsa(companyIds: Map<string, string>) {
   });
   const problemDiff = diffRows(desiredProblems, new Map(problemRows.map((r) => [r.slug, r])));
   for (const rows of chunk(problemDiff.creates, INSERT_CHUNK))
-    await prisma.dsaProblem.createMany({ data: rows.map((r) => r.fields) });
+    await db.dsaProblem.createMany({ data: rows.map((r) => r.fields) });
   await inBatches(problemDiff.updates, (u) =>
-    prisma.dsaProblem.update({ where: { id: u.id }, data: u.fields })
+    db.dsaProblem.update({ where: { id: u.id }, data: u.fields })
   );
   summarise("problems", problemDiff);
 
   const problemIds = new Map(
     (problemDiff.creates.length
-      ? await prisma.dsaProblem.findMany({ select: { id: true, slug: true } })
+      ? await db.dsaProblem.findMany({ select: { id: true, slug: true } })
       : problemRows
     ).map((r) => [r.slug, r.id])
   );
@@ -526,7 +544,7 @@ async function updateDsa(companyIds: Map<string, string>) {
   // delete + insert per problem (~1160 round trips) on every run, to land on
   // exactly the same rows. Compare the sets first and touch only the drift.
   const seenProblemIds = resolveIds(desiredProblems, problemIds, "problems");
-  const existingTags = await prisma.problemCompany.findMany({
+  const existingTags = await db.problemCompany.findMany({
     select: { problemId: true, companyId: true },
   });
   const tagsByProblem = new Map<string, Set<string>>();
@@ -548,9 +566,9 @@ async function updateDsa(companyIds: Map<string, string>) {
   }
 
   if (staleProblemIds.length) {
-    await prisma.problemCompany.deleteMany({ where: { problemId: { in: staleProblemIds } } });
+    await db.problemCompany.deleteMany({ where: { problemId: { in: staleProblemIds } } });
     for (const rows of chunk(freshPairs, INSERT_CHUNK))
-      await prisma.problemCompany.createMany({ data: rows, skipDuplicates: true });
+      await db.problemCompany.createMany({ data: rows, skipDuplicates: true });
   }
   console.log(
     `   tags      ${staleProblemIds.length} problems retagged (${freshPairs.length} links), ` +
@@ -575,12 +593,12 @@ async function updateDsa(companyIds: Map<string, string>) {
   if (!seenSheets.length || !seenTopics.length || !seenPatterns.length || !seenProblemIds.length)
     throw new Error("refusing to prune: dsa.json produced an empty level");
 
-  const delSheets = await prisma.dsaSheet.deleteMany({ where: { id: { notIn: seenSheets } } });
-  const delTopics = await prisma.dsaTopic.deleteMany({ where: { id: { notIn: seenTopics } } });
-  const delPatterns = await prisma.dsaPattern.deleteMany({
+  const delSheets = await db.dsaSheet.deleteMany({ where: { id: { notIn: seenSheets } } });
+  const delTopics = await db.dsaTopic.deleteMany({ where: { id: { notIn: seenTopics } } });
+  const delPatterns = await db.dsaPattern.deleteMany({
     where: { id: { notIn: seenPatterns } },
   });
-  const delProblems = await prisma.dsaProblem.deleteMany({
+  const delProblems = await db.dsaProblem.deleteMany({
     where: { id: { notIn: seenProblemIds } },
   });
   console.log(
@@ -588,11 +606,40 @@ async function updateDsa(companyIds: Map<string, string>) {
   );
 }
 
+async function run(db: Db) {
+  const companyIds = await upsertCompanies(db);
+  await updateDsa(db, companyIds);
+}
+
 async function main() {
   const startedAt = Date.now();
-  console.log(`🔄 Updating DSA content from seed/dsa.json (prune=${PRUNE})…`);
-  const companyIds = await upsertCompanies();
-  await updateDsa(companyIds);
+  console.log(
+    `🔄 Updating DSA content from seed/dsa.json (prune=${PRUNE}${DRY_RUN ? ", DRY RUN — will roll back" : ""})…`
+  );
+
+  if (DRY_RUN) {
+    // Run the real pipeline against a real interactive transaction, then force
+    // a rollback — every finding/query/constraint is genuine, nothing is kept.
+    await prisma
+      .$transaction(
+        async (tx: Prisma.TransactionClient) => {
+          await run(tx);
+          throw new DryRunRollback();
+        },
+        // Generous timeout: a dry run does the same hundreds of reads/writes as
+        // a real run, all held open in one transaction instead of committed
+        // incrementally, so the default 5s interactive-transaction timeout is
+        // too tight for a full dsa.json.
+        { timeout: 60_000 }
+      )
+      .catch((e) => {
+        if (!(e instanceof DryRunRollback)) throw e;
+      });
+    console.log("🧪 Dry run rolled back — no changes were committed.");
+  } else {
+    await run(prisma);
+  }
+
   console.log(
     `✅ DSA update complete in ${((Date.now() - startedAt) / 1000).toFixed(1)}s. ` +
       `(quizzes, domain, courses, interviews, users untouched)`

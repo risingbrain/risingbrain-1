@@ -578,7 +578,7 @@
                   "reference": "LC 1749",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/maximum-absolute-sum-of-any-subarray/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/minimizing-maximum-absolute-subarray-sums/",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Microsoft",
@@ -805,7 +805,7 @@
                   "title": "Longest Substring with K Uniques",
                   "reference": "LC 340",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/longest-k-unique-characters-substring0853/1",
                   "companies": [
                     {
@@ -875,7 +875,7 @@
                   "reference": "LC 30",
                   "difficulty": "HARD",
                   "leetcodeUrl": "https://leetcode.com/problems/substring-with-concatenation-of-all-words/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/find-starting-indices-substrings-string-s-made-concatenating-words-listl/ ",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Google",
@@ -1081,9 +1081,9 @@
                 {
                   "id": "problem_0046",
                   "title": "Find kth rotation",
-                  "reference": "GFG",
+                  "reference": "LC 189",
                   "difficulty": "EASY",
-                  "leetcodeUrl": null,
+                  "leetcodeUrl": "https://leetcode.com/problems/rotate-array/description/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/rotation4723/1",
                   "companies": [
                     {
@@ -1249,7 +1249,7 @@
                   "title": "Aggressive cows",
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/discuss/post/4133198/c-aggressive-cows-binary-search-by-tle-5nlw/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/aggressive-cows/1",
                   "companies": [
                     {
@@ -1318,7 +1318,7 @@
                   "title": "Allocate Minimum Number of Pages",
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/discuss/post/3340922/ALLOCATE-MIN-NUMBER-OF-PAGES/ ",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/allocate-minimum-number-of-pages0937/1",
                   "companies": [
                     {
@@ -1442,7 +1442,7 @@
                   "title": "Matrix Median",
                   "reference": "GFG",
                   "difficulty": "HARD",
-                  "leetcodeUrl": "https://leetcode.com/problems/median-of-a-row-wise-sorted-matrix/description/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/median-in-a-row-wise-sorted-matrix1527/1",
                   "companies": [
                     {
@@ -1482,7 +1482,7 @@
                   "reference": "LC 496",
                   "difficulty": "EASY",
                   "leetcodeUrl": "https://leetcode.com/problems/next-greater-element-i/",
-                  "gfgUrl": null,
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/next-larger-element-1587115620/1",
                   "companies": [
                     {
                       "name": "Amazon",
@@ -1505,7 +1505,7 @@
                   "reference": "LC 503",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/next-greater-element-ii/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/next-larger-element-1587115620/1",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Microsoft",
@@ -1528,7 +1528,7 @@
                   "reference": "LC 739",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/daily-temperatures/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/count-of-days-remaining-for-the-next-day-with-higher-temperature/",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Flipkart",
@@ -1675,7 +1675,7 @@
                   "reference": "LC 227",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/basic-calculator-ii/",
-                  "gfgUrl": null,
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/create-your-own-calculator4308/1",
                   "companies": [
                     {
                       "name": "Microsoft",
@@ -1820,7 +1820,7 @@
                   "id": "problem_0084",
                   "title": "Minimum String Length After Removing Substrings",
                   "reference": "GFG",
-                  "difficulty": "EASY",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/minimum-string-length-after-removing-substrings/description/",
                   "gfgUrl": null,
                   "companies": [
@@ -1976,8 +1976,8 @@
                   "id": "problem_0090",
                   "title": "Max Stack",
                   "reference": "GFG",
-                  "difficulty": "HARD",
-                  "leetcodeUrl": "https://leetcode.com/problems/max-stack/description/",
+                  "difficulty": "MEDIUM",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/get-max-from-stack/1",
                   "companies": [
                     {
@@ -2106,7 +2106,7 @@
                   "reference": "LC 316",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/remove-duplicate-letters/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/remove-all-duplicates-from-a-given-string4321/1",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Google",
@@ -2129,7 +2129,7 @@
                   "reference": "LC 1081",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/lexicographically-smallest-subsequence-possible-by-removing-a-character-from-given-string/",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Google",
@@ -2206,7 +2206,7 @@
                   "title": "Reverse a Stack (Recursive)",
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/discuss/post/6155674/sort-and-reverse-stack-with-recursion-by-szbt/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/reverse-a-stack/1",
                   "companies": [
                     {
@@ -2225,7 +2225,7 @@
                   "title": "Insert at Bottom of Stack",
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": null,
+                  "leetcodeUrl": "https://leetcode.com/problems/implement-stack-using-queues/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/insert-an-element-at-the-bottom-of-a-stack/1",
                   "companies": [
                     {
@@ -2325,7 +2325,7 @@
                   "title": "Check Palindrome (Recursive)",
                   "reference": "Classic",
                   "difficulty": "EASY",
-                  "leetcodeUrl": " https://leetcode.com/problems/palindrome-number/description/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://practice.geeksforgeeks.org/problems/palindrome0746/1",
                   "companies": [
                     {
@@ -2349,7 +2349,7 @@
                   "reference": "Classic",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/powx-n/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/powx-n/1",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/power-of-numbers-1587115620/1",
                   "companies": [
                     {
                       "name": "Amazon",
@@ -2481,7 +2481,7 @@
                   "title": "Merge Sort",
                   "reference": "Classic",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/sort-an-array/description/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://practice.geeksforgeeks.org/problems/merge-sort/1",
                   "companies": [
                     {
@@ -2504,7 +2504,7 @@
                   "title": "Quick Sort",
                   "reference": "Classic",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/sort-an-array/description/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://practice.geeksforgeeks.org/problems/quick-sort/1",
                   "companies": [
                     {
@@ -2528,7 +2528,7 @@
                   "reference": "LC 704",
                   "difficulty": "EASY",
                   "leetcodeUrl": "https://leetcode.com/problems/binary-search/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/who-will-win-1587115621/1",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Google",
@@ -2551,7 +2551,7 @@
                   "reference": "LC 50",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/powx-n/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/powx-n/1",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Flipkart",
@@ -2574,7 +2574,7 @@
                   "reference": "Classic",
                   "difficulty": "HARD",
                   "leetcodeUrl": "https://leetcode.com/problems/median-of-two-sorted-arrays/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/median-of-2-sorted-arrays-of-different-sizes/1",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Google",
@@ -2595,7 +2595,7 @@
             },
             {
               "id": "topic_0009_sub_3",
-              "name": "Recursion on LinkedList / Stack",
+              "name": "Recursion on LinkedList/Stack",
               "order": 3,
               "strategy": "Process data structures recursively by handling the first/last element and recursing on the rest.",
               "identification": "Problems asking to reverse, delete, or merge standard linear data structures.",
@@ -2729,7 +2729,7 @@
                   "title": "Subset Sum",
                   "reference": "Classic",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/partition-equal-subset-sum/ ",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://practice.geeksforgeeks.org/problems/subset-sum-problem2014/1",
                   "companies": [
                     {
@@ -2907,7 +2907,7 @@
                   "reference": "LC 160",
                   "difficulty": "EASY",
                   "leetcodeUrl": "https://leetcode.com/problems/intersection-of-two-linked-lists/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/intersection-point-in-y-shapped-linked-lists/1",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/intersection-of-two-linked-list/1",
                   "companies": [
                     {
                       "name": "Amazon",
@@ -3108,7 +3108,7 @@
                   "title": "Maximum Twin Sum of a Linked List",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/maximum-twin-sum-of-a-linked-list/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/find-maximum-pairwise-sum-in-linked-list-that-are-equidistant-from-front-and-back/",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Amazon",
@@ -3348,7 +3348,7 @@
                   "reference": "LC 86",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/partition-list/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/partition-a-linked-list-around-a-given-value/1",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Amazon",
@@ -3380,7 +3380,7 @@
                   "reference": "LC 2",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/add-two-numbers/",
-                  "gfgUrl": null,
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/add-two-numbers-represented-by-linked-lists/1",
                   "companies": [
                     {
                       "name": "Amazon",
@@ -3426,7 +3426,7 @@
                   "reference": "LC 1019",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/next-greater-node-in-linked-list/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/next-greater-element-in-the-linked-list/",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Flipkart",
@@ -3511,7 +3511,7 @@
                   "reference": "GFG",
                   "difficulty": "EASY",
                   "leetcodeUrl": null,
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/create-a-doubly-linked-list-from-a-given-array/1",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/insert-a-node-in-doubly-linked-list/1",
                   "companies": [
                     {
                       "name": "Amazon",
@@ -3656,8 +3656,8 @@
                   "id": "problem_0127",
                   "title": "Merge Two Sorted DLLs",
                   "reference": "GFG",
-                  "difficulty": "EASY",
-                  "leetcodeUrl": "https://leetcode.com/problems/merge-two-sorted-lists/description/",
+                  "difficulty": "MEDIUM",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/merge-two-sorted-linked-lists/1",
                   "companies": [
                     {
@@ -3681,7 +3681,7 @@
                   "reference": "LC 430",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/flatten-a-multi-level-linked-list-set-2-depth-wise/",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Amazon",
@@ -3700,29 +3700,6 @@
                 },
                 {
                   "id": "problem_0129",
-                  "title": "Convert DLL to Binary Tree",
-                  "reference": "GFG",
-                  "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/binary-tree-to-dll/1",
-                  "companies": [
-                    {
-                      "name": "Amazon",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
-                    },
-                    {
-                      "name": "Google",
-                      "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
-                    },
-                    {
-                      "name": "Goldman Sachs",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Goldman_Sachs.svg/250px-Goldman_Sachs.svg.png"
-                    }
-                  ],
-                  "youtubeUrl": null
-                },
-                {
-                  "id": "problem_1124",
                   "title": "Convert DLL to Binary Tree",
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
@@ -3834,7 +3811,7 @@
                   "title": "Task Scheduler (frequency-based greedy)",
                   "reference": "LC 621",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/task-scheduler/description/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/task-scheduler/1",
                   "companies": [
                     {
@@ -3866,7 +3843,7 @@
                   "title": "Count Subarrays with Sum K",
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/subarray-sum-equals-k/description/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/subarrays-with-sum-k/1",
                   "companies": [
                     {
@@ -3891,7 +3868,7 @@
         {
           "id": "topic_0010",
           "name": "Binary Tree",
-          "description": "Hierarchical data structure with a root value and subtrees of children, including ordered binary search trees.",
+          "description": "Hierarchical data structure with a root value and subtrees of children.",
           "subtopics": [
             {
               "id": "subtopic_0036",
@@ -4081,6 +4058,29 @@
                   "youtubeUrl": "https://youtu.be/GLPeZfpjR80?si=QURbfLGKNv23CPlq"
                 },
                 {
+                  "id": "problem_0196",
+                  "title": "Minimum Depth of Binary Tree",
+                  "reference": "LC 111",
+                  "difficulty": "EASY",
+                  "leetcodeUrl": "https://leetcode.com/problems/minimum-depth-of-binary-tree/",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/minimum-depth-of-a-binary-tree/1",
+                  "companies": [
+                    {
+                      "name": "Amazon",
+                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
+                    },
+                    {
+                      "name": "Adobe",
+                      "logo": "https://companieslogo.com/img/orig/ADBE-fb158b30.png?t=1740130206"
+                    },
+                    {
+                      "name": "Sumo Logic",
+                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7g-Z03mvYWp-V0fzAUngNU4ZLVExOT0EpwA&s"
+                    }
+                  ],
+                  "youtubeUrl": "https://youtu.be/GLPeZfpjR80?si=QURbfLGKNv23CPlq"
+                },
+                {
                   "id": "problem_1102",
                   "title": "Subtree of Another Tree",
                   "reference": "LC 572",
@@ -4146,6 +4146,29 @@
                   "youtubeUrl": "https://youtu.be/fVM2bqhBxyI?si=Gkm7nznB3HHXRVS6"
                 },
                 {
+                  "id": "problem_1105",
+                  "title": "Path Sum III",
+                  "reference": "LC 437",
+                  "difficulty": "MEDIUM",
+                  "leetcodeUrl": "https://leetcode.com/problems/path-sum-iii/",
+                  "gfgUrl": null,
+                  "companies": [
+                    {
+                      "name": "Amazon",
+                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
+                    },
+                    {
+                      "name": "Microsoft",
+                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
+                    },
+                    {
+                      "name": "Google",
+                      "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
+                    }
+                  ],
+                  "youtubeUrl": null
+                },
+                {
                   "id": "problem_0185",
                   "title": "Binary Tree Maximum Path Sum",
                   "reference": "LC 124",
@@ -4164,44 +4187,6 @@
                     {
                       "name": "Morgan Stanley",
                       "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg4b2xFrY7mhOS9pGOnckG88R0ZzHpzYZ7hA&s"
-                    }
-                  ],
-                  "youtubeUrl": null
-                },
-                {
-                  "id": "problem_0186",
-                  "title": "Check if Nodes are Cousins",
-                  "reference": "LC 993",
-                  "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/cousins-in-binary-tree/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/check-if-two-nodes-are-cousins/1",
-                  "companies": [
-                    {
-                      "name": "Amazon",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
-                    },
-                    {
-                      "name": "Google",
-                      "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
-                    }
-                  ],
-                  "youtubeUrl": null
-                },
-                {
-                  "id": "problem_0187",
-                  "title": "Minimum Height of a Binary Tree",
-                  "reference": "LC 111",
-                  "difficulty": "EASY",
-                  "leetcodeUrl": "https://leetcode.com/problems/minimum-depth-of-binary-tree/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/minimum-depth-of-a-binary-tree/1",
-                  "companies": [
-                    {
-                      "name": "Microsoft",
-                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
-                    },
-                    {
-                      "name": "Flipkart",
-                      "logo": "https://www.citypng.com/public/uploads/preview/flipkart-logo-icon-hd-png-701751694706828v1habfry9b.png"
                     }
                   ],
                   "youtubeUrl": null
@@ -4266,44 +4251,6 @@
                     }
                   ],
                   "youtubeUrl": null
-                },
-                {
-                  "id": "problem_0190",
-                  "title": "Vertical Order Traversal",
-                  "reference": "LC 314",
-                  "difficulty": "HARD",
-                  "leetcodeUrl": "https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/print-a-binary-tree-in-vertical-order/1",
-                  "companies": [
-                    {
-                      "name": "Google",
-                      "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
-                    },
-                    {
-                      "name": "Microsoft",
-                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
-                    }
-                  ],
-                  "youtubeUrl": "https://youtu.be/d5kbLp3BEqs?si=IPUWomfEU55SNSVL"
-                },
-                {
-                  "id": "problem_0191",
-                  "title": "Top View of a Binary Tree",
-                  "reference": "GFG",
-                  "difficulty": "MEDIUM",
-                  "leetcodeUrl": null,
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/top-view-of-binary-tree/1",
-                  "companies": [
-                    {
-                      "name": "Microsoft",
-                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
-                    },
-                    {
-                      "name": "Amazon",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
-                    }
-                  ],
-                  "youtubeUrl": "https://youtu.be/tYB3oYK1woo?si=LZk_ea9xU39xMjMu"
                 },
                 {
                   "id": "problem_0192",
@@ -4380,6 +4327,29 @@
                   "youtubeUrl": "https://youtu.be/g5pwB1X-rfY?si=V_3k-gs_1P0o4D1P"
                 },
                 {
+                  "id": "problem_0197",
+                  "title": "Average of Levels in Binary Tree",
+                  "reference": "LC 637",
+                  "difficulty": "EASY",
+                  "leetcodeUrl": "https://leetcode.com/problems/average-of-levels-in-binary-tree/",
+                  "gfgUrl": null,
+                  "companies": [
+                    {
+                      "name": "Amazon",
+                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
+                    },
+                    {
+                      "name": "Microsoft",
+                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
+                    },
+                    {
+                      "name": "PhonePe",
+                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVf6nm-Dk1ELbj1aBfeN_vJH6R1wAqYWnltw&s"
+                    }
+                  ],
+                  "youtubeUrl": "https://youtu.be/6SBaKv6p6bQ?si=XlZIXjaNAAU9WGeq"
+                },
+                {
                   "id": "problem_0195",
                   "title": "Binary Tree Right Side View",
                   "reference": "LC 199",
@@ -4403,27 +4373,27 @@
                   "youtubeUrl": "https://youtu.be/xo3i19SvDaU?si=hVG03nDbOvKocGu0"
                 },
                 {
-                  "id": "problem_0197",
-                  "title": "Average of Levels in Binary Tree",
-                  "reference": "LC 637",
+                  "id": "problem_1007",
+                  "title": "Cousins in Binary Tree",
+                  "reference": "LC 993",
                   "difficulty": "EASY",
-                  "leetcodeUrl": "https://leetcode.com/problems/average-of-levels-in-binary-tree/",
-                  "gfgUrl": null,
+                  "leetcodeUrl": "https://leetcode.com/problems/cousins-in-binary-tree/",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/check-if-two-nodes-are-cousins/1",
                   "companies": [
                     {
                       "name": "Amazon",
                       "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
                     },
                     {
-                      "name": "Microsoft",
-                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
+                      "name": "Google",
+                      "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
                     },
                     {
-                      "name": "PhonePe",
-                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVf6nm-Dk1ELbj1aBfeN_vJH6R1wAqYWnltw&s"
+                      "name": "Adobe",
+                      "logo": "https://companieslogo.com/img/orig/ADBE-fb158b30.png?t=1740130206"
                     }
                   ],
-                  "youtubeUrl": "https://youtu.be/6SBaKv6p6bQ?si=XlZIXjaNAAU9WGeq"
+                  "youtubeUrl": "https://youtu.be/BjFCmspVQl4?si=PZHL17gYvNQxtWP3"
                 },
                 {
                   "id": "problem_1006",
@@ -4470,6 +4440,44 @@
                     }
                   ],
                   "youtubeUrl": "https://youtu.be/xo3i19SvDaU?si=hVG03nDbOvKocGu0"
+                },
+                {
+                  "id": "problem_0190",
+                  "title": "Vertical Order Traversal",
+                  "reference": "LC 314",
+                  "difficulty": "MEDIUM",
+                  "leetcodeUrl": "https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/description/",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/print-a-binary-tree-in-vertical-order/1",
+                  "companies": [
+                    {
+                      "name": "Google",
+                      "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
+                    },
+                    {
+                      "name": "Microsoft",
+                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
+                    }
+                  ],
+                  "youtubeUrl": "https://youtu.be/d5kbLp3BEqs?si=IPUWomfEU55SNSVL"
+                },
+                {
+                  "id": "problem_0191",
+                  "title": "Top View of a Binary Tree",
+                  "reference": "GFG",
+                  "difficulty": "MEDIUM",
+                  "leetcodeUrl": null,
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/top-view-of-binary-tree/1",
+                  "companies": [
+                    {
+                      "name": "Microsoft",
+                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
+                    },
+                    {
+                      "name": "Amazon",
+                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
+                    }
+                  ],
+                  "youtubeUrl": "https://youtu.be/tYB3oYK1woo?si=LZk_ea9xU39xMjMu"
                 },
                 {
                   "id": "problem_1106",
@@ -4550,11 +4558,11 @@
                   "youtubeUrl": null
                 },
                 {
-                  "id": "problem_1123",
-                  "title": "Lowest Common Ancestor of Deepest Leaves",
-                  "reference": "LC 1123",
+                  "id": "problem_0214",
+                  "title": "Lowest Common Ancestor of BST",
+                  "reference": "LC 235",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-deepest-leaves/",
+                  "leetcodeUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/",
                   "gfgUrl": null,
                   "companies": [
                     {
@@ -4566,10 +4574,20 @@
                       "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
                     },
                     {
-                      "name": "Microsoft",
-                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
+                      "name": "Goldman Sachs",
+                      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Goldman_Sachs.svg/250px-Goldman_Sachs.svg.png"
                     }
                   ],
+                  "youtubeUrl": null
+                },
+                {
+                  "id": "problem_1123",
+                  "title": "Lowest Common Ancestor of Deepest Leaves",
+                  "reference": "LC 1123",
+                  "difficulty": "MEDIUM",
+                  "leetcodeUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-deepest-leaves/",
+                  "gfgUrl": null,
+                  "companies": [],
                   "youtubeUrl": null
                 }
               ]
@@ -4600,6 +4618,29 @@
                     {
                       "name": "Goldman Sachs",
                       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Goldman_Sachs.svg/250px-Goldman_Sachs.svg.png"
+                    }
+                  ],
+                  "youtubeUrl": null
+                },
+                {
+                  "id": "problem_0202",
+                  "title": "Flatten Binary Tree to Linked List",
+                  "reference": "LC 114",
+                  "difficulty": "MEDIUM",
+                  "leetcodeUrl": "https://leetcode.com/problems/flatten-binary-tree-to-linked-list/",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/flatten-binary-tree-to-linked-list/1",
+                  "companies": [
+                    {
+                      "name": "Microsoft",
+                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
+                    },
+                    {
+                      "name": "Facebook",
+                      "logo": "https://1000logos.net/wp-content/uploads/2017/02/Facebook-Logosu.png"
+                    },
+                    {
+                      "name": "Morgan Stanley",
+                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg4b2xFrY7mhOS9pGOnckG88R0ZzHpzYZ7hA&s"
                     }
                   ],
                   "youtubeUrl": null
@@ -4696,7 +4737,7 @@
             },
             {
               "id": "subtopic_0040",
-              "name": "BST Operations",
+              "name": "BST",
               "order": 0,
               "strategy": "Leverage BST property (left < root < right) for search, insertion, deletion, and range queries.",
               "identification": "Problem mentions “BST operations, validate BST, insert/delete nodes, or sum/range queries.”",
@@ -4840,6 +4881,29 @@
                   "youtubeUrl": null
                 },
                 {
+                  "id": "problem_0216",
+                  "title": "Closest Binary Search Tree Value",
+                  "reference": "LC 270",
+                  "difficulty": "EASY",
+                  "leetcodeUrl": null,
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/find-the-closest-element-in-bst/1",
+                  "companies": [
+                    {
+                      "name": "Flipkart",
+                      "logo": "https://www.citypng.com/public/uploads/preview/flipkart-logo-icon-hd-png-701751694706828v1habfry9b.png"
+                    },
+                    {
+                      "name": "Paytm",
+                      "logo": "https://cdn.iconscout.com/icon/free/png-256/free-paytm-icon-svg-download-png-226448.png?f=webp"
+                    },
+                    {
+                      "name": "PhonePe",
+                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVf6nm-Dk1ELbj1aBfeN_vJH6R1wAqYWnltw&s"
+                    }
+                  ],
+                  "youtubeUrl": null
+                },
+                {
                   "id": "problem_0210",
                   "title": "Delete Node in a BST",
                   "reference": "LC 450",
@@ -4912,7 +4976,7 @@
                   "id": "problem_1117",
                   "title": "Merge BSTs",
                   "reference": "LC 1932",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/merge-bsts-to-create-single-bst/",
                   "gfgUrl": null,
                   "companies": [
@@ -4931,7 +4995,7 @@
                   "id": "problem_0213",
                   "title": "Maximum sum BST in binary Tree",
                   "reference": "GFG",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/description/",
                   "gfgUrl": null,
                   "companies": [
@@ -5061,61 +5125,6 @@
                     {
                       "name": "Google",
                       "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
-                    }
-                  ],
-                  "youtubeUrl": null
-                }
-              ]
-            },
-            {
-              "id": "subtopic_0041",
-              "name": "LCA & Range Queries",
-              "order": 1,
-              "strategy": "Use BST property → traverse from root to find split point → LCA.",
-              "identification": "Problem mentions “find lowest common ancestor in BST, nodes guaranteed to exist, exploit BST order.”",
-              "problems": [
-                {
-                  "id": "problem_0214",
-                  "title": "Lowest Common Ancestor of BST",
-                  "reference": "LC 235",
-                  "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/lowest-common-ancestor-in-a-bst/1",
-                  "companies": [
-                    {
-                      "name": "Amazon",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
-                    },
-                    {
-                      "name": "Google",
-                      "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
-                    },
-                    {
-                      "name": "Goldman Sachs",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Goldman_Sachs.svg/250px-Goldman_Sachs.svg.png"
-                    }
-                  ],
-                  "youtubeUrl": null
-                },
-                {
-                  "id": "problem_0216",
-                  "title": "Closest Binary Search Tree Value",
-                  "reference": "LC 270",
-                  "difficulty": "EASY",
-                  "leetcodeUrl": "https://leetcode.com/problems/closest-binary-search-tree-value/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/find-the-closest-element-in-bst/1",
-                  "companies": [
-                    {
-                      "name": "Flipkart",
-                      "logo": "https://www.citypng.com/public/uploads/preview/flipkart-logo-icon-hd-png-701751694706828v1habfry9b.png"
-                    },
-                    {
-                      "name": "Paytm",
-                      "logo": "https://cdn.iconscout.com/icon/free/png-256/free-paytm-icon-svg-download-png-226448.png?f=webp"
-                    },
-                    {
-                      "name": "PhonePe",
-                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVf6nm-Dk1ELbj1aBfeN_vJH6R1wAqYWnltw&s"
                     }
                   ],
                   "youtubeUrl": null
@@ -5252,10 +5261,10 @@
                   "youtubeUrl": null
                 },
                 {
-                  "id": "problem_1125",
+                  "id": "problem_0223",
                   "title": "Escape the Spreading Fire",
                   "reference": "LC 286",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/escape-the-spreading-fire/",
                   "gfgUrl": null,
                   "companies": [
@@ -5514,7 +5523,7 @@
                   "title": "Articulation Points",
                   "reference": "GFG",
                   "difficulty": "HARD",
-                  "leetcodeUrl": "https://leetcode.com/problems/critical-connections-in-a-network/description/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/articulation-point-1/1",
                   "companies": [
                     {
@@ -5565,8 +5574,8 @@
                   "title": "Task Scheduling with Dependencies",
                   "reference": "LC 2050",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/parallel-courses-iii/",
-                  "gfgUrl": null,
+                  "leetcodeUrl": "https://leetcode.com/problems/task-scheduler/description/",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/prerequisite-tasks/1",
                   "companies": [
                     {
                       "name": "Amazon",
@@ -5758,7 +5767,7 @@
                   "title": "Kruskal’s algorithm",
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/min-cost-to-connect-all-points/description/ ",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/minimum-spanning-tree-kruskals-algorithm/1",
                   "companies": [
                     {
@@ -5804,7 +5813,7 @@
                   "title": "Number of Connected Components in Graph",
                   "reference": "LC 323",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/ ",
+                  "leetcodeUrl": "https://leetcode.com/problems/count-the-number-of-complete-components/description/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/connected-components-in-an-undirected-graph/1",
                   "companies": [
                     {
@@ -5828,7 +5837,7 @@
                   "reference": "LC 684",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/redundant-connection/",
-                  "gfgUrl": " https://www.geeksforgeeks.org/dsa/extra-edge-in-an-undirected-tree/ ",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/disjoint-set-union-find/1",
                   "companies": [
                     {
                       "name": "Flipkart",
@@ -5928,7 +5937,7 @@
                   "title": "Shortest Path in Weighted Graph",
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": null,
+                  "leetcodeUrl": "https://leetcode.com/problems/shortest-path-visiting-all-nodes/description/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/shortest-path-in-weighted-undirected-graph/1",
                   "companies": [
                     {
@@ -6019,9 +6028,9 @@
                   "id": "problem_0255",
                   "title": "Swim in Rising Water",
                   "reference": "LC 778",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/swim-in-rising-water/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/minimum-time-required-to-swim-in-rising-water/",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Amazon",
@@ -6122,7 +6131,7 @@
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/1",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Amazon",
@@ -6239,7 +6248,7 @@
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/top-k-frequent-words/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/find-the-k-most-frequent-words-from-a-file/",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/word-with-maximum-frequency0120/1",
                   "companies": [
                     {
                       "name": "Google",
@@ -6353,7 +6362,7 @@
                   "title": "Minimum Cost to Connect Ropes",
                   "reference": "LC 1167",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/minimum-cost-to-connect-sticks/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/minimum-cost-of-ropes-1587115620/1",
                   "companies": [
                     {
@@ -6510,7 +6519,7 @@
                   "reference": "LC 480",
                   "difficulty": "HARD",
                   "leetcodeUrl": "https://leetcode.com/problems/sliding-window-median/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/median-of-sliding-window-in-an-array/ ",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/find-the-median0527/1",
                   "companies": [
                     {
                       "name": "Google",
@@ -6665,7 +6674,7 @@
                   "title": "Merge Files with Minimum Cost",
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/minimum-cost-to-merge-stones/description/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/optimal-file-merge/1",
                   "companies": [
                     {
@@ -6966,7 +6975,7 @@
                   "reference": "LC 52",
                   "difficulty": "HARD",
                   "leetcodeUrl": "https://leetcode.com/problems/n-queens-ii/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/n-queen-ii-problem/",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Google",
@@ -6984,7 +6993,7 @@
                   "title": "Graph Coloring (M-Coloring Problem)",
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/flower-planting-with-no-adjacent/description/ ",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/m-coloring-problem-1587115620/1",
                   "companies": [
                     {
@@ -7003,7 +7012,7 @@
                   "title": "Knight’s Tour",
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/the-knights-tour/description/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/knight-walk4521/1",
                   "companies": [
                     {
@@ -7042,7 +7051,7 @@
                   "reference": "LC 473",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/matchsticks-to-square/",
-                  "gfgUrl": null,
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/partition-to-k-equal-sum-subsets/1",
                   "companies": [
                     {
                       "name": "Amazon",
@@ -7073,7 +7082,7 @@
                   "title": "Rat in a Maze",
                   "reference": "GFG",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/discuss/post/2073103/rat-in-a-maze-problem-by-kabiland-fsox/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/rat-in-a-maze-problem/1",
                   "companies": [
                     {
@@ -7135,7 +7144,7 @@
                   "reference": "LC 980",
                   "difficulty": "HARD",
                   "leetcodeUrl": "https://leetcode.com/problems/unique-paths-iii/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/unique-paths-in-a-grid--170647/1",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Google",
@@ -7220,7 +7229,7 @@
                   "reference": "LC 894",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/all-possible-full-binary-trees/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/print-all-possible-n-nodes-full-binary-trees/",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/full-binary-tree/1",
                   "companies": [
                     {
                       "name": "Google",
@@ -7350,7 +7359,7 @@
                   "title": "Meeting Rooms II",
                   "reference": "LC 253",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/meeting-rooms-ii/description/ ",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/attend-all-meetings-ii/1",
                   "companies": [
                     {
@@ -7374,7 +7383,7 @@
                   "reference": "LC 452",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/find-minimum-number-of-arrows-needed-to-burst-all-balloons/",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/hit-most-balloons--170637/1",
                   "companies": [
                     {
                       "name": "Amazon",
@@ -7489,7 +7498,7 @@
                   "reference": "LC 1094",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/car-pooling/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/feasibility-of-car-trips-with-passenger-pickup-and-drop-off/",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Amazon",
@@ -7567,7 +7576,7 @@
                   "reference": "LC 763",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/partition-labels/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/maximize-partitions-in-a-string/1",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/partition-the-array--170647/1",
                   "companies": [
                     {
                       "name": "Flipkart",
@@ -8032,7 +8041,7 @@
                   "id": "problem_0320",
                   "title": "Minimum Insertions to Make String Palindrome",
                   "reference": "LC 1312",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/description/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/form-a-palindrome1455/1",
                   "companies": [
@@ -8170,7 +8179,7 @@
                   "id": "problem_0326",
                   "title": "Shortest Common Supersequence",
                   "reference": "LC 1092",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/shortest-common-supersequence/description/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/shortest-common-supersequence0322/1",
                   "companies": [
@@ -8341,7 +8350,7 @@
                   "title": "Evaluate Expression to True (Boolean Parenthesization)",
                   "reference": "GFG",
                   "difficulty": "HARD",
-                  "leetcodeUrl": "https://leetcode.com/problems/parsing-a-boolean-expression/description/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/boolean-parenthesization5610/1",
                   "companies": [
                     {
@@ -8396,29 +8405,6 @@
                   "title": "Path Sum III",
                   "reference": "LC 437",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/path-sum-iii/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/k-sum-paths/1",
-                  "companies": [
-                    {
-                      "name": "Amazon",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
-                    },
-                    {
-                      "name": "Microsoft",
-                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
-                    },
-                    {
-                      "name": "Google",
-                      "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
-                    }
-                  ],
-                  "youtubeUrl": null
-                },
-                {
-                  "id": "problem_1126",
-                  "title": "Path Sum III",
-                  "reference": "LC 437",
-                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/path-sum-iii/description/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/k-sum-paths/1",
                   "companies": [
@@ -8465,6 +8451,29 @@
                     {
                       "name": "Goldman Sachs",
                       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Goldman_Sachs.svg/250px-Goldman_Sachs.svg.png"
+                    }
+                  ],
+                  "youtubeUrl": null
+                },
+                {
+                  "id": "problem_0341",
+                  "title": "Partition Equal Subset Sum",
+                  "reference": "LC 416",
+                  "difficulty": "MEDIUM",
+                  "leetcodeUrl": "https://leetcode.com/problems/partition-equal-subset-sum/",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/subset-sum-problem2014/1",
+                  "companies": [
+                    {
+                      "name": "Adobe",
+                      "logo": "https://companieslogo.com/img/orig/ADBE-fb158b30.png?t=1740130206"
+                    },
+                    {
+                      "name": "Flipkart",
+                      "logo": "https://www.citypng.com/public/uploads/preview/flipkart-logo-icon-hd-png-701751694706828v1habfry9b.png"
+                    },
+                    {
+                      "name": "Paytm",
+                      "logo": "https://cdn.iconscout.com/icon/free/png-256/free-paytm-icon-svg-download-png-226448.png?f=webp"
                     }
                   ],
                   "youtubeUrl": null
@@ -8589,8 +8598,8 @@
                   "title": "Combination Sum IV",
                   "reference": "LC 377",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/combination-sum-iv/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/combination-sum-ii-1664263832/1",
+                  "leetcodeUrl": null,
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/4-combination-sum/1",
                   "companies": [
                     {
                       "name": "Amazon",
@@ -8603,29 +8612,6 @@
                     {
                       "name": "PhonePe",
                       "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVf6nm-Dk1ELbj1aBfeN_vJH6R1wAqYWnltw&s"
-                    }
-                  ],
-                  "youtubeUrl": null
-                },
-                {
-                  "id": "problem_1127",
-                  "title": "Subset Sum",
-                  "reference": "GFG",
-                  "difficulty": "MEDIUM",
-                  "leetcodeUrl": null,
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1",
-                  "companies": [
-                    {
-                      "name": "Adobe",
-                      "logo": "https://companieslogo.com/img/orig/ADBE-fb158b30.png?t=1740130206"
-                    },
-                    {
-                      "name": "Flipkart",
-                      "logo": "https://www.citypng.com/public/uploads/preview/flipkart-logo-icon-hd-png-701751694706828v1habfry9b.png"
-                    },
-                    {
-                      "name": "Paytm",
-                      "logo": "https://cdn.iconscout.com/icon/free/png-256/free-paytm-icon-svg-download-png-226448.png?f=webp"
                     }
                   ],
                   "youtubeUrl": null
@@ -8645,7 +8631,7 @@
                   "reference": "LC 121",
                   "difficulty": "EASY",
                   "leetcodeUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/buy-stock-2/1",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/buy-maximum-stocks-if-i-stocks-can-be-bought-on-i-th-day/1",
                   "companies": [
                     {
                       "name": "Amazon",
@@ -8668,7 +8654,7 @@
                   "reference": "LC 122",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/stock-buy-and-sell-1587115621/1",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Adobe",
@@ -8691,7 +8677,7 @@
                   "reference": "LC 123",
                   "difficulty": "HARD",
                   "leetcodeUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/buy-and-sell-a-share-at-most-twice/1",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Google",
@@ -8714,7 +8700,7 @@
                   "reference": "LC 188",
                   "difficulty": "HARD",
                   "leetcodeUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/maximum-profit4657/1",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Google",
@@ -8737,7 +8723,7 @@
                   "reference": "LC 309",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/buy-stock-with-cooldown/1",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Google",
@@ -8760,7 +8746,7 @@
                   "reference": "LC 714",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/buy-stock-with-transaction-fee/1 ",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Amazon",
@@ -8821,7 +8807,7 @@
                   "title": "Add and Search Word",
                   "reference": "LC 211",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
+                  "leetcodeUrl": "https://leetcode.com/problems/add-and-search-word-data-structure-design/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/design-add-and-search-words-data-structure--154618/1",
                   "companies": [
                     {
@@ -8843,7 +8829,7 @@
                   "id": "problem_0350",
                   "title": "Longest common prefix ",
                   "reference": "LC 14",
-                  "difficulty": "EASY",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/longest-common-prefix/description/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/longest-common-prefix-in-an-array5129/1",
                   "companies": [
@@ -8946,7 +8932,7 @@
                   "reference": "LC 472",
                   "difficulty": "HARD",
                   "leetcodeUrl": "https://leetcode.com/problems/concatenated-words/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/find-all-concatenations-of-words-in-array/",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/find-all-concatenations-of-words-in-array/1",
                   "companies": [
                     {
                       "name": "Flipkart",
@@ -9109,7 +9095,7 @@
                   "reference": "LC 191",
                   "difficulty": "EASY",
                   "leetcodeUrl": "https://leetcode.com/problems/number-of-1-bits/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/set-bits0143/1",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/count-total-set-bits-1587115620/1",
                   "companies": [
                     {
                       "name": "Amazon",
@@ -9139,7 +9125,7 @@
                       "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
                     },
                     {
-                      "name": "PayPal",
+                      "name": "Paypal",
                       "logo": null
                     },
                     {
@@ -9200,7 +9186,7 @@
                   "title": "Unique Numbers 2",
                   "reference": "",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/single-number-ii/description/",
+                  "leetcodeUrl": null,
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/finding-the-numbers0215/1",
                   "companies": [
                     {
@@ -9242,35 +9228,35 @@
                   "youtubeUrl": null
                 },
                 {
-                  "id": "problem_0368",
-                  "title": "Single Number III",
-                  "reference": "",
+                  "id": "problem_0367",
+                  "title": "Single Number II",
+                  "reference": "LC 137",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/single-number-iii/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/find-element-occuring-once-when-all-other-are-present-thrice/1",
+                  "leetcodeUrl": "https://leetcode.com/problems/single-number-ii/",
+                  "gfgUrl": null,
                   "companies": [
                     {
-                      "name": "Amazon",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
+                      "name": "Flipkart",
+                      "logo": "https://www.citypng.com/public/uploads/preview/flipkart-logo-icon-hd-png-701751694706828v1habfry9b.png"
                     },
                     {
-                      "name": "Google",
-                      "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
+                      "name": "PhonePe",
+                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVf6nm-Dk1ELbj1aBfeN_vJH6R1wAqYWnltw&s"
                     },
                     {
-                      "name": "Microsoft",
-                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
+                      "name": "Zomato",
+                      "logo": "https://1000logos.net/wp-content/uploads/2021/06/Zomato-logo.png"
                     }
                   ],
                   "youtubeUrl": null
                 },
                 {
-                  "id": "problem_1128",
-                  "title": "Unique Numbers 2",
+                  "id": "problem_0368",
+                  "title": "Single Number III",
                   "reference": "",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": null,
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/finding-the-numbers0215/1",
+                  "leetcodeUrl": "https://leetcode.com/problems/single-number-iii/description/",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Amazon",
@@ -9626,7 +9612,7 @@
                       "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVf6nm-Dk1ELbj1aBfeN_vJH6R1wAqYWnltw&s"
                     }
                   ],
-                  "youtubeUrl": "https://www.youtube.com/watch?v=kge_3sdDWfE&list=PLvNVexrplJJyQTJ7a6sx3MzZjq1cR2geB&index=7"
+                  "youtubeUrl": null
                 },
                 {
                   "id": "lm_problem_0506",
@@ -9688,7 +9674,7 @@
                       "logo": "https://upload.wikimedia.org/wikipedia/commons/b/b7/PayPal_Logo_Icon_2014.svg"
                     }
                   ],
-                  "youtubeUrl": "https://www.youtube.com/watch?v=L84y20axpIA"
+                  "youtubeUrl": null
                 },
                 {
                   "id": "lm_problem_0508",
@@ -9849,7 +9835,7 @@
                   "title": "Find First and Last Position of Element",
                   "reference": "LC 34",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/",
+                  "leetcodeUrl": "https://leetcode.com/problems/find-first-and-last-position-of-element/",
                   "gfgUrl": null,
                   "companies": [
                     {
@@ -9893,9 +9879,9 @@
                 {
                   "id": "lm_problem_0517",
                   "title": "Min Speed to Arrive on Time",
-                  "reference": "LC 1870",
+                  "reference": "LC 1011",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/minimum-speed-to-arrive-on-time/",
+                  "leetcodeUrl": "https://leetcode.com/problems/min-speed-to-arrive-on-time/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/minimum-travel-time/1",
                   "companies": [
                     {
@@ -9934,7 +9920,7 @@
                       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Goldman_Sachs.svg/250px-Goldman_Sachs.svg.png"
                     }
                   ],
-                  "youtubeUrl": "https://www.youtube.com/watch?v=2jqTPmHyz8U"
+                  "youtubeUrl": null
                 }
               ]
             }
@@ -9953,122 +9939,53 @@
               "identification": "Problems asking for smallest/largest sequence, removing k elements",
               "problems": [
                 {
-                  "id": "prob_sg_1",
+                  "id": "prob_sg_1_lm",
                   "title": "Remove K Digits",
                   "reference": "LC 402",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/remove-k-digits/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/remove-k-digits/1",
-                  "companies": [
-                    {
-                      "name": "Goldman Sachs",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Goldman_Sachs.svg/250px-Goldman_Sachs.svg.png"
-                    },
-                    {
-                      "name": "Sumo Logic",
-                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7g-Z03mvYWp-V0fzAUngNU4ZLVExOT0EpwA&s"
-                    },
-                    {
-                      "name": "Amazon",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
-                    },
-                    {
-                      "name": "Microsoft",
-                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
-                    }
-                  ],
+                  "companies": [],
                   "youtubeUrl": "https://youtu.be/u9Ih5uY-6U0?si=qBZ1HKJ63A5yBHIy"
                 },
                 {
-                  "id": "prob_sg_2",
+                  "id": "prob_sg_2_lm",
                   "title": "Remove Duplicate Letters",
                   "reference": "LC 316",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/remove-duplicate-letters/",
                   "gfgUrl": null,
-                  "companies": [
-                    {
-                      "name": "Google",
-                      "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
-                    },
-                    {
-                      "name": "Microsoft",
-                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVu_punmVpXPehlmF-zb9LO30EZQRtHpK7KA&s"
-                    },
-                    {
-                      "name": "Meta",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png"
-                    }
-                  ],
+                  "companies": [],
                   "youtubeUrl": "https://youtu.be/VNBVQ89mlTo?si=_m94Uvyq0XIHJ2Ra"
                 },
                 {
-                  "id": "prob_sg_3",
+                  "id": "prob_sg_3_lm",
                   "title": "Smallest Subsequence of Distinct Characters",
                   "reference": "LC 1081",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/",
                   "gfgUrl": null,
-                  "companies": [
-                    {
-                      "name": "Google",
-                      "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
-                    },
-                    {
-                      "name": "Amazon",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
-                    },
-                    {
-                      "name": "Uber",
-                      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1qkiD90vY7E0mYyM71L9fWkQx44q8q6f5qw&s"
-                    }
-                  ],
+                  "companies": [],
                   "youtubeUrl": null
                 },
                 {
-                  "id": "prob_sg_4",
+                  "id": "prob_sg_4_lm",
                   "title": "Create Maximum Number",
                   "reference": "LC 321",
                   "difficulty": "HARD",
                   "leetcodeUrl": "https://leetcode.com/problems/create-maximum-number/",
                   "gfgUrl": null,
-                  "companies": [
-                    {
-                      "name": "Google",
-                      "logo": "https://s3-alpha.figma.com/hub/file/6516490032/e7dabd51-4155-4761-a247-b3d6a6f52f73-cover.png"
-                    },
-                    {
-                      "name": "Amazon",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
-                    },
-                    {
-                      "name": "ByteDance",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/ByteDance_logo.svg/250px-ByteDance_logo.svg.png"
-                    }
-                  ],
+                  "companies": [],
                   "youtubeUrl": null
                 },
                 {
-                  "id": "prob_sg_5",
+                  "id": "prob_sg_5_lm",
                   "title": "Minimum Remove to Make Valid Parentheses",
                   "reference": "LC 1249",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/",
                   "gfgUrl": null,
-                  "companies": [
-                    {
-                      "name": "Meta",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png"
-                    },
-                    {
-                      "name": "Amazon",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
-                    },
-                    {
-                      "name": "Bloomberg",
-                      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bloomberg_logo.svg/250px-Bloomberg_logo.svg.png"
-                    }
-                  ],
+                  "companies": [],
                   "youtubeUrl": "https://youtu.be/54m6kYA9QFE?si=jXy2ClmV9PpTh5Ko"
                 }
               ]
@@ -10153,8 +10070,8 @@
                   "id": "lm_problem_0522",
                   "title": "Basic Calculator I",
                   "reference": "LC 224",
-                  "difficulty": "HARD",
-                  "leetcodeUrl": "https://leetcode.com/problems/basic-calculator/",
+                  "difficulty": "MEDIUM",
+                  "leetcodeUrl": "https://leetcode.com/problems/basic-calculator-i/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/calculator/1",
                   "companies": [
                     {
@@ -10177,7 +10094,7 @@
                   "title": "Remove Adjacent Duplicates II",
                   "reference": "LC 1209",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/",
+                  "leetcodeUrl": "https://leetcode.com/problems/remove-adjacent-duplicates-ii/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/recursively-remove-all-adjacent-duplicates0744/0",
                   "companies": [
                     {
@@ -10199,7 +10116,7 @@
                   "id": "lm_problem_0524",
                   "title": "Longest Valid Parentheses",
                   "reference": "LC 32",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/longest-valid-parentheses/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/longest-valid-parentheses5657/1",
                   "companies": [
@@ -10245,7 +10162,7 @@
                   "id": "lm_problem_0526",
                   "title": "Implement Queue using Stacks",
                   "reference": "LC 232",
-                  "difficulty": "EASY",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/implement-queue-using-stacks/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/queue-using-stack/1",
                   "companies": [
@@ -10308,7 +10225,7 @@
                   "title": "Reverse Linked List II (Between m & n)",
                   "reference": "LC 92",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/reverse-linked-list-ii/",
+                  "leetcodeUrl": "https://leetcode.com/problems/reverse-linked-list-ii-between-m-n/",
                   "gfgUrl": null,
                   "companies": [
                     {
@@ -10330,7 +10247,7 @@
                   "id": "lm_problem_0529",
                   "title": "Reverse Nodes in k-Group",
                   "reference": "LC 25",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/reverse-nodes-in-k-group/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/reverse-a-linked-list-in-groups-of-given-size/1",
                   "companies": [
@@ -10353,7 +10270,7 @@
                   "id": "lm_problem_0530",
                   "title": "Merge k Sorted Lists",
                   "reference": "LC 23",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/merge-k-sorted-lists/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/merge-k-sorted-linked-lists/1",
                   "companies": [
@@ -10485,7 +10402,7 @@
                   "title": "Flatten Multilevel DLL",
                   "reference": "LC 430",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/",
+                  "leetcodeUrl": "https://leetcode.com/problems/flatten-multilevel-dll/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/flattening-a-linked-list/1",
                   "companies": [
                     {
@@ -10570,7 +10487,7 @@
                   "title": "Subarray Sum Divisible by K",
                   "reference": "LC 974",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/subarray-sums-divisible-by-k/",
+                  "leetcodeUrl": "https://leetcode.com/problems/subarray-sum-divisible-by-k/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/sub-array-sum-divisible-by-k2617/1",
                   "companies": [
                     {
@@ -10586,7 +10503,7 @@
                       "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7g-Z03mvYWp-V0fzAUngNU4ZLVExOT0EpwA&s"
                     }
                   ],
-                  "youtubeUrl": "https://youtu.be/7IJdLmNJaSA?si=C0kzObuVWbuQvV4J"
+                  "youtubeUrl": null
                 },
                 {
                   "id": "lm_problem_0539",
@@ -10656,7 +10573,7 @@
                   "reference": "LC 215",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/kth-largest-element-in-an-array/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/kth-largest-element5034/1",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/k-largest-elements2331/1",
                   "companies": [
                     {
                       "name": "Amazon",
@@ -10700,7 +10617,7 @@
                   "id": "lm_problem_0543",
                   "title": "Merge K Sorted Lists",
                   "reference": "LC 23",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/merge-k-sorted-lists/",
                   "gfgUrl": null,
                   "companies": [
@@ -10770,8 +10687,8 @@
                   "title": "Power of X",
                   "reference": "LC 50",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/powx-n/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/powx-n/1",
+                  "leetcodeUrl": "https://leetcode.com/problems/power-of-x/",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/power-of-numbers-1587115620/1",
                   "companies": [
                     {
                       "name": "Amazon",
@@ -11015,7 +10932,7 @@
                   "id": "lm_problem_0556",
                   "title": "N-Queens",
                   "reference": "LC 51",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/n-queens/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/n-queen-problem0315/1",
                   "companies": [
@@ -11038,7 +10955,7 @@
                   "id": "lm_problem_0557",
                   "title": "Word Search II",
                   "reference": "LC 212",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/word-search-ii/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/word-search-ii/1",
                   "companies": [
@@ -11123,7 +11040,7 @@
                   "id": "lm_problem_0560",
                   "title": "Maximum Depth of Binary Tree",
                   "reference": "LC 104",
-                  "difficulty": "EASY",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/height-of-binary-tree/1",
                   "companies": [
@@ -11146,8 +11063,8 @@
                   "id": "lm_problem_0561",
                   "title": "Maximum Path Sum",
                   "reference": "LC 124",
-                  "difficulty": "HARD",
-                  "leetcodeUrl": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+                  "difficulty": "MEDIUM",
+                  "leetcodeUrl": "https://leetcode.com/problems/maximum-path-sum/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/maximum-path-sum-from-any-node/1",
                   "companies": [
                     {
@@ -11170,7 +11087,7 @@
                   "title": "Lowest Common Ancestor of Binary Tree",
                   "reference": "LC 236",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/",
+                  "leetcodeUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-binary-tree/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/lowest-common-ancestor-in-a-binary-tree/1",
                   "companies": [
                     {
@@ -11216,7 +11133,7 @@
                   "title": "Construct Binary Tree from Preorder & Inorder",
                   "reference": "LC 105",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
+                  "leetcodeUrl": "https://leetcode.com/problems/construct-binary-tree-from-preorder-inorder/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/construct-tree-1/1",
                   "companies": [
                     {
@@ -11261,8 +11178,8 @@
                   "id": "lm_problem_0566",
                   "title": "Convert Sorted Array to BST",
                   "reference": "LC 108",
-                  "difficulty": "EASY",
-                  "leetcodeUrl": "https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/",
+                  "difficulty": "MEDIUM",
+                  "leetcodeUrl": "https://leetcode.com/problems/convert-sorted-array-to-bst/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/array-to-bst4443/1",
                   "companies": [
                     {
@@ -11309,7 +11226,7 @@
                   "reference": "LC 235",
                   "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/lowest-common-ancestor-in-a-bst/1",
+                  "gfgUrl": null,
                   "companies": [
                     {
                       "name": "Amazon",
@@ -11392,7 +11309,7 @@
                   "id": "lm_problem_0571",
                   "title": "Word Ladder",
                   "reference": "LC 127",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/word-ladder/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/word-ladder/1",
                   "companies": [
@@ -11439,7 +11356,7 @@
                   "title": "Minimum Cost to Connect All Cities",
                   "reference": "LC 1135",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/connecting-cities-with-minimum-cost/",
+                  "leetcodeUrl": "https://leetcode.com/problems/minimum-cost-to-connect-all-cities/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/minimum-cost-to-connect-all-houses-in-a-city/1",
                   "companies": [
                     {
@@ -11508,7 +11425,7 @@
                   "title": "Evaluate Division (Union-Find)",
                   "reference": "LC 399",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/evaluate-division/",
+                  "leetcodeUrl": "https://leetcode.com/problems/evaluate-division-union-find/",
                   "gfgUrl": null,
                   "companies": [
                     {
@@ -11570,7 +11487,7 @@
                   "title": "1. Jump Game II",
                   "reference": "LC 45",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/jump-game-ii/",
+                  "leetcodeUrl": "https://leetcode.com/problems/1-jump-game-ii/",
                   "gfgUrl": null,
                   "companies": [
                     {
@@ -11593,7 +11510,7 @@
                   "title": "2. Non-overlapping Intervals",
                   "reference": "LC 435",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/non-overlapping-intervals/",
+                  "leetcodeUrl": "https://leetcode.com/problems/2-non-overlapping-intervals/",
                   "gfgUrl": null,
                   "companies": [
                     {
@@ -11616,7 +11533,7 @@
                   "title": "3. Minimum Number of Arrows to Burst Balloons",
                   "reference": "LC 452",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/",
+                  "leetcodeUrl": "https://leetcode.com/problems/3-minimum-number-of-arrows-to-burst-balloons/",
                   "gfgUrl": null,
                   "companies": [
                     {
@@ -11639,7 +11556,7 @@
                   "title": "4. Meeting Rooms II",
                   "reference": "LC 253",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/meeting-rooms-ii/",
+                  "leetcodeUrl": "https://leetcode.com/problems/4-meeting-rooms-ii/",
                   "gfgUrl": null,
                   "companies": [
                     {
@@ -11662,7 +11579,7 @@
                   "title": "6. Gas Station / Minimum Refueling Stops",
                   "reference": "LC 871",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/minimum-number-of-refueling-stops/",
+                  "leetcodeUrl": "https://leetcode.com/problems/6-gas-station-minimum-refueling-stops/",
                   "gfgUrl": null,
                   "companies": [
                     {
@@ -11861,9 +11778,9 @@
                   "id": "lm_problem_0590",
                   "title": "Palindrome Partitioning II",
                   "reference": "LC 132",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/palindrome-partitioning-ii/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/palindromic-patitioning4845/1",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/palindromic-patitioning4825/1",
                   "companies": [
                     {
                       "name": "Microsoft",
@@ -11907,7 +11824,7 @@
                   "id": "lm_problem_0592",
                   "title": "Maximum Sum BST in Binary Tree",
                   "reference": "LC 1373",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/",
                   "gfgUrl": null,
                   "companies": [
@@ -11930,9 +11847,9 @@
                   "id": "lm_problem_0593",
                   "title": "Binary Tree Cameras",
                   "reference": "LC 968",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/binary-tree-cameras/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/dsa/minimum-number-of-cameras-required-to-monitor-all-nodes-of-a-binary-tree/",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/binary-tree-cameras/1",
                   "companies": [
                     {
                       "name": "Google",
@@ -12039,8 +11956,8 @@
                   "title": "Add and Search Word",
                   "reference": "LC 211",
                   "difficulty": "MEDIUM",
-                  "leetcodeUrl": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
-                  "gfgUrl": "https://www.geeksforgeeks.org/problems/design-add-and-search-words-data-structure--154618/1",
+                  "leetcodeUrl": "https://leetcode.com/problems/add-and-search-word/",
+                  "gfgUrl": "https://www.geeksforgeeks.org/problems/trie-delete/1",
                   "companies": [
                     {
                       "name": "Flipkart",
@@ -12123,7 +12040,7 @@
                   "id": "lm_problem_0600",
                   "title": "Maximum XOR of Two Numbers in an Array",
                   "reference": "LC 421",
-                  "difficulty": "MEDIUM",
+                  "difficulty": "HARD",
                   "leetcodeUrl": "https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/maximum-xor-of-two-numbers-in-an-array/1",
                   "companies": [
@@ -12146,7 +12063,7 @@
                   "id": "lm_problem_0601",
                   "title": "Maximum XOR With an Element From Array",
                   "reference": "LC 1707",
-                  "difficulty": "HARD",
+                  "difficulty": "MEDIUM",
                   "leetcodeUrl": "https://leetcode.com/problems/maximum-xor-with-an-element-from-array/",
                   "gfgUrl": "https://www.geeksforgeeks.org/problems/maximum-xor-with-an-element-from-array/1",
                   "companies": [
