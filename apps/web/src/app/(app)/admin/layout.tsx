@@ -33,7 +33,19 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   if (user.role !== "ADMIN") notFound();
 
   return (
-    <div data-fills-scrollport className="flex h-full min-h-0 flex-1 flex-col">
+    // The flex/height chain is gated behind `lg:`, exactly like the other three
+    // `data-fills-scrollport` layouts (puzzles, screening, domain). That gate is
+    // not cosmetic: the CSS that gives this chain a definite height —
+    // `.animate-page { min-height: 0 }` and the shell's `overflow: hidden` — lives
+    // inside `@media (min-width: 1024px)` in globals.css. Applying `flex h-full
+    // min-h-0 flex-1 flex-col` unconditionally (what this used to do) meant that
+    // below 1024px `h-full` resolved against an auto-height wrapper and the
+    // scrollport below became `flex-1 min-h-0` in an auto-height column flex
+    // container — which collapses to zero. The cards then painted outside a box
+    // the document never accounted for: visible, cut off at the fold, and
+    // unreachable, with only the header's worth of scroll to give. Paginating was
+    // just what made you scroll far enough to hit the wall.
+    <div data-fills-scrollport className="flex-1 lg:flex lg:min-h-0 lg:flex-col">
       {/* Section header + tabs stay put; only the content below them scrolls. */}
       <div className="shrink-0 border-b border-border px-4 pb-3.5 pt-5 sm:px-6">
         <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-accent">
@@ -49,7 +61,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           so this never doubles up on them. Without it, opting into
           `data-fills-scrollport` above would leave those pages clipped — the shell
           no longer scrolls on this route. */}
-      <div className="pane-scroll min-h-0 flex-1 lg:overflow-y-auto">{children}</div>
+      <div className="pane-scroll lg:min-h-0 lg:flex-1 lg:overflow-y-auto">{children}</div>
     </div>
   );
 }
