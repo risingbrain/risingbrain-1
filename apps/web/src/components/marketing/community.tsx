@@ -12,14 +12,14 @@ const socials = [
   },
   {
     label: "YouTube",
-    handle: "RisingBrain · 30k+ subs",
+    handle: "RisingBrain · 40k+ subs",
     href: "https://www.youtube.com/@rbanjalikumari",
     Icon: YouTubeIcon,
     accent: "from-[#ff0000]/30 to-[#ff0000]/5 text-[#e25555]",
   },
   {
     label: "Instagram",
-    handle: "@rbanjali.codes",
+    handle: "@rbanjali.codes . 255k+",
     href: "https://www.instagram.com/rbanjali.codes/",
     Icon: InstagramIcon,
     accent: "from-[#e1306c]/30 to-[#e1306c]/5 text-[#d1568a]",

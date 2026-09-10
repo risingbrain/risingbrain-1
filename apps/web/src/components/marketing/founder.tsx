@@ -4,10 +4,34 @@ import { Container, Eyebrow, GlassCard } from "./primitives";
 import { InstagramIcon, LinkedInIcon, YouTubeIcon } from "./brand-icons";
 import { Reveal } from "@/components/motion/reveal";
 
+/**
+ * Brand colours, reusing the exact pair the Community cards use so LinkedIn
+ * blue means one thing across the page.
+ *
+ * Each `accent` holds both states. At rest the icon takes the lightened brand
+ * tone, because the true brand hex (#0a66c2 especially) goes muddy against a
+ * frosted chip on a dark photo. The full-strength hex is saved for hover, where
+ * it fills the chip and border with a white icon on top.
+ */
 const socials = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/risingbrain/", Icon: LinkedInIcon },
-  { label: "YouTube", href: "https://www.youtube.com/@rbanjalikumari", Icon: YouTubeIcon },
-  { label: "Instagram", href: "https://www.instagram.com/rbanjali.codes/", Icon: InstagramIcon },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/risingbrain/",
+    Icon: LinkedInIcon,
+    accent: "text-[#5a96d8] hover:border-[#0a66c2] hover:bg-[#0a66c2] hover:text-white",
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@rbanjalikumari",
+    Icon: YouTubeIcon,
+    accent: "text-[#e25555] hover:border-[#ff0000] hover:bg-[#ff0000] hover:text-white",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/rbanjali.codes/",
+    Icon: InstagramIcon,
+    accent: "text-[#d1568a] hover:border-[#e1306c] hover:bg-[#e1306c] hover:text-white",
+  },
 ];
 
 /** Where she worked before RisingBrain — the section's strongest trust signal,
@@ -33,14 +57,18 @@ const metrics: [LucideIcon, string, string][] = [
  * Rebuilt from a centred-avatar layout. The old version put a 128px circular
  * portrait in a tinted box beside two paragraphs of muted body text — which
  * made the human face the smallest element in the one section whose entire job
- * is to introduce a person. The source image is 1414×1600, so it can carry a
+ * is to introduce a person. The source image is 1400×1600, so it can carry a
  * full-bleed editorial crop instead.
  *
  * Changes worth knowing:
  *  - Portrait runs the full height of the card, with a scrim carrying the name,
  *    role and socials over it. One block instead of four stacked centred ones.
- *  - Portrait frame follows the source's ~7:8 aspect below `lg` rather than a
- *    flat min-height, and the crop is pinned to the face (52% / 28%).
+ *  - Portrait frame follows the source's 7:8 aspect below `lg` rather than a
+ *    flat min-height, and the crop is pinned to the face (50% / 30%). The file
+ *    is already cropped to 7:8 around the subject, so below `lg` object-cover
+ *    shows it whole; the position only bites in the taller `lg` column, where
+ *    50% keeps the face centred and holds both the mic and the gesturing hand
+ *    inside the narrower frame.
  *  - `ex-Walmart` etc. were 12px muted pills AND repeated verbatim in the first
  *    prose paragraph. They're now a single labelled "Previously" row, and the
  *    prose no longer re-lists them.
@@ -62,7 +90,7 @@ export function Founder() {
                   alt="Anjali Kumari, founder of RisingBrain"
                   fill
                   sizes="(min-width: 1024px) 42vw, 100vw"
-                  className="object-cover object-[52%_28%]"
+                  className="object-cover object-[50%_30%]"
                   priority
                 />
                 {/* Scrim: opaque at the base, clear by mid-frame, so the text
@@ -84,7 +112,7 @@ export function Founder() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`Anjali on ${s.label}`}
-                        className="grid h-10 w-10 place-items-center rounded-xl border border-white/20 bg-white/10 text-white/80 backdrop-blur transition-colors hover:bg-white/20 hover:text-white"
+                        className={`grid h-10 w-10 place-items-center rounded-xl border border-white/20 bg-white/10 backdrop-blur transition-colors ${s.accent}`}
                       >
                         <s.Icon className="h-4 w-4" />
                       </a>
