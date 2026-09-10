@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import { AdminNav } from "./_components/admin-nav";
+import { ADMIN_SCROLLPORT_ID, ScrollportReset } from "./_components/scrollport-reset";
 
 export const metadata: Metadata = {
   title: "Admin",
@@ -61,7 +62,15 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           so this never doubles up on them. Without it, opting into
           `data-fills-scrollport` above would leave those pages clipped — the shell
           no longer scrolls on this route. */}
-      <div className="pane-scroll lg:min-h-0 lg:flex-1 lg:overflow-y-auto">{children}</div>
+      <div
+        id={ADMIN_SCROLLPORT_ID}
+        className="pane-scroll lg:min-h-0 lg:flex-1 lg:overflow-y-auto"
+      >
+        {/* Owns the after-navigation scroll for the whole section, because the
+            router's own version drags the header and rail off-screen here. */}
+        <ScrollportReset />
+        {children}
+      </div>
     </div>
   );
 }

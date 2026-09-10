@@ -50,6 +50,18 @@ body::before {
    now owns its scrollports. Desktop only — mobile keeps normal page scroll.
    ========================================================================== */
 @media (min-width: 1024px) {
+  /* The (app) shell is `position: fixed` on desktop, so the document itself has
+     nothing left to scroll — say so, instead of leaving it to work out that way.
+     A document that is even slightly scrollable behind a fixed shell is a trap:
+     any scroll it takes (a stray wheel event, or a programmatic
+     `scrollIntoView` like the router's after a navigation) slides the rail and
+     the section header off the top of the screen, and a fixed shell has no
+     scrollbar to bring them back. Marketing pages are unaffected — they have no
+     `.app-scrollport`. */
+  body:has(.app-scrollport) {
+    overflow: hidden;
+  }
+
   .app-scrollport:has([data-fills-scrollport]) {
     overflow: hidden;
   }

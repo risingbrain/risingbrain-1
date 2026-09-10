@@ -80,6 +80,8 @@ export default async function AdminInterviewPage({
             <Link
               key={s}
               href={href({ status: s })}
+              // `ScrollportReset` handles the scroll for the whole section.
+              scroll={false}
               aria-current={active ? "page" : undefined}
               className={cn(
                 "inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
@@ -147,7 +149,11 @@ export default async function AdminInterviewPage({
                   : `No ${TAB_LABEL[params.status].toLowerCase()} experiences.`}
             </p>
             {params.q && (
-              <Link href={href({ q: "" })} className="mt-2 text-sm font-medium text-accent hover:underline">
+              <Link
+                href={href({ q: "" })}
+                scroll={false}
+                className="mt-2 text-sm font-medium text-accent hover:underline"
+              >
                 Clear search
               </Link>
             )}
@@ -327,6 +333,9 @@ function PagerLink({
   return (
     <Link
       href={href}
+      // See `ScrollportReset` in the admin layout — the router's own
+      // post-navigation scroll shifts the fixed shell off-screen here.
+      scroll={false}
       className="glass-pill glass-hover rounded-full px-4 py-2 text-sm font-medium text-foreground"
     >
       {children}

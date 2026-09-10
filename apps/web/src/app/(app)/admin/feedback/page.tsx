@@ -64,6 +64,8 @@ export default async function AdminFeedbackPage({
             <Link
               key={s}
               href={href({ status: s })}
+              // `ScrollportReset` handles the scroll for the whole section.
+              scroll={false}
               aria-current={active ? "page" : undefined}
               className={cn(
                 "inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
@@ -133,6 +135,7 @@ export default async function AdminFeedbackPage({
             {params.q && (
               <Link
                 href={href({ q: "" })}
+                scroll={false}
                 className="mt-2 text-sm font-medium text-accent hover:underline"
               >
                 Clear search
@@ -259,6 +262,9 @@ function PagerLink({
   return (
     <Link
       href={href}
+      // The router's post-navigation scroll is what broke this page: see
+      // `ScrollportReset` in the admin layout, which does it properly instead.
+      scroll={false}
       className="glass-pill glass-hover rounded-full px-4 py-2 text-sm font-medium text-foreground"
     >
       {children}

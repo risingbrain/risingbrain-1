@@ -40,6 +40,9 @@ export function AdminNav() {
             // out of it — the proxy is what makes a denied prefetch harmless (see
             // the isPrefetch branch in proxy.ts).
             prefetch={false}
+            // `ScrollportReset` in the layout owns the scroll after a section
+            // switch; the router's own version shifts the fixed shell instead.
+            scroll={false}
             aria-current={active ? "page" : undefined}
             className={cn(
               "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
