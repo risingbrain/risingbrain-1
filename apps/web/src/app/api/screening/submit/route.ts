@@ -169,7 +169,15 @@ export async function POST(request: Request) {
   // Log fresh answers to the heatmap/streak. Best-effort in the sense that
   // recordActivity swallows its own failures — but it IS awaited, so it sits on
   // the response path rather than being fire-and-forget.
-  await recordActivity({ userId: user.id, kind: "mcq", referenceIds: newlyAnsweredIds });
+  await recordActivity({
+    userId: user.id,
+    kind: "mcq",
+    referenceIds: newlyAnsweredIds,
+    // Reaching here means a test was submitted. A retake breaks no new ground
+    // (newlyAnsweredIds is empty) but is still a day's practice, so it keeps the
+    // streak alive rather than recording nothing at all.
+    countRevision: true,
+  });
 
   return NextResponse.json({ score, total, review });
 }

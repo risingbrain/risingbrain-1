@@ -11,7 +11,7 @@ import {
 import { useProgress } from "./progress-provider";
 import type { AptReviewEntry } from "../data";
 import { redirectToLogin } from "@/lib/auth/redirect";
-import { refreshStreakBadge } from "@/lib/streak-client";
+import { refreshActivity } from "@/lib/streak-client";
 import { useAttemptDraft } from "@/lib/attempt-draft";
 import { apiFetch } from "@/lib/api-fetch";
 
@@ -205,7 +205,7 @@ export function PaperAttemptProvider({
         clearDraft();
         // Submitting a test can extend the streak (today became active) — refresh
         // the navbar flame in place from the authoritative value, no reload.
-        void refreshStreakBadge();
+        void refreshActivity();
       } catch {
         setError("Couldn't submit the test. Please try again.");
       } finally {

@@ -1,5 +1,6 @@
 import { prisma, ProblemStatus } from "@/lib/db";
-import { DAY_MS, addDays, istToday, keyOf } from "@/lib/ist";
+import { addDays, istToday, keyOf } from "@/lib/ist";
+import { computeLongestStreak, computeStreak } from "@/lib/streak-days";
 
 /**
  * Server-side data for the profile dashboard:
@@ -173,23 +174,8 @@ export async function getProfileData(userId: string, year?: number) {
 
   // ---- Streaks from the recent window --------------------------------------
   const streakDays = new Set<string>(streakRows.map((r) => keyOf(r.day)));
-
-  let currentStreak = 0;
-  let probe = streakDays.has(keyOf(today)) ? today : addDays(today, -1);
-  while (streakDays.has(keyOf(probe))) {
-    currentStreak += 1;
-    probe = addDays(probe, -1);
-  }
-
-  let longestStreak = 0;
-  let run = 0;
-  let prevKey: string | null = null;
-  for (const k of [...streakDays].sort()) {
-    if (prevKey && (Date.parse(k) - Date.parse(prevKey)) / DAY_MS === 1) run += 1;
-    else run = 1;
-    longestStreak = Math.max(longestStreak, run);
-    prevKey = k;
-  }
+  const currentStreak = computeStreak(streakDays, today);
+  const longestStreak = computeLongestStreak(streakDays);
 
   // ---- Available years for the switcher ------------------------------------
   // From the app launch year (or the user's even-earlier first activity, just in

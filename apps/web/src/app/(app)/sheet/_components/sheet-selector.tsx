@@ -166,32 +166,15 @@ function SheetSelectorInner({
     return stat;
   }, [difficulty, solvedIds, problemMeta]);
 
-  // Net problems solved/unsolved this session — drives the calendar's "today"
-  // cell + live streak. = current solved total − the SSR baseline.
-  const initialSolvedCount = useMemo(() => {
-    let n = 0;
-    for (const sheet of sheets)
-      for (const topic of sheet.topics)
-        for (const pattern of topic.patterns)
-          for (const p of pattern.problems) if (p.status === "SOLVED") n += 1;
-    return n;
-  }, [sheets]);
-  const todayDelta = solvedIds.size - initialSolvedCount;
-
-  // Dispatch a custom event whenever todayDelta changes so the navbar's streak
-  // badge can update in-place without a full page reload.
-  const isMounted = useRef(false);
-  useEffect(() => {
-    if (!isMounted.current) { isMounted.current = true; return; }
-    if (!activity) return;
-    const lastMonth = activity.months[activity.months.length - 1];
-    const baseToday = lastMonth?.cells.find((c) => c.isToday)?.count ?? 0;
-    const liveToday = Math.max(0, baseToday + todayDelta);
-    let streak = activity.currentStreak;
-    if (baseToday === 0 && liveToday > 0) streak += 1;
-    else if (baseToday > 0 && liveToday === 0) streak = Math.max(0, streak - 1);
-    window.dispatchEvent(new CustomEvent("rb:streak-updated", { detail: { streak } }));
-  }, [todayDelta]); // eslint-disable-line react-hooks/exhaustive-deps
+  // NOTE: this component deliberately publishes NO live activity numbers. It
+  // used to derive a `todayDelta` (`solvedIds.size` minus the page's initial
+  // solved total) and feed it to the calendar's today cell, plus broadcast its
+  // own streak estimate to the navbar flame. Both were wrong: the delta is a
+  // session-wide net over every problem, so un-ticking month-old work dropped
+  // today's square and retracted the streak, and the streak estimate was
+  // DSA-only so it knocked an all-activity 6 down to 1 on the first solve.
+  // `refreshActivity()` in problem-row refetches the authoritative snapshot
+  // after every toggle, so the server is the single writer for both.
 
   // Per-sheet aggregates (totals are static; solved is live).
   const stats = useMemo(() => {
@@ -330,7 +313,6 @@ function SheetSelectorInner({
             <SheetStats
               difficulty={diffStat}
               activity={activity}
-              todayDelta={todayDelta}
               greetingName={greetingName}
             />
           </div>
@@ -532,7 +514,6 @@ function SheetSelectorInner({
             variant="rail"
             difficulty={diffStat}
             activity={activity}
-            todayDelta={todayDelta}
             greetingName={greetingName}
           />
         </aside>

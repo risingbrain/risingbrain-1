@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Flame } from "lucide-react";
+import { useLiveStreak } from "@/lib/streak-client";
 
 /**
  * Animated streak flame for the navbar.
@@ -32,16 +32,7 @@ function tierFor(streak: number): number {
 }
 
 export function StreakBadge({ streak: initialStreak }: { streak: number }) {
-  const [streak, setStreak] = useState(initialStreak);
-
-  useEffect(() => {
-    const handler = (e: Event) => {
-      const newStreak = (e as CustomEvent<{ streak: number }>).detail.streak;
-      setStreak(newStreak);
-    };
-    window.addEventListener("rb:streak-updated", handler);
-    return () => window.removeEventListener("rb:streak-updated", handler);
-  }, []);
+  const streak = useLiveStreak(initialStreak);
 
   const broken = streak <= 0;
   const t = TIERS[tierFor(streak)]!;

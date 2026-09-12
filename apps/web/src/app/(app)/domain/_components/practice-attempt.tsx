@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useMemo, useRef, useState } fro
 import { useDomainProgress } from "./progress-provider";
 import type { DomainReviewEntry } from "../_data";
 import { redirectToLogin } from "@/lib/auth/redirect";
-import { refreshStreakBadge } from "@/lib/streak-client";
+import { refreshActivity } from "@/lib/streak-client";
 import { useAttemptDraft } from "@/lib/attempt-draft";
 import { apiFetch } from "@/lib/api-fetch";
 
@@ -166,7 +166,7 @@ export function PracticeAttemptProvider({
         clearDraft();
         // Submitting can extend the streak (today became active) — refresh the
         // navbar flame in place from the authoritative value, no reload.
-        void refreshStreakBadge();
+        void refreshActivity();
       } catch {
         setError("Couldn't submit your answers. Please try again.");
       } finally {

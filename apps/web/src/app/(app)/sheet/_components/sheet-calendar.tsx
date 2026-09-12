@@ -2,6 +2,7 @@
 
 import { useMemo, useState, type SVGProps } from "react";
 import { ChevronLeft, ChevronRight, Flame } from "lucide-react";
+import { useLiveStreak, useLiveTodayDsaCount } from "@/lib/streak-client";
 import type { SheetActivity } from "../_data";
 
 /**
@@ -10,9 +11,10 @@ import type { SheetActivity } from "../_data";
  * were solved that IST day; today is ringed; a flame badge tracks the live solve
  * streak. Pages back through the trailing months the server provided.
  *
- * Lives under the ProgressPanel in the hero's right rail; `todayDelta` (derived
- * from SheetSelector's solvedIds source of truth) lets it update optimistically
- * the moment a problem is toggled (no refetch).
+ * Lives under the ProgressPanel in the hero's right rail. Both live numbers —
+ * the streak and today's solve count — come from the SERVER via
+ * `refreshActivity()`, never from local arithmetic; see `lib/streak-client.ts`
+ * for why the browser cannot compute either of them correctly.
  */
 
 const WEEKDAYS = ["S", "M", "T", "W", "T", "F", "S"];
@@ -111,26 +113,30 @@ function prettyDate(key: string) {
   });
 }
 
-export function SheetCalendar({
-  activity,
-  todayDelta = 0,
-}: {
-  activity: SheetActivity;
-  todayDelta?: number;
-}) {
+export function SheetCalendar({ activity }: { activity: SheetActivity }) {
   const { months } = activity;
   const lastIdx = months.length - 1;
   const [idx, setIdx] = useState(lastIdx);
   const isCurrentMonth = idx === lastIdx;
   const month = months[idx]!;
 
-  // Apply the live "solved today" delta to today's cell (current month only).
+  // Today's solve count, authoritative. Seeded from the server-rendered cell and
+  // replaced whenever `refreshActivity()` reports a new one.
+  //
+  // This REPLACES a `todayDelta` prop that was `solvedIds.size` minus the page's
+  // initial solved total — a session-wide net across every problem, applied as
+  // though it were today's. Un-ticking a problem solved last month therefore
+  // dropped today's square, and solving then un-ticking one today left the square
+  // at zero while the server had (correctly, it is append-only) banked the day.
+  // The page ships no `solvedAt`, so the browser has no way to tell those apart.
+  const ssrToday = months[lastIdx]?.cells.find((c) => c.isToday)?.count ?? 0;
+  const todayCount = useLiveTodayDsaCount(ssrToday);
+
   const { cells, activeDays, solved } = useMemo(() => {
     let activeDays = 0;
     let solved = 0;
     const cells = month.cells.map((c) => {
-      let count = c.count;
-      if (isCurrentMonth && c.isToday && todayDelta) count = Math.max(0, count + todayDelta);
+      const count = isCurrentMonth && c.isToday ? todayCount : c.count;
       if (count > 0) {
         activeDays += 1;
         solved += count;
@@ -138,15 +144,16 @@ export function SheetCalendar({
       return { ...c, count, level: c.future ? 0 : levelFor(count) };
     });
     return { cells, activeDays, solved };
-  }, [month, isCurrentMonth, todayDelta]);
+  }, [month, isCurrentMonth, todayCount]);
 
-  // Live streak: extend/retract by today's net change regardless of which month
-  // is being viewed (the streak is "now", not the viewed month).
-  const baseToday = months[lastIdx]!.cells.find((c) => c.isToday)?.count ?? 0;
-  const liveToday = Math.max(0, baseToday + todayDelta);
-  let streak = activity.currentStreak;
-  if (baseToday === 0 && liveToday > 0) streak += 1;
-  else if (baseToday > 0 && liveToday === 0) streak = Math.max(0, streak - 1);
+  // Live streak, straight from the server. This used to be derived locally from
+  // `todayDelta`, which was wrong in both directions — `todayDelta` is a
+  // whole-session net across every problem, so un-ticking one solved last month
+  // retracted today's streak, and the base it adjusted was DSA-only. The value
+  // now counts practice anywhere on the site and is refreshed by
+  // `refreshActivity()` after each toggle, so this badge and the navbar flame
+  // are always the same number.
+  const streak = useLiveStreak(activity.currentStreak);
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-[22rem] flex-1 lg:mx-0">

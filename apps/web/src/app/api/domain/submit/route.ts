@@ -161,7 +161,15 @@ export async function POST(request: Request) {
   // the response path rather than being fire-and-forget. A domain question is an
   // MCQ like a screening one, so it lands in the same `mcqCount` column rather
   // than inventing a fourth activity kind.
-  await recordActivity({ userId: user.id, kind: "mcq", referenceIds: newlyAnsweredIds });
+  await recordActivity({
+    userId: user.id,
+    kind: "mcq",
+    referenceIds: newlyAnsweredIds,
+    // Reaching here means a test was submitted. A retake breaks no new ground
+    // (newlyAnsweredIds is empty) but is still a day's practice, so it keeps the
+    // streak alive rather than recording nothing at all.
+    countRevision: true,
+  });
 
   return NextResponse.json({ score, total, review });
 }

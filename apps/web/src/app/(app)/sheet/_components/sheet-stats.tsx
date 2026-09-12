@@ -19,13 +19,11 @@ import type { SheetActivity } from "../_data";
 export function SheetStats({
   difficulty,
   activity,
-  todayDelta = 0,
   greetingName,
   variant = "panel",
 }: {
   difficulty: DifficultyStat;
   activity?: SheetActivity | null;
-  todayDelta?: number;
   greetingName?: string | null;
   /** "panel" = wide horizontal (in-content); "rail" = vertical (sticky rail). */
   variant?: "panel" | "rail";
@@ -90,7 +88,7 @@ export function SheetStats({
               }
             />
             <div className={rail ? "w-full" : "w-full shrink-0 lg:w-[17rem]"}>
-              <SheetCalendar activity={activity} todayDelta={todayDelta} />
+              <SheetCalendar activity={activity} />
             </div>
           </>
         ) : null}

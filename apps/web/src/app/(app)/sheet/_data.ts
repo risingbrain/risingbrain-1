@@ -1,7 +1,8 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { prisma, ProblemStatus } from "@/lib/db";
 import { CACHE_TAGS } from "@/lib/cache";
-import { DAY_MS, addDays, istDayKey, istToday, keyOf } from "@/lib/ist";
+import { addDays, istDayKey, istToday, keyOf } from "@/lib/ist";
+import { computeLongestStreak, computeStreak } from "@/lib/streak-days";
 
 /**
  * The full published DSA sheet tree — sheets → topics → patterns → problems →
@@ -126,9 +127,13 @@ export async function getSheetActivity(userId: string): Promise<SheetActivity> {
   // UTC-midnight lower bound.
   const since = addDays(today, -400);
 
+  // Every active day, not just the DSA ones: the CALENDAR below is DSA-only
+  // (this is the DSA sheet), but the STREAK counts practice anywhere on the site
+  // — aptitude, domain, DSA — so it matches the navbar flame instead of showing
+  // a second, smaller number beside it. One scan still serves both.
   const [activityRows, totalSolved, user] = await Promise.all([
     prisma.activityDay.findMany({
-      where: { userId, day: { gte: since }, dsaCount: { gt: 0 } },
+      where: { userId, day: { gte: since }, count: { gt: 0 } },
       select: { day: true, dsaCount: true },
     }),
     prisma.userProblemProgress.count({ where: { userId, status: ProblemStatus.SOLVED } }),
@@ -138,8 +143,13 @@ export async function getSheetActivity(userId: string): Promise<SheetActivity> {
   const joinedKey = user ? istDayKey(user.createdAt) : todayKey;
 
   // ---- Daily DSA-solve counts, keyed by IST day ----------------------------
+  // Only days that actually carry a DSA solve reach the calendar; a day the user
+  // spent on aptitude alone would otherwise paint a green square with a count of
+  // zero behind it.
   const counts = new Map<string, number>();
-  for (const r of activityRows) counts.set(keyOf(r.day), r.dsaCount);
+  for (const r of activityRows) {
+    if (r.dsaCount > 0) counts.set(keyOf(r.day), r.dsaCount);
+  }
 
   // ---- One block per visible month -----------------------------------------
   const months: SheetMonth[] = [];
@@ -167,25 +177,12 @@ export async function getSheetActivity(userId: string): Promise<SheetActivity> {
     months.push({ key: `${y}-${pad(m + 1)}`, label: `${MONTHS_LONG[m]} ${y}`, leading, cells });
   }
 
-  // ---- Streaks from the recent window (days with any DSA solve) ------------
-  const streakDays = new Set<string>(counts.keys());
-
-  let currentStreak = 0;
-  let probe = streakDays.has(keyOf(today)) ? today : addDays(today, -1);
-  while (streakDays.has(keyOf(probe))) {
-    currentStreak += 1;
-    probe = addDays(probe, -1);
-  }
-
-  let longestStreak = 0;
-  let run = 0;
-  let prevKey: string | null = null;
-  for (const k of [...streakDays].sort()) {
-    if (prevKey && (Date.parse(k) - Date.parse(prevKey)) / DAY_MS === 1) run += 1;
-    else run = 1;
-    longestStreak = Math.max(longestStreak, run);
-    prevKey = k;
-  }
+  // ---- Streaks from the recent window (days with activity of ANY kind) -----
+  // Deliberately NOT `counts.keys()` (which is DSA-only): this is the same
+  // definition `lib/streak.ts` uses for the navbar flame, so the two agree.
+  const streakDays = new Set<string>(activityRows.map((r) => keyOf(r.day)));
+  const currentStreak = computeStreak(streakDays, today);
+  const longestStreak = computeLongestStreak(streakDays);
 
   return { months, currentStreak, longestStreak, totalSolved, todayKey, joinedKey };
 }
