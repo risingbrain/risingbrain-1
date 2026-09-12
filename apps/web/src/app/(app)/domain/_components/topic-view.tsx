@@ -65,8 +65,8 @@ export function TopicView({ topic }: { topic: DomainTopicDetail }) {
         {/* Horizontal gutters come from the page <Container>, the scrollbar gutter
             from the pane in `workspace.tsx`; only the bottom gutter is ours, so
             the sheet's last edge isn't flush against the scroll end. */}
-        <div className="mb-10 flex items-start gap-8">
-          <article className="reading-surface min-w-0 flex-1 px-5 py-6 sm:px-8 sm:py-8 lg:px-10 lg:py-9">
+        <div className="mb-6 flex items-start gap-8">
+          <article className="reading-surface min-w-0 flex-1 px-5 py-6 pb-5 sm:px-8 sm:py-8 sm:pb-6 lg:px-10 lg:py-9 lg:pb-7">
             {/* Header */}
             <header className="mb-8 border-b border-reading-border pb-6">
               <p className="text-[11px] font-semibold uppercase tracking-[0.09em] text-accent">

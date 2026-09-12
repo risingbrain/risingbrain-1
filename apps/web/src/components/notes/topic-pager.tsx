@@ -50,16 +50,22 @@ function PagerCardBody({ link, dir }: { link: PagerLink; dir: "prev" | "next" })
 
   return (
     // `flex-1` matters: the card is a flex row, so without it this column shrinks
-    // to its content and `items-end` has no width to push the `next` side against.
+    // to its content and there is no width for the `next` side to align against.
+    //
+    // Right-alignment is done with `text-right` + `flex-row-reverse` on the rows
+    // below, NOT with `items-end` here. `align-items: flex-end` sizes every child
+    // to its own max-content, which lets a long line push straight out of the card
+    // and defeats the truncation — so each row instead takes `w-full` and clips
+    // inside it.
     <span
       className={`flex min-w-0 flex-1 flex-col gap-1 transition-opacity ${
         pending ? "opacity-60" : ""
-      } ${alignEnd ? "sm:items-end sm:text-right" : ""}`}
+      } ${alignEnd ? "sm:text-right" : ""}`}
     >
       {/* Direction label + arrow. The arrow leads on `prev` and trails on `next`,
           so the pair reads outward from the middle of the row. */}
       <span
-        className={`flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.09em] text-muted ${
+        className={`flex w-full min-w-0 items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.09em] text-muted ${
           alignEnd ? "sm:flex-row-reverse" : ""
         }`}
       >
@@ -82,18 +88,21 @@ function PagerCardBody({ link, dir }: { link: PagerLink; dir: "prev" | "next" })
           so it takes the accent and a marker rather than reading as more of the
           same. */}
       <span
-        className={`flex min-w-0 items-center gap-1 text-[11px] font-medium uppercase tracking-wider ${
+        className={`flex w-full min-w-0 items-center gap-1 text-[11px] font-medium uppercase tracking-wider ${
           link.crossesScope ? "text-accent" : "text-muted/80"
         } ${alignEnd ? "sm:flex-row-reverse" : ""}`}
       >
         {link.crossesScope ? <CornerDownRight className="h-3 w-3 shrink-0" /> : null}
-        <span className="truncate">{link.scope}</span>
+        {/* `min-w-0` is what lets this shrink past its content and ellipsize —
+            a cross-subject scope ("Operating Systems · Module 1 — Foundations…")
+            is far wider than half a sheet. */}
+        <span className="min-w-0 truncate">{link.scope}</span>
       </span>
 
       {/* Two lines maximum: topic titles run long, and a card that grows with its
           title makes the pair uneven. `line-clamp-2` keeps the row symmetrical
           and the full title is still on the link's accessible name. */}
-      <span className="line-clamp-2 text-sm font-semibold text-foreground group-hover/pager:text-brand">
+      <span className="line-clamp-2 w-full min-w-0 text-sm font-semibold text-foreground group-hover/pager:text-brand">
         {link.title}
       </span>
     </span>
@@ -162,7 +171,7 @@ export function TopicPager({
   return (
     <nav
       aria-label="Topic navigation"
-      className="mt-10 border-t border-reading-border pt-8"
+      className="mt-8 border-t border-reading-border pt-6"
     >
       {/* Next leads on mobile — it's the button wanted almost every time, and a
           stacked pair puts whatever comes first under the thumb. The grid restores
@@ -199,7 +208,7 @@ export function TopicPager({
       </div>
 
       {position ? (
-        <p className="mt-4 text-center text-xs tabular-nums text-muted">
+        <p className="mt-3 text-center text-xs tabular-nums text-muted">
           Topic {position.index} of {position.total} · {position.scope}
         </p>
       ) : null}
