@@ -3,6 +3,7 @@ import { TopicProgressBar } from "./topic-progress-bar";
 import { PaperAttemptProvider } from "./paper-attempt";
 import { NotesMarkdown } from "./notes-markdown";
 import { SubmitBar, TopRetakeButton } from "./submit-bar";
+import { PaperPager } from "./paper-pager";
 import { ReadingTabs, ReadingTabProvider } from "@/components/notes/reading-tabs";
 import { NotesToc } from "@/components/notes/notes-toc";
 import { extractToc } from "@/lib/markdown-toc";
@@ -113,6 +114,11 @@ export function Paper({ paper }: { paper: AptPaper }) {
               }
               practice={practice}
             />
+
+            {/* Foot of the sheet, OUTSIDE the tabs on purpose: a learner who has
+                read the notes and doesn't want the practice set should still be
+                able to move on without going back to the index. */}
+            <PaperPager />
           </div>
 
           <NotesToc items={toc} />

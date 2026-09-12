@@ -16,9 +16,8 @@ import { Trophy } from "lucide-react";
  * Four escalating completion celebrations, all pure-CSS (no deps), rendered in a
  * single fixed portal overlay so they never affect layout and never block clicks:
  *
- *  - "problem" (one problem ticked off) → a dozen green flecks, fired FROM the
- *                                         toggle the user clicked rather than the
- *                                         middle of the screen.
+ *  - "problem" (one problem ticked off) → the same centred confetti burst as a
+ *                                         cleared subcategory.
  *  - "pattern" (a subcategory cleared)  → a small confetti burst, centred.
  *  - "topic"  (a whole category done)  → a larger multicolour burst, centred.
  *  - "sheet"  (the entire sheet done)  → full-screen confetti rain + a trophy card.
@@ -30,21 +29,17 @@ import { Trophy } from "lucide-react";
 
 type Variant = "problem" | "pattern" | "topic" | "sheet";
 
-/** Viewport coordinates a burst radiates from. Omitted → centred on screen. */
-export type CelebrationOrigin = { x: number; y: number };
-
 const RANK: Record<Variant, number> = { problem: 0, pattern: 1, topic: 2, sheet: 3 };
 // How long the overlay stays mounted (ms) — must cover the longest animation.
+// "problem" mirrors "pattern" because they render the identical burst.
 const DURATION: Record<Variant, number> = {
-  problem: 900,
+  problem: 1500,
   pattern: 1500,
   topic: 2200,
   sheet: 3600,
 };
 
-const CelebrationContext = createContext<(variant: Variant, origin?: CelebrationOrigin) => void>(
-  () => {}
-);
+const CelebrationContext = createContext<(variant: Variant) => void>(() => {});
 
 export function useCelebrate() {
   return useContext(CelebrationContext);
@@ -65,21 +60,21 @@ export function useCompletionEffect(isComplete: boolean, onComplete: () => void)
   }, [isComplete]);
 }
 
-type Active = { variant: Variant; id: number; origin?: CelebrationOrigin };
+type Active = { variant: Variant; id: number };
 
 export function CelebrationProvider({ children }: { children: React.ReactNode }) {
   const [active, setActive] = useState<Active | null>(null);
   const idRef = useRef(0);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const celebrate = useCallback((variant: Variant, origin?: CelebrationOrigin) => {
+  const celebrate = useCallback((variant: Variant) => {
     setActive((cur) => {
-      // Keep the grander celebration if one is already showing/queued this tick.
-      // This is what makes the per-problem fleck yield when that same click also
-      // finished the pattern: the fleck fires first, the tier burst replaces it.
+      // Keep the grander celebration if one is already showing/queued this tick,
+      // so a click that finishes the pattern (or topic, or sheet) as well as the
+      // problem plays one burst at the grandest tier rather than several.
       if (cur && RANK[cur.variant] > RANK[variant]) return cur;
       idRef.current += 1;
-      return { variant, id: idRef.current, origin };
+      return { variant, id: idRef.current };
     });
   }, []);
 
@@ -107,15 +102,12 @@ function CelebrationOverlay({ active }: { active: Active | null }) {
   if (!mounted || !active) return null;
   // `key` remounts the burst each time so its CSS animations replay.
   return createPortal(
-    <Celebration key={active.id} variant={active.variant} origin={active.origin} />,
+    <Celebration key={active.id} variant={active.variant} />,
     document.body
   );
 }
 
 const PALETTE = ["#35a45c", "#7fcf9c", "#1b6240", "#5ad17f", "#f5c451", "#ffffff"];
-// The per-problem fleck stays inside the brand greens — the multicolour palette is
-// what marks an actual completion, so keeping it back preserves that escalation.
-const GREENS = ["#35a45c", "#7fcf9c", "#5ad17f", "#1b6240"];
 
 type Piece = {
   bg: string;
@@ -146,26 +138,8 @@ function makePieces(variant: Variant): Piece[] {
     }));
   }
 
-  if (variant === "problem") {
-    // Deliberately the quietest tier: a dozen small flecks over a tight radius,
-    // gone in under a second. It has to read as acknowledgement while the user is
-    // still looking at the row, not as an interruption they have to wait out.
-    return Array.from({ length: 12 }, (_, i) => {
-      const angle = Math.random() * Math.PI * 2;
-      const dist = 62 * (0.35 + Math.random() * 0.65);
-      return {
-        bg: GREENS[i % GREENS.length]!,
-        size: 4 + Math.random() * 3,
-        delay: Math.random() * 0.05,
-        duration: 0.5 + Math.random() * 0.25,
-        rot: Math.random() * 360 - 180,
-        round: i % 2 === 0,
-        tx: Math.cos(angle) * dist,
-        ty: Math.sin(angle) * dist - 16, // slight upward bias, as the larger tiers have
-      };
-    });
-  }
-
+  // "problem" and "pattern" share one burst: ticking off a single question gets
+  // the same celebration as clearing a subcategory.
   const count = variant === "topic" ? 32 : 18;
   const spread = variant === "topic" ? 340 : 190;
   return Array.from({ length: count }, (_, i) => {
@@ -184,13 +158,12 @@ function makePieces(variant: Variant): Piece[] {
   });
 }
 
-function Celebration({ variant, origin }: { variant: Variant; origin?: CelebrationOrigin }) {
+function Celebration({ variant }: { variant: Variant }) {
   const pieces = useMemo(() => makePieces(variant), [variant]);
-  // An anchored burst fires from the control the user actually clicked. The overlay
-  // is `fixed inset-0`, so the viewport coordinates the caller measured drop straight
-  // in as `left`/`top` with no scroll maths. Unanchored tiers stay centred.
-  const burstLeft = origin ? `${origin.x}px` : "50%";
-  const burstTop = origin ? `${origin.y}px` : variant === "topic" ? "50%" : "56%";
+  // Every burst is centred on the viewport; the overlay is `fixed inset-0`, so
+  // these are plain percentages with no scroll maths.
+  const burstLeft = "50%";
+  const burstTop = variant === "topic" ? "50%" : "56%";
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[120] overflow-hidden">

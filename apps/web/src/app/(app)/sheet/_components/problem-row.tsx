@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { Check, Loader2 } from "lucide-react";
 import { DifficultyBadge } from "./difficulty-badge";
 import { NoteModal } from "./note-modal";
@@ -193,8 +193,6 @@ export function ProblemRow({
   const reportBookmark = useSheetBookmarkReport();
   const signedIn = useSheetSignedIn();
   const celebrate = useCelebrate();
-  // Measured on solve so the confetti can radiate from the toggle itself.
-  const toggleRef = useRef<HTMLButtonElement>(null);
 
   async function toggleBookmark() {
     if (!signedIn) { redirectToLogin(); return; }
@@ -229,12 +227,11 @@ export function ProblemRow({
     reportSolved(problem.id, nextSolved);
     if (nextSolved) {
       setPop(true); // springy pop only when completing
-      // Fire the flecks from the middle of the toggle. Measured here rather than in
-      // an effect so it uses the button's position at the moment of the click, before
-      // the row's own state change can reflow anything under it. If the toggle has
-      // somehow unmounted, skip the burst rather than firing it from the corner.
-      const box = toggleRef.current?.getBoundingClientRect();
-      if (box) celebrate("problem", { x: box.left + box.width / 2, y: box.top + box.height / 2 });
+      // Same centred confetti burst a cleared subcategory gets. Fired here rather
+      // than from an effect so it lands on the click, not a render later; the
+      // provider still lets a grander tier (pattern/topic/sheet) supersede it if
+      // this same click happened to finish one.
+      celebrate("problem");
     }
     setToggling(true);
 
@@ -263,7 +260,6 @@ export function ProblemRow({
       <div className="flex items-center gap-3 px-3 py-4 sm:px-4 sm:py-5">
         {/* Status toggle — both directions */}
         <button
-          ref={toggleRef}
           type="button"
           onClick={toggleStatus}
           aria-pressed={solved}

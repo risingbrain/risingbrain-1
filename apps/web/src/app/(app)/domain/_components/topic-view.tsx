@@ -7,6 +7,7 @@ import { DomainQuestionCard } from "./question-card";
 import { SubmitBar, TopRetakeButton } from "./submit-bar";
 import { TopicProgressBar } from "./topic-progress-bar";
 import { TopicSummary } from "./topic-summary";
+import { DomainTopicPager } from "./topic-pager";
 import type { DomainTopicDetail } from "../_data";
 
 /**
@@ -88,6 +89,11 @@ export function TopicView({ topic }: { topic: DomainTopicDetail }) {
               practice={practice}
               questionCount={questions.length}
             />
+
+            {/* Foot of the sheet, OUTSIDE the tabs on purpose: a learner who has
+                read the notes and doesn't want the practice set should still be
+                able to move on without going back to the index. */}
+            <DomainTopicPager />
           </article>
 
           <NotesToc items={toc} />
