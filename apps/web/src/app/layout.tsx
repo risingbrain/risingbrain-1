@@ -4,6 +4,7 @@ import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import { COOKIES } from "@/lib/auth/constants";
 import { SessionKeepAlive } from "@/components/session-keep-alive";
+import { GoogleAnalytics } from "@/components/google-analytics";
 import { SITE_NAME, SITE_DESCRIPTION, SITE_KEYWORDS, siteUrl } from "@/lib/seo";
 import "./globals.css";
 
@@ -111,6 +112,8 @@ export default async function RootLayout({
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
         {hasSession && <SessionKeepAlive stale={staleSession} />}
         {children}
+        {/* Google Analytics (production builds only). */}
+        <GoogleAnalytics />
       </body>
     </html>
   );
