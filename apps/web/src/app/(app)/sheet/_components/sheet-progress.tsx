@@ -40,3 +40,14 @@ export const SheetBookmarkContext = createContext<(problemId: string, bookmarked
 export function useSheetBookmarkReport() {
   return useContext(SheetBookmarkContext);
 }
+
+/**
+ * Lets a pattern report "the visitor is working here" (any click inside it) up
+ * to SheetSelector, which saves it as the active sheet's resume position. See
+ * resume-cookie.ts.
+ */
+export const SheetPositionContext = createContext<(patternId: string) => void>(() => {});
+
+export function useRecordSheetPosition() {
+  return useContext(SheetPositionContext);
+}

@@ -11,11 +11,44 @@ import {
   type DifficultyOption,
 } from "./difficulty-filter";
 import { CelebrationProvider, useCelebrate } from "./celebration";
-import { SheetBookmarkContext, SheetGuestContext, SheetSolvedContext, useSheetSignedIn } from "./sheet-progress";
+import {
+  SheetBookmarkContext,
+  SheetGuestContext,
+  SheetPositionContext,
+  SheetSolvedContext,
+  useSheetSignedIn,
+} from "./sheet-progress";
+import { writePositionCookie, type ResumeState } from "./resume-cookie";
 import { type DifficultyStat } from "./progress-panel";
 import { SheetStats } from "./sheet-stats";
 import type { SheetActivity } from "../_data";
 import type { DifficultyValue, SheetMeta } from "./types";
+
+/**
+ * Brings a pattern block to the top of whatever is scrolling it, then flashes a
+ * highlight ring so the visitor sees where they resumed.
+ *
+ * NOT `scrollIntoView()`: on desktop the page scrolls inside the shell's
+ * `.app-scrollport` pane, and scrollIntoView also aligns every ancestor
+ * scroller — including the viewport — which shoves the fixed shell off screen
+ * (see admin/_components/scrollport-reset.tsx). So scroll the one box that owns
+ * the scroll: the pane on desktop, the window below `lg` (where the pane is
+ * `overflow: visible` and a sticky ~57px header sits on top).
+ */
+function scrollToPattern(patternId: string, smooth: boolean) {
+  const el = document.querySelector<HTMLElement>(`[data-pattern-id="${CSS.escape(patternId)}"]`);
+  if (!el) return;
+  const behavior: ScrollBehavior = smooth ? "smooth" : "instant";
+  const pane = el.closest<HTMLElement>(".app-scrollport");
+  if (pane && getComputedStyle(pane).overflowY !== "visible") {
+    const top = pane.scrollTop + el.getBoundingClientRect().top - pane.getBoundingClientRect().top - 16;
+    pane.scrollTo({ top, behavior });
+  } else {
+    window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top - 72, behavior });
+  }
+  el.dataset.flash = "";
+  window.setTimeout(() => delete el.dataset.flash, 1600);
+}
 
 /**
  * Client shell for the practice sheets. Owns the live "solved per topic" map so
@@ -33,6 +66,8 @@ export function SheetSelector({
   signedIn = false,
   header,
   initialSheetId,
+  resume,
+  resumeOwner,
 }: {
   sheets: SheetMeta[];
   difficulty: DifficultyStat;
@@ -40,8 +75,12 @@ export function SheetSelector({
   greetingName?: string | null;
   signedIn?: boolean;
   header?: React.ReactNode;
-  /** Sheet to open on first render (from `/sheet/<slug>`); defaults to the first. */
+  /** Sheet to open on first render (URL or resume cookie); defaults to the first. */
   initialSheetId?: string;
+  /** Per-sheet last-worked pattern from the resume cookies (server-resolved). */
+  resume?: ResumeState;
+  /** Owner stamp to write into the resume cookies (hash of user id / guest). */
+  resumeOwner?: string;
 }) {
   return (
     <CelebrationProvider>
@@ -53,6 +92,8 @@ export function SheetSelector({
           greetingName={greetingName}
           header={header}
           initialSheetId={initialSheetId}
+          resume={resume}
+          resumeOwner={resumeOwner}
         />
       </SheetGuestContext.Provider>
     </CelebrationProvider>
@@ -66,6 +107,8 @@ function SheetSelectorInner({
   greetingName,
   header,
   initialSheetId,
+  resume,
+  resumeOwner,
 }: {
   sheets: SheetMeta[];
   difficulty: DifficultyStat;
@@ -73,8 +116,41 @@ function SheetSelectorInner({
   greetingName?: string | null;
   header?: React.ReactNode;
   initialSheetId?: string;
+  resume?: ResumeState;
+  resumeOwner?: string;
 }) {
   const [activeId, setActiveId] = useState(initialSheetId ?? sheets[0]?.id ?? "");
+
+  // ---- Resume ("continue where you left off") ------------------------------
+  // sheetId → last pattern worked in, seeded from the per-sheet cookies and kept
+  // live so switching back to a sheet in this visit reopens its latest pattern.
+  const [positions, setPositions] = useState<Record<string, string>>(() => ({
+    ...resume?.patterns,
+  }));
+  // The pattern to scroll to after the next render: the active sheet's saved
+  // pattern on first load (instant — it should feel like it opened there), and
+  // the target sheet's on a tab switch (smooth). `n` re-triggers the effect.
+  const [scrollTarget, setScrollTarget] = useState<
+    { patternId: string; smooth: boolean; n: number } | null
+  >(() => {
+    const id = resume?.patterns[initialSheetId ?? sheets[0]?.id ?? ""];
+    return id ? { patternId: id, smooth: false, n: 0 } : null;
+  });
+  useEffect(() => {
+    if (!scrollTarget) return;
+    const frame = requestAnimationFrame(() =>
+      scrollToPattern(scrollTarget.patternId, scrollTarget.smooth),
+    );
+    return () => cancelAnimationFrame(frame);
+  }, [scrollTarget]);
+
+  // Opened on the bare /sheet hub but resumed onto a sheet: make the address
+  // bar name it, exactly as a tab click would.
+  useEffect(() => {
+    if (!resume?.sheetId || window.location.pathname !== "/sheet") return;
+    const slug = sheets.find((s) => s.id === resume.sheetId)?.slug;
+    if (slug) window.history.replaceState(null, "", `/sheet/${slug}`);
+  }, [resume, sheets]);
   const [searchQuery, setSearchQuery] = useState("");
   const [bookmarkOnly, setBookmarkOnly] = useState(false);
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilterValue>("ALL");
@@ -221,6 +297,21 @@ function SheetSelectorInner({
 
   const active = sheets.find((s) => s.id === activeId) ?? sheets[0];
 
+  // Any click inside a pattern saves it as this sheet's resume point — its own
+  // cookie per sheet, so each sheet resumes independently.
+  const activeSlug = active?.slug;
+  const activeSheetId = active?.id;
+  const recordPosition = useCallback(
+    (patternId: string) => {
+      if (!activeSlug || !activeSheetId || !resumeOwner) return;
+      writePositionCookie(activeSlug, { owner: resumeOwner, patternId, at: Date.now() });
+      setPositions((prev) =>
+        prev[activeSheetId] === patternId ? prev : { ...prev, [activeSheetId]: patternId },
+      );
+    },
+    [activeSlug, activeSheetId, resumeOwner],
+  );
+
   // Difficulty options are derived from the DB-loaded tree, never hardcoded: we
   // count the problems in the active sheet per difficulty and offer only the
   // ones that actually occur. Ordering follows the schema's own `Difficulty`
@@ -308,6 +399,7 @@ function SheetSelectorInner({
   return (
     <SheetSolvedContext.Provider value={reportSolved}>
     <SheetBookmarkContext.Provider value={reportBookmark}>
+    <SheetPositionContext.Provider value={recordPosition}>
       {/* Three-column shell: center content + a sticky right progress rail. */}
       <div className="xl:flex xl:items-start xl:gap-6">
         <div className="min-w-0 xl:flex-1">
@@ -348,6 +440,10 @@ function SheetSelectorInner({
                 e.preventDefault();
                 setActiveId(sheet.id);
                 window.history.replaceState(null, "", href);
+                const saved = positions[sheet.id];
+                if (saved && sheet.id !== active.id) {
+                  setScrollTarget((t) => ({ patternId: saved, smooth: true, n: (t?.n ?? 0) + 1 }));
+                }
               }}
               className={`group flex items-center gap-3 rounded-2xl px-6 py-4 text-left transition-all ${
                 isActive
@@ -497,6 +593,7 @@ function SheetSelectorInner({
             bookmarkedIds={bookmarkedIds}
             solvedIds={solvedIds}
             forceExpanded={filterActive}
+            resumePatternId={positions[active.id] ?? null}
           />
         ))}
         {filterActive && matchCount === 0 && (
@@ -534,6 +631,7 @@ function SheetSelectorInner({
           />
         </aside>
       </div>
+    </SheetPositionContext.Provider>
     </SheetBookmarkContext.Provider>
     </SheetSolvedContext.Provider>
   );

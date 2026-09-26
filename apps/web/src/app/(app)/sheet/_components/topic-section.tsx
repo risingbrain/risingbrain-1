@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronDown, Lightbulb, Target } from "lucide-react";
 import { ProblemRow } from "./problem-row";
 import { useCelebrate, useCompletionEffect } from "./celebration";
+import { useRecordSheetPosition } from "./sheet-progress";
 import type { SheetPattern } from "./types";
 
 /**
@@ -22,6 +23,7 @@ export function TopicSection({
   bookmarkedIds,
   solvedIds,
   forceExpanded = false,
+  resumePatternId = null,
 }: {
   topicId: string;
   name: string;
@@ -39,6 +41,8 @@ export function TopicSection({
   // checkmark and for every derived solved count.
   solvedIds: Set<string>;
   forceExpanded?: boolean;
+  // The sheet's saved "continue here" pattern — it mounts expanded.
+  resumePatternId?: string | null;
 }) {
   const pct = problemCount > 0 ? Math.round((solvedCount / problemCount) * 100) : 0;
   const complete = problemCount > 0 && solvedCount >= problemCount;
@@ -96,6 +100,7 @@ export function TopicSection({
             bookmarkedIds={bookmarkedIds}
             solvedIds={solvedIds}
             forceExpanded={forceExpanded}
+            defaultOpen={pattern.id === resumePatternId}
           />
         ))}
       </div>
@@ -109,14 +114,17 @@ function PatternBlock({
   bookmarkedIds,
   solvedIds,
   forceExpanded = false,
+  defaultOpen = false,
 }: {
   pattern: SheetPattern;
   visibleProblemIds?: Set<string> | null;
   bookmarkedIds: Set<string>;
   solvedIds: Set<string>;
   forceExpanded?: boolean;
+  defaultOpen?: boolean;
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
+  const recordPosition = useRecordSheetPosition();
   // When a search is active, show content regardless of the local toggle state.
   const isOpen = open || forceExpanded;
   // Progress is DERIVED from the lifted solvedIds set — always against the FULL
@@ -138,7 +146,15 @@ function PatternBlock({
   if (visibleProblemIds && visibleProblems.length === 0) return null;
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-surface-2/40 ring-1 ring-border/50">
+    // Any click inside — expanding it, a problem link, solve, bookmark, note —
+    // marks this as where the visitor is working (capture phase, so it fires
+    // even for links and buttons that stop propagation). `data-pattern-id` is
+    // the resume scroll target; `data-flash` is the brief "you're here" ring.
+    <div
+      data-pattern-id={pattern.id}
+      onClickCapture={() => recordPosition(pattern.id)}
+      className="overflow-hidden rounded-2xl bg-surface-2/40 ring-1 ring-border/50 transition-shadow duration-500 data-[flash]:ring-2 data-[flash]:ring-rb-green-500/70"
+    >
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}

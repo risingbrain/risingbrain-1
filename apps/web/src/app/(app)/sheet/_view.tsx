@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import { cookies } from "next/headers";
 import { BookOpen, Layers, ListChecks } from "lucide-react";
 import { getCurrentUser, getCurrentUserProfileForChrome } from "@/lib/auth/current-user";
 import { Container } from "@/components/marketing/primitives";
@@ -15,6 +17,16 @@ import type {
 import type { DifficultyStat } from "./_components/progress-panel";
 import { getDsaCatalog, getSheetActivity, type SheetActivity } from "./_data";
 import { sheetJsonLd } from "./_seo";
+import { GUEST_OWNER, resolveResume } from "./_components/resume-cookie";
+
+/**
+ * Owner stamp for the resume cookie: a short, one-way hash of the user id (the
+ * raw id never lands in a cookie), or the guest marker. See resume-cookie.ts.
+ */
+function resumeOwner(userId: string | undefined): string {
+  if (!userId) return GUEST_OWNER;
+  return createHash("sha256").update(`rb-sheet-pos:${userId}`).digest("hex").slice(0, 16);
+}
 
 function StatPill({
   icon,
@@ -151,7 +163,14 @@ export async function SheetView({ activeSlug }: { activeSlug?: string }) {
   const totalTopics = sheetsRaw.reduce((s, sh) => s + sh.topics.length, 0);
   const totalProblems = allProblemIds.length;
   const firstName = profile?.name?.trim().split(/\s+/)[0] ?? null;
+  // `activeSheet` is the sheet named by the URL — it alone drives SEO (JSON-LD).
+  // The per-sheet resume cookies additionally pick the sheet on the bare
+  // `/sheet` hub and pre-open each sheet's last pattern; crawlers carry no
+  // cookies, so they always get the default render.
   const activeSheet = sheetsRaw.find((s) => s.slug === activeSlug);
+  const owner = resumeOwner(user?.id);
+  const jar = await cookies();
+  const resume = resolveResume(sheetsRaw, (name) => jar.get(name)?.value, owner);
 
   return (
     <main className="flex-1">
@@ -161,7 +180,9 @@ export async function SheetView({ activeSlug }: { activeSlug?: string }) {
       <Container tight className="py-8 sm:py-12">
         <SheetSelector
           sheets={sheetData}
-          initialSheetId={activeSheet?.id}
+          initialSheetId={activeSheet?.id ?? resume.sheetId ?? undefined}
+          resume={resume}
+          resumeOwner={owner}
           difficulty={difficultyStats}
           activity={activity}
           greetingName={firstName}
