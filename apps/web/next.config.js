@@ -50,6 +50,8 @@ const nextConfig = {
       { source: "/sql", destination: "/domain", permanent: true },
       { source: "/aptitude", destination: "/screening", permanent: true },
       { source: "/aptitude/:path*", destination: "/screening/:path*", permanent: true },
+      // The previous site's login URL is still in Google's index and 404s.
+      { source: "/auth/login", destination: "/login", permanent: true },
     ];
   },
 };

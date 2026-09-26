@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { BadgeCheck, GraduationCap, Layers, Users, Video } from "lucide-react";
 import { Container } from "@/components/marketing/primitives";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Courses — Coming soon",
   description:
     "Founder-led, structured video courses are on the way. Curated curriculum, hands-on modules and mentorship — launching soon on RisingBrain.",
-};
+  path: "/courses",
+});
 
 const HIGHLIGHTS = [
   { icon: Layers, label: "Structured curriculum" },

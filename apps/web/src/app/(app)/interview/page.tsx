@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Building2, MessageSquareQuote, Sparkles, Trophy } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import { PublishStatus } from "@risingbrain/database/enums";
@@ -9,11 +10,12 @@ import { InterviewFeed } from "./_components/interview-feed";
 import { MySubmissions } from "./_components/my-submissions";
 import { getInterviewFeed, getMySubmissions, parseFeedParams } from "./_data";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Interview Experiences",
   description:
     "Real interview experiences from real candidates — what was asked, what worked, and what they'd do differently. Learn from wins and lessons across companies.",
-};
+  path: "/interview",
+});
 
 export default async function InterviewPage({
   searchParams,

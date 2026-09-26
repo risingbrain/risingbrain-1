@@ -32,6 +32,7 @@ export function SheetSelector({
   greetingName,
   signedIn = false,
   header,
+  initialSheetId,
 }: {
   sheets: SheetMeta[];
   difficulty: DifficultyStat;
@@ -39,6 +40,8 @@ export function SheetSelector({
   greetingName?: string | null;
   signedIn?: boolean;
   header?: React.ReactNode;
+  /** Sheet to open on first render (from `/sheet/<slug>`); defaults to the first. */
+  initialSheetId?: string;
 }) {
   return (
     <CelebrationProvider>
@@ -49,6 +52,7 @@ export function SheetSelector({
           activity={activity}
           greetingName={greetingName}
           header={header}
+          initialSheetId={initialSheetId}
         />
       </SheetGuestContext.Provider>
     </CelebrationProvider>
@@ -61,14 +65,16 @@ function SheetSelectorInner({
   activity,
   greetingName,
   header,
+  initialSheetId,
 }: {
   sheets: SheetMeta[];
   difficulty: DifficultyStat;
   activity?: SheetActivity | null;
   greetingName?: string | null;
   header?: React.ReactNode;
+  initialSheetId?: string;
 }) {
-  const [activeId, setActiveId] = useState(sheets[0]?.id ?? "");
+  const [activeId, setActiveId] = useState(initialSheetId ?? sheets[0]?.id ?? "");
   const [searchQuery, setSearchQuery] = useState("");
   const [bookmarkOnly, setBookmarkOnly] = useState(false);
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilterValue>("ALL");
@@ -326,13 +332,23 @@ function SheetSelectorInner({
         {sheets.map((sheet, i) => {
           const s = stats.get(sheet.id) ?? { total: 0, solved: 0 };
           const isActive = sheet.id === active.id;
+          const href = `/sheet/${sheet.slug}`;
           return (
-            <button
+            // A real link to the sheet's own page, so crawlers can discover
+            // every sheet URL. A plain click still switches in place (no server
+            // round-trip) and just swaps the address bar to match; modified
+            // clicks (new tab/window) fall through to the browser.
+            <a
               key={sheet.id}
-              type="button"
+              href={href}
               role="tab"
               aria-selected={isActive}
-              onClick={() => setActiveId(sheet.id)}
+              onClick={(e) => {
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                e.preventDefault();
+                setActiveId(sheet.id);
+                window.history.replaceState(null, "", href);
+              }}
               className={`group flex items-center gap-3 rounded-2xl px-6 py-4 text-left transition-all ${
                 isActive
                   ? "bg-rb-green-500/15 text-brand ring-1 ring-rb-green-500/40"
@@ -357,7 +373,7 @@ function SheetSelectorInner({
                   {s.solved} / {s.total} solved
                 </span>
               </span>
-            </button>
+            </a>
           );
         })}
       </div>
@@ -366,7 +382,7 @@ function SheetSelectorInner({
       <div className="glass mt-6 rounded-3xl p-6 sm:p-7">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="max-w-2xl">
-            <h3 className="text-2xl font-bold tracking-tight">{active.name}</h3>
+            <h2 className="text-2xl font-bold tracking-tight">{active.name}</h2>
             {active.description && (
               <p className="mt-2 text-sm leading-relaxed text-muted">{active.description}</p>
             )}

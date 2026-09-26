@@ -168,6 +168,22 @@ function PatternBlock({
         <CircleProgress solved={solved} total={total} />
       </button>
 
+      {/* Collapsed patterns still ship their text in the server HTML — hidden,
+          but present — so search engines can index every problem name and the
+          pattern strategy. Rendering nothing here (as before) left the sheet
+          pages with no problem titles at all in the crawled HTML. Plain markup
+          only: the interactive rows mount when the pattern is opened. */}
+      {!isOpen && (
+        <div hidden>
+          {pattern.strategy && <p>{pattern.strategy}</p>}
+          <ul>
+            {visibleProblems.map((problem) => (
+              <li key={problem.id}>{problem.title}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {isOpen && (
         <div className="animate-in">
           {(pattern.identification || pattern.strategy) && (

@@ -1,7 +1,26 @@
+import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
+import { pageMetadata } from "@/lib/seo";
 import { getQuizTopicBySlug, getTopicSlugById } from "../../_quiz/data";
 import { Paper } from "../../_quiz/components/paper";
 import { SCREENING_ROUTE, routeForKind } from "../../_quiz/routes";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const paper = await getQuizTopicBySlug(slug);
+  // Unknown / legacy / foreign slugs redirect or 404 below — keep the layout's.
+  if (!paper || !SCREENING_ROUTE.kinds.includes(paper.kind)) return {};
+  const n = paper.questions.length;
+  return pageMetadata({
+    title: `${paper.topicName} — ${paper.categoryName} Questions & Formulas`,
+    description: `Practice ${n} ${paper.topicName.toLowerCase()} question${n === 1 ? "" : "s"} for placement aptitude tests, with key formulas, crisp theory and hints.`,
+    path: `${SCREENING_ROUTE.basePath}/${paper.topicSlug}`,
+  });
+}
 
 /**
  * One topic's paper, addressed by SLUG. This segment is fetched lazily — only

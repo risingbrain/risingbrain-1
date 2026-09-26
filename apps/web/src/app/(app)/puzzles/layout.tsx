@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Suspense } from "react";
 import { Container } from "@/components/marketing/primitives";
 import { getCurrentUser } from "@/lib/auth/current-user";
@@ -6,10 +7,11 @@ import { QuizWorkspace } from "../_quiz/components/workspace";
 import { QuizWorkspaceSkeleton } from "../_quiz/components/workspace-skeleton";
 import { PUZZLES_ROUTE } from "../_quiz/routes";
 
-export const metadata: Metadata = {
-  title: "Puzzles",
+export const metadata: Metadata = pageMetadata({
+  title: "Interview Puzzles with Solutions",
   description: "Classic interview puzzles — logic, deduction, weighing, binary tricks and optimisation — with worked solutions and diagrams.",
-};
+  path: "/puzzles",
+});
 
 /**
  * `/puzzles` shell. Uses a parallel route: the `@nav` slot (left index) and the

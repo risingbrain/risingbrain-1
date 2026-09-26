@@ -1,7 +1,27 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { pageMetadata } from "@/lib/seo";
 import { getDomainTopic } from "../../_data";
-import { SUBJECT_BY_SLUG } from "../../_categories";
+import { SUBJECT_BY_SLUG, domainTopicHref } from "../../_categories";
 import { TopicView } from "../../_components/topic-view";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ subject: string; slug: string }>;
+}): Promise<Metadata> {
+  const { subject: subjectSlug, slug } = await params;
+  const subject = SUBJECT_BY_SLUG[subjectSlug];
+  const topic = subject ? await getDomainTopic(subject, slug) : null;
+  if (!topic) return {};
+  return pageMetadata({
+    title: `${topic.title} in ${topic.subjectLabel} — Notes & Interview Questions`,
+    description:
+      topic.summary ??
+      `${topic.title} (${topic.subjectLabel}) explained for interviews — focused notes, worked examples and ${topic.questions.length} practice MCQs.`,
+    path: domainTopicHref(topic.subject, topic.slug),
+  });
+}
 
 /**
  * One topic's content, addressed by `<subject>/<slug>`. This segment is fetched

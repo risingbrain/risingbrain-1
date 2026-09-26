@@ -21,6 +21,7 @@ export async function getDsaCatalog() {
     orderBy: { order: "asc" },
     select: {
       id: true,
+      slug: true,
       name: true,
       description: true,
       topics: {

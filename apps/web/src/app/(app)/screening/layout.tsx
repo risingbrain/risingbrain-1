@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Suspense } from "react";
 import { Container } from "@/components/marketing/primitives";
 import { getCurrentUser } from "@/lib/auth/current-user";
@@ -6,10 +7,11 @@ import { QuizWorkspace } from "../_quiz/components/workspace";
 import { QuizWorkspaceSkeleton } from "../_quiz/components/workspace-skeleton";
 import { SCREENING_ROUTE } from "../_quiz/routes";
 
-export const metadata: Metadata = {
-  title: "Screening",
+export const metadata: Metadata = pageMetadata({
+  title: "Aptitude & Logical Reasoning Practice",
   description: "Topic-wise aptitude and logical reasoning drills with crisp theory, key formulae and MCQ practice to sharpen your speed.",
-};
+  path: "/screening",
+});
 
 /**
  * `/screening` shell. Uses a parallel route: the `@nav` slot (left index) and the

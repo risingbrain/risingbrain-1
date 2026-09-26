@@ -40,6 +40,8 @@ export interface TopicMeta {
 
 export interface SheetMeta {
   id: string;
+  /** URL segment — `/sheet/<slug>` is this sheet's own indexable page. */
+  slug: string;
   name: string;
   description: string | null;
   topics: TopicMeta[];

@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Suspense } from "react";
 import { Container } from "@/components/marketing/primitives";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import { DomainWorkspace } from "./_components/workspace";
 import { DomainWorkspaceSkeleton } from "./_components/workspace-skeleton";
 
-export const metadata: Metadata = {
-  title: "Domain",
+export const metadata: Metadata = pageMetadata({
+  title: "Core CS Interview Prep — OOP, SQL, DBMS, OS & Networks",
   description:
     "Core-CS interview prep — OOP, SQL, DBMS, Operating Systems and Computer Networks — each topic with focused notes, worked examples and MCQ practice.",
-};
+  path: "/domain",
+});
 
 /**
  * `/domain` shell. Uses a parallel route: the `@nav` slot (left index) and the

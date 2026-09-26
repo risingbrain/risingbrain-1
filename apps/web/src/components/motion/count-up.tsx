@@ -79,11 +79,21 @@ export function CountUp({
     return () => observer.disconnect();
   }, [value, duration]);
 
+  // The animated digits start at 0, which is also what the server HTML would
+  // contain — so crawlers and screen readers used to read "0 problems". The
+  // final value rides along as sr-only text; the animation is aria-hidden.
   return (
     <span ref={ref} className={className}>
-      {prefix}
-      {display.toLocaleString()}
-      {suffix}
+      <span className="sr-only">
+        {prefix}
+        {value.toLocaleString()}
+        {suffix}
+      </span>
+      <span aria-hidden>
+        {prefix}
+        {display.toLocaleString()}
+        {suffix}
+      </span>
     </span>
   );
 }

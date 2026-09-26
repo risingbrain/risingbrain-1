@@ -10,13 +10,15 @@ import { CtaBanner } from "@/components/marketing/cta-banner";
 import { Faq, faqs } from "@/components/marketing/faq";
 import { Reveal } from "@/components/motion/reveal";
 import { JsonLd } from "@/components/structured-data";
-import { SITE_NAME, SITE_DESCRIPTION, absoluteUrl } from "@/lib/seo";
+import { SITE_NAME, SITE_DESCRIPTION, absoluteUrl, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: { absolute: "RisingBrain — Crack your dream product company from any college" },
+export const metadata: Metadata = pageMetadata({
+  title: "RisingBrain — Crack your dream product company from any college",
+  absoluteTitle: true,
   description:
     "Founder-led, pattern-first placement platform with curated DSA sheets, SQL, aptitude, a real coding arena, live contests and mentorship — all in one place.",
-};
+  path: "/",
+});
 
 // Structured data: the brand entity (Organization), the site (WebSite, enabling
 // a sitelinks search box) and the on-page FAQ (FAQPage rich result).

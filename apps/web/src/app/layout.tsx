@@ -34,15 +34,16 @@ export const metadata: Metadata = {
   authors: [{ name: SITE_NAME }],
   creator: SITE_NAME,
   publisher: SITE_NAME,
-  // Canonical for the home route; each page inherits metadataBase for its own.
-  alternates: { canonical: "/" },
+  // NO canonical / og:url here: metadata merges shallowly, so whatever the root
+  // sets is inherited by every page that doesn't override it — a root canonical
+  // of "/" told Google every section page was a duplicate of the homepage. Each
+  // indexable page sets its own via `pageMetadata()` (lib/seo.ts).
   category: "education",
   formatDetection: { email: false, telephone: false, address: false },
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
     locale: "en_US",
-    url: "/",
     title: `${SITE_NAME} — Crack your dream product company from any college`,
     description: SITE_DESCRIPTION,
     // opengraph-image.tsx generates the image automatically.

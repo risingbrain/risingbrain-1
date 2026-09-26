@@ -1,7 +1,26 @@
+import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
+import { pageMetadata } from "@/lib/seo";
 import { getQuizTopicBySlug, getTopicSlugById } from "../../_quiz/data";
 import { Paper } from "../../_quiz/components/paper";
 import { PUZZLES_ROUTE, routeForKind } from "../../_quiz/routes";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const paper = await getQuizTopicBySlug(slug);
+  // Unknown / legacy / foreign slugs redirect or 404 below — keep the layout's.
+  if (!paper || !PUZZLES_ROUTE.kinds.includes(paper.kind)) return {};
+  const n = paper.questions.length;
+  return pageMetadata({
+    title: `${paper.topicName} Puzzles with Solutions`,
+    description: `${n} ${paper.topicName.toLowerCase()} interview puzzle${n === 1 ? "" : "s"} (${paper.categoryName}) with hints and worked solutions — practice the reasoning interviewers test.`,
+    path: `${PUZZLES_ROUTE.basePath}/${paper.topicSlug}`,
+  });
+}
 
 /**
  * One topic's paper, addressed by SLUG. This segment is fetched lazily — only
