@@ -24,9 +24,17 @@ import { SheetStats } from "./sheet-stats";
 import type { SheetActivity } from "../_data";
 import type { DifficultyValue, SheetMeta } from "./types";
 
+/** Where a restored pattern's top edge should land in its scroller, in px. */
+const PANE_OFFSET = 16; // desktop: inside the `.app-scrollport` pane
+const WINDOW_OFFSET = 72; // below `lg`: clears the sticky ~57px mobile header
+/** How long an initial restore is defended against being scrolled away. */
+const RESTORE_GUARD_MS = 2000;
+/** Any of these means the visitor is steering — stop defending the restore. */
+const USER_SCROLL_EVENTS = ["wheel", "touchstart", "pointerdown", "keydown"] as const;
+
 /**
  * Brings a pattern block to the top of whatever is scrolling it, then flashes a
- * highlight ring so the visitor sees where they resumed.
+ * highlight ring so the visitor sees where they resumed. Returns a cleanup.
  *
  * NOT `scrollIntoView()`: on desktop the page scrolls inside the shell's
  * `.app-scrollport` pane, and scrollIntoView also aligns every ancestor
@@ -34,20 +42,56 @@ import type { DifficultyValue, SheetMeta } from "./types";
  * (see admin/_components/scrollport-reset.tsx). So scroll the one box that owns
  * the scroll: the pane on desktop, the window below `lg` (where the pane is
  * `overflow: visible` and a sticky ~57px header sits on top).
+ *
+ * `guard` (the initial restore) keeps the position for a short while after.
+ * Arriving by client-side navigation, Next's router resets the document to the
+ * top (`html.scrollTop = 0` in layout-router's scroll-and-focus handler) a few
+ * ms AFTER this runs — a race against the streamed page commit, so it only bit
+ * sometimes, and only below `lg`, where the document is the scroller. Late
+ * layout shifts can move the target too. So while guarding, any scroll that
+ * leaves the pattern off its mark is undone — until the visitor scrolls, taps
+ * or presses a key themselves, or the window closes. Tab switches (`smooth`)
+ * don't guard: nothing races them, and re-aligning would fight the animation.
  */
-function scrollToPattern(patternId: string, smooth: boolean) {
+function scrollToPattern(patternId: string, smooth: boolean, guard: boolean): () => void {
   const el = document.querySelector<HTMLElement>(`[data-pattern-id="${CSS.escape(patternId)}"]`);
-  if (!el) return;
-  const behavior: ScrollBehavior = smooth ? "smooth" : "instant";
-  const pane = el.closest<HTMLElement>(".app-scrollport");
-  if (pane && getComputedStyle(pane).overflowY !== "visible") {
-    const top = pane.scrollTop + el.getBoundingClientRect().top - pane.getBoundingClientRect().top - 16;
-    pane.scrollTo({ top, behavior });
-  } else {
-    window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top - 72, behavior });
-  }
+  if (!el) return () => {};
+  const found = el.closest<HTMLElement>(".app-scrollport");
+  const pane = found && getComputedStyle(found).overflowY !== "visible" ? found : null;
+  const offset = pane ? PANE_OFFSET : WINDOW_OFFSET;
+  const distanceFromMark = () =>
+    el.getBoundingClientRect().top - (pane ? pane.getBoundingClientRect().top : 0) - offset;
+  const align = (behavior: ScrollBehavior) => {
+    if (pane) pane.scrollTo({ top: pane.scrollTop + distanceFromMark(), behavior });
+    else window.scrollTo({ top: window.scrollY + distanceFromMark(), behavior });
+  };
+
+  align(smooth ? "smooth" : "instant");
   el.dataset.flash = "";
-  window.setTimeout(() => delete el.dataset.flash, 1600);
+  const unflash = window.setTimeout(() => delete el.dataset.flash, 1600);
+  if (!guard) return () => window.clearTimeout(unflash);
+
+  const scroller: HTMLElement | Window = pane ?? window;
+  const onScroll = () => {
+    if (Math.abs(distanceFromMark()) > 48) align("instant");
+  };
+  let stopped = false;
+  const stop = () => {
+    if (stopped) return;
+    stopped = true;
+    window.clearTimeout(timer);
+    scroller.removeEventListener("scroll", onScroll);
+    for (const type of USER_SCROLL_EVENTS) window.removeEventListener(type, stop, true);
+  };
+  const timer = window.setTimeout(stop, RESTORE_GUARD_MS);
+  scroller.addEventListener("scroll", onScroll, { passive: true });
+  for (const type of USER_SCROLL_EVENTS) {
+    window.addEventListener(type, stop, { capture: true, passive: true });
+  }
+  return () => {
+    stop();
+    window.clearTimeout(unflash);
+  };
 }
 
 /**
@@ -138,10 +182,15 @@ function SheetSelectorInner({
   });
   useEffect(() => {
     if (!scrollTarget) return;
-    const frame = requestAnimationFrame(() =>
-      scrollToPattern(scrollTarget.patternId, scrollTarget.smooth),
-    );
-    return () => cancelAnimationFrame(frame);
+    let cleanup = () => {};
+    const frame = requestAnimationFrame(() => {
+      // Only the first-load restore (not a tab switch) needs defending.
+      cleanup = scrollToPattern(scrollTarget.patternId, scrollTarget.smooth, !scrollTarget.smooth);
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+      cleanup();
+    };
   }, [scrollTarget]);
 
   // Opened on the bare /sheet hub but resumed onto a sheet: make the address
