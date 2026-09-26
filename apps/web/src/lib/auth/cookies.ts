@@ -10,6 +10,8 @@ import {
   REFRESH_TTL_SECONDS,
   REFRESH_COOKIE_PATH,
   REFRESH_ATTEMPT_COOKIE,
+  AUTH_RECOVER_COOKIE,
+  AUTH_RECOVER_MAX_AGE_SECONDS,
 } from "./constants";
 import type { IssuedTokens } from "./session";
 
@@ -35,6 +37,8 @@ export async function setAuthCookies(tokens: IssuedTokens): Promise<void> {
     path: "/",
     ...(tokens.persistent ? { maxAge: ACCESS_TTL_SECONDS } : {}),
   });
+  // A good renewal answers any pending "please recover" flag.
+  jar.set(AUTH_RECOVER_COOKIE, "", { path: "/", maxAge: 0 });
 
   // `null` means a concurrent request already rotated this session and its cookie
   // is in flight to the same browser — writing a competing one here is what makes
@@ -60,6 +64,22 @@ export async function clearAuthCookies(): Promise<void> {
   // Drop the proxy's in-flight marker too, so the next real login isn't shadowed
   // by a stale attempt cookie.
   jar.set(REFRESH_ATTEMPT_COOKIE, "", { httpOnly: true, path: "/", maxAge: 0 });
+}
+
+/**
+ * Flag this response's page as rendered signed-out for a visitor who may still
+ * be signed in (see AUTH_RECOVER_COOKIE). Not HttpOnly on purpose.
+ */
+export async function markSessionForRecovery(): Promise<void> {
+  const jar = await cookies();
+  const secure = env.secureCookies || (await headers()).get("x-forwarded-proto") === "https";
+  jar.set(AUTH_RECOVER_COOKIE, "1", {
+    httpOnly: false,
+    secure,
+    sameSite: "lax",
+    path: "/",
+    maxAge: AUTH_RECOVER_MAX_AGE_SECONDS,
+  });
 }
 
 export async function readRefreshCookie(): Promise<string | undefined> {

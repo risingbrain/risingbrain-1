@@ -14,7 +14,12 @@
  */
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { COOKIES, REFRESH_ATTEMPT_COOKIE } from "@/lib/auth/constants";
+import {
+  COOKIES,
+  REFRESH_ATTEMPT_COOKIE,
+  AUTH_RECOVER_COOKIE,
+  AUTH_RECOVER_MAX_AGE_SECONDS,
+} from "@/lib/auth/constants";
 import { verifyAccessToken } from "@/lib/auth/jwt";
 import { checkRouteAccess } from "@/lib/rbac";
 
@@ -82,7 +87,28 @@ export default async function proxy(req: NextRequest) {
     if (recoverable && !AUTH_PAGES.some((p) => pathname.startsWith(p))) {
       return refreshThenReturn(req, pathname, true);
     }
-    return NextResponse.next();
+    const res = NextResponse.next();
+    // Signed out ONLY because a renewal was attempted in the last few seconds
+    // (its one-shot marker is still up) — typically one that couldn't reach the
+    // session store. This page will render signed-out for someone who may well
+    // be signed in; flag it so the client shell renews and redraws when the
+    // store is back (see AUTH_RECOVER_COOKIE). Readable by JS on purpose.
+    if (
+      !role &&
+      req.method === "GET" &&
+      !isPrefetch &&
+      req.cookies.get(COOKIES.REFRESH)?.value &&
+      req.cookies.get(REFRESH_ATTEMPT_COOKIE)
+    ) {
+      res.cookies.set(AUTH_RECOVER_COOKIE, "1", {
+        httpOnly: false,
+        secure: req.nextUrl.protocol === "https:",
+        sameSite: "lax",
+        path: "/",
+        maxAge: AUTH_RECOVER_MAX_AGE_SECONDS,
+      });
+    }
+    return res;
   }
 
   // A denied PREFETCH must never be answered with a redirect. It is a guess about

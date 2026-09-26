@@ -165,6 +165,44 @@ export async function createSession(params: {
 }
 
 /**
+ * Waits between attempts when the session store is slow to answer.
+ *
+ * Sized for a COLD START, not a blip: the app runs on Vercel functions and the
+ * stores on Railway, reached over the public internet. The first request after
+ * a quiet spell (every morning) pays a fresh function, fresh TCP + TLS to both
+ * stores, and — if the service was idle — a store waking up. Two tries 150ms
+ * apart (what this used to be) routinely gave up before the store answered,
+ * and a refresh that gives up renders the page signed-out for a user who is
+ * signed in. A refresh happens at most once per ~12 minutes per user, so
+ * waiting a few seconds here is cheap; ordinary page queries are unaffected.
+ */
+const STORE_RETRY_DELAYS_MS = [200, 500, 1_000, 2_000];
+/** Total time a session READ may spend (attempts + waits) before "unavailable". */
+const STORE_READ_BUDGET_MS = 6_000;
+/**
+ * Cap on ONE read attempt, so a single hung query (a dead pooled socket) can't
+ * eat the whole budget — a retry on a fresh connection usually answers at once.
+ */
+const STORE_ATTEMPT_TIMEOUT_MS = 3_000;
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/** Reject if `promise` hasn't settled within `ms`, always clearing the timer. */
+async function withDeadline<T>(promise: Promise<T>, ms: number): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error(`session store read timed out after ${ms}ms`)), ms);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/**
  * A Postgres read whose FAILURE must never be mistaken for "no such session".
  *
  * Everything in `rotateSession` hinges on that distinction: a completed query
@@ -177,22 +215,29 @@ export async function createSession(params: {
  * container could not authenticate at all, and every refresh answered 500 —
  * indistinguishable, from the outside, from the session being gone.
  *
- * One retry first, because a dropped pooled socket (Neon suspends on idle)
- * usually succeeds immediately on a fresh connection.
+ * Retried with backoff inside STORE_READ_BUDGET_MS (see STORE_RETRY_DELAYS_MS).
+ * Each attempt is also capped (STORE_ATTEMPT_TIMEOUT_MS, and never past the
+ * budget), so a connection that hangs can't hold the request past it. That is
+ * safe for READS only — an abandoned read has no side effects. Writes are never
+ * raced against a timer; see the rotation below.
  */
 async function dbRead<T>(op: () => Promise<T>, what: string): Promise<T> {
-  for (let attempt = 1; attempt <= 2; attempt++) {
+  const deadline = Date.now() + STORE_READ_BUDGET_MS;
+  let lastErr: unknown;
+  for (let attempt = 0; ; attempt++) {
+    const remaining = deadline - Date.now();
+    if (remaining <= 0) break;
     try {
-      return await op();
+      return await withDeadline(op(), Math.min(remaining, STORE_ATTEMPT_TIMEOUT_MS));
     } catch (err) {
-      if (attempt === 2) {
-        console.error(`[auth] session lookup (${what}) failed:`, err);
-        throw new SessionUnavailableError(err);
-      }
-      await new Promise((r) => setTimeout(r, 150));
+      lastErr = err;
     }
+    const wait = STORE_RETRY_DELAYS_MS[attempt];
+    if (wait === undefined || Date.now() + wait >= deadline) break;
+    await sleep(wait);
   }
-  throw new SessionUnavailableError(); // unreachable
+  console.error(`[auth] session lookup (${what}) failed:`, lastErr);
+  throw new SessionUnavailableError(lastErr);
 }
 
 /**
@@ -288,6 +333,28 @@ export async function rotateSession(
   const presentedHash = await sha256(rawRefreshToken);
 
   // --- Resolve the session: Redis fast path, Postgres fallback. ---
+  // The Postgres lookup starts NOW, alongside Redis, instead of after Redis has
+  // given up. On a cold start Redis alone can spend its whole connect allowance
+  // (~3s) failing, and a sequential fallback then began its own cold connect only
+  // afterwards — the two waits added up past the point the user saw a signed-out
+  // page. Racing them costs one extra indexed read per refresh (~once per 12
+  // minutes per user). The result is only used if Redis doesn't answer; the
+  // `.catch` keeps an unused failure from surfacing as an unhandled rejection.
+  const dbLookup = dbRead(
+    () =>
+      prisma.session.findUnique({
+        where: { refreshHash: presentedHash },
+        select: {
+          id: true,
+          userId: true,
+          revokedAt: true,
+          expiresAt: true,
+          user: { select: { role: true } },
+        },
+      }),
+    "refresh hash"
+  );
+  dbLookup.catch(() => undefined);
   let sid: string | null = null;
   let data: RedisSession | null = null;
   let fromRedis = false;
@@ -321,20 +388,7 @@ export async function rotateSession(
     // Redis missed or was unreachable. The DB row is authoritative, so a cache
     // gap can't log anyone out; a genuinely reused/rotated token still finds no
     // live row here and is correctly rejected below.
-    const row = await dbRead(
-      () =>
-        prisma.session.findUnique({
-          where: { refreshHash: presentedHash },
-          select: {
-            id: true,
-            userId: true,
-            revokedAt: true,
-            expiresAt: true,
-            user: { select: { role: true } },
-          },
-        }),
-      "refresh hash"
-    );
+    const row = await dbLookup;
     if (row && !row.revokedAt && row.expiresAt > new Date()) {
       sid = row.id;
       data = {
@@ -390,9 +444,13 @@ export async function rotateSession(
   let rotatedInDb = false;
   let dbFailed = false;
   let lastErr: unknown;
-  // Two quick retries first: a dropped pooled socket usually succeeds immediately
-  // on a fresh connection, which avoids bothering the caller at all.
-  for (let attempt = 1; attempt <= 3; attempt++) {
+  // Retried on the same cold-start backoff as reads (a dropped pooled socket
+  // usually succeeds at once on a fresh connection; a waking store takes longer).
+  // Unlike reads, an attempt is NEVER abandoned on a timer: a write we stopped
+  // waiting for can still commit, rotating the row to a token this response never
+  // delivers — the browser would keep the old one, which outlives only the 60s
+  // grace window. Each attempt is bounded by the pool's own connect timeout.
+  for (let attempt = 1; attempt <= STORE_RETRY_DELAYS_MS.length; attempt++) {
     try {
       const { count } = await prisma.session.updateMany({
         where: { id: sid!, refreshHash: presentedHash, revokedAt: null },
@@ -415,7 +473,7 @@ export async function rotateSession(
     } catch (err) {
       lastErr = err;
       dbFailed = true;
-      if (attempt < 3) await new Promise((r) => setTimeout(r, 150 * attempt));
+      if (attempt < STORE_RETRY_DELAYS_MS.length) await sleep(STORE_RETRY_DELAYS_MS[attempt - 1]!);
     }
   }
 

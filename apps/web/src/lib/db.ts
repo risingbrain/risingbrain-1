@@ -21,16 +21,20 @@ const globalForPrisma = globalThis as unknown as {
   prismaAdapter?: PrismaPg;
 };
 
-// Pool options tuned for Neon's serverless Postgres, which suspends on idle and
-// silently drops connections. `idleTimeoutMillis` recycles connections before
-// Neon kills them (so we don't hand out a dead socket → ETIMEDOUT/"Invalid
-// invocation"); `keepAlive` + a short connect timeout keep the hot path healthy.
+// Pool options for Postgres on Railway, reached from Vercel functions over the
+// public internet (Railway's TCP proxy). Opening a connection there costs a TCP
+// + TLS handshake across regions, so an idle connection is worth keeping: the
+// old 10s idle timeout (tuned for Neon, which suspends and silently drops idle
+// sockets) meant nearly every request after a short lull paid that handshake
+// again. 30s keeps connections across ordinary pauses between requests while
+// still recycling them well before a proxy would drop an idle socket; TCP
+// `keepAlive` guards the ones that do sit longer.
 const adapter =
   globalForPrisma.prismaAdapter ??
   new PrismaPg({
     connectionString: process.env.DATABASE_URL,
     max: 5,
-    idleTimeoutMillis: 10_000,
+    idleTimeoutMillis: 30_000,
     connectionTimeoutMillis: 15_000,
     keepAlive: true,
   });

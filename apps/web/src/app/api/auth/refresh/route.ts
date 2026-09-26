@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { rotateSession, SessionUnavailableError } from "@/lib/auth/session";
-import { setAuthCookies, clearAuthCookies, readRefreshCookie } from "@/lib/auth/cookies";
+import {
+  setAuthCookies,
+  clearAuthCookies,
+  readRefreshCookie,
+  markSessionForRecovery,
+} from "@/lib/auth/cookies";
 import { safeRedirectPath } from "@/lib/auth/safe-redirect";
 import { env } from "@/lib/env";
 
@@ -79,6 +84,10 @@ export async function GET(req: Request) {
       // intact. The proxy's 10s attempt marker stops this from looping, and the
       // next navigation retries once the store recovers.
       console.error("[auth] refresh unavailable, preserving session cookies:", err);
+      // The page we send them back to will render signed-out. Flag it so the
+      // client shell renews and redraws once the store answers, instead of
+      // leaving signed-in chrome over an empty page (see AUTH_RECOVER_COOKIE).
+      await markSessionForRecovery();
       return NextResponse.redirect(new URL(target, env.APP_URL));
     }
     throw err;
@@ -88,7 +97,13 @@ export async function GET(req: Request) {
     // Clears the refresh cookie too, so the proxy sees nothing to recover and
     // won't bounce this visitor here again.
     await clearAuthCookies();
-    if (soft) return NextResponse.redirect(new URL(target, env.APP_URL));
+    if (soft) {
+      // Genuinely signed out now — but an in-app navigation keeps the layout it
+      // already had, so the navbar would go on saying "signed in". The flag makes
+      // the client redraw once so chrome and page agree.
+      await markSessionForRecovery();
+      return NextResponse.redirect(new URL(target, env.APP_URL));
+    }
     const login = new URL("/login", env.APP_URL);
     login.searchParams.set("callbackUrl", target);
     return NextResponse.redirect(login);

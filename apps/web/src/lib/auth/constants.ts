@@ -83,6 +83,22 @@ export const REFRESH_COOKIE_PATH = "/";
  */
 export const REFRESH_ATTEMPT_COOKIE = "rb_ref";
 
+/**
+ * "This page was rendered signed-out, but the visitor may still have a live
+ * session" — set when a renewal couldn't reach the session store (or was skipped
+ * because one had just failed), cleared by any successful renewal.
+ *
+ * Deliberately readable from JS (NOT HttpOnly) and carries no secret: it is the
+ * only way the persistent client shell can learn that the page it just received
+ * doesn't match the signed-in navbar it is still showing. In-app navigation
+ * re-renders the page but NOT the layout, so without this a failed renewal left
+ * "logged in" chrome over a signed-out, progress-less page until a manual reload.
+ * SessionKeepAlive watches for it, renews once the store is back, and redraws.
+ */
+export const AUTH_RECOVER_COOKIE = "rb_recover";
+/** How long the recovery marker lives — long enough to outlast a cold store. */
+export const AUTH_RECOVER_MAX_AGE_SECONDS = 5 * 60;
+
 export type AppRole = "NORMAL" | "STUDENT" | "SUBSCRIBER" | "ADMIN";
 
 /** Claims carried by the access token. */
