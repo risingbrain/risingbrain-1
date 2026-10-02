@@ -373,6 +373,11 @@ enum DomainSubject {
 //
 // `questions` is the topic's own MCQ set, shown in the "Practice" tab beside the
 // notes — see DomainQuestion.
+//
+// `miniProject` is an optional third tab, "Mini Project": a hands-on design
+// challenge (the course PDFs call it the "Boss Challenge") with its hint and a
+// possible solution, in markdown. Null for topics that don't have one, and the
+// tab is simply not shown — so CN / DBMS / OS / SQL are unaffected.
 model DomainTopic {
   id          String        @id @default(cuid())
   subject     DomainSubject
@@ -382,6 +387,7 @@ model DomainTopic {
   groupOrder  Int           @default(0)
   summary     String? // one-line subtitle
   notes       String // markdown: theory + inline diagrams + code examples
+  miniProject String? // markdown: the "Mini Project" tab; null = no tab
   order       Int           @default(0)
   isPublished Boolean       @default(true)
   createdAt   DateTime      @default(now())

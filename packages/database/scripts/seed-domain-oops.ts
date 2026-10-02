@@ -2,9 +2,9 @@
  * Standalone seeder for the OOPS subject of the Domain section.
  *
  * Reseeds ONLY the `OOPS` rows of `domain_topics` (and, by cascade, their practice
- * questions) — clears and reloads them from seed/domain-oops.json (+ the authored
- * Java in seed/domain-examples.json, appended to each topic's notes), leaving the
- * other subjects and every other table untouched:
+ * questions) — clears and reloads them from seed/domain-oops.json (one topic per
+ * course module: notes + the "Mini Project" tab) and seed/domain-oops-quiz.json
+ * (the Practice MCQs), leaving the other subjects and every other table untouched:
  *
  *   bun run db:seed-domain-oops              (from packages/database, or via turbo)
  *   bun run db:seed-domain-oops -- --clear   (delete the OOPS rows and stop)
@@ -16,6 +16,16 @@
  *
  * DESTRUCTIVE within its scope: because questions cascade with their topic, any
  * learner answers recorded against the OLD OOPS questions go with them.
+ *
+ * Both seed files are GENERATED from the course PDFs — edit the extractor, not
+ * the JSON:
+ *
+ *   python3 scripts/oops_pdf_extract.py --src <pdf dir>   # PDFs → seed + figures
+ *   python3 scripts/oops_pdf_verify.py  --src <pdf dir>   # prove nothing was lost
+ *   (cd ../../apps/web && bun run gen:figures)             # size the new figures
+ *
+ * Needs the `miniProject` column (migration 20261002120000_domain_mini_project) —
+ * run `bun run db:migrate-deploy` first on an existing database.
  *
  * Shares seedDomainSubject() with the full `db:seed`, so the two never drift.
  */

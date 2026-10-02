@@ -2,9 +2,8 @@
  * Standalone seeder for the Domain section (SQL / DBMS / OS / CN / OOPS notes).
  *
  * Reseeds ONLY `domain_topics` and the practice questions that cascade with it —
- * clears and reloads them from seed/domain-*.json (+ the authored Java in
- * seed/domain-examples.json, which is appended to each topic's notes, and the
- * MCQs in seed/domain-*-quiz.json), leaving every other table untouched. Run it
+ * clears and reloads them from seed/domain-*.json (+ the MCQs in
+ * seed/domain-*-quiz.json), leaving every other table untouched. Run it
  * after re-extracting the source PDFs so you don't have to reseed the whole
  * database:
  *

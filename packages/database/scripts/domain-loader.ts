@@ -4,13 +4,13 @@
  * `db:seed-domain-sql` (scripts/seed-domain-sql.ts) so they can never drift.
  *
  * Data sources:
- *   - seed/domain-*.json        — topics + markdown notes per subject
- *   - seed/domain-examples.json — authored, copy-ready code per topic slug
+ *   - seed/domain-*.json        — topics + markdown notes per subject (and, for
+ *                                 OOPS, the "Mini Project" tab's `miniProject`)
  *   - seed/domain-*-quiz.json   — the practice MCQs, keyed by topic slug
  *
  * The code examples used to live in their own `DomainTopic.example` column behind
- * a second tab; that column is gone, so an authored example is APPENDED to its
- * topic's notes as a final "## Example" section — the content survives, the topic
+ * a second tab; that column is gone, so a topic's inline `example` is APPENDED to
+ * its notes as a final "## Example" section — the content survives, the topic
  * just reads top to bottom now.
  *
  * Clears `domain_topics` and reloads it; safe to run repeatedly. `seedDomainSubject()`
@@ -23,10 +23,10 @@ import dbmsData from "../seed/domain-dbms.json";
 import osData from "../seed/domain-os.json";
 import cnData from "../seed/domain-cn.json";
 import sqlData from "../seed/domain-sql.json";
-import exampleData from "../seed/domain-examples.json";
 import dbmsQuiz from "../seed/domain-dbms-quiz.json";
 import cnQuiz from "../seed/domain-cn-quiz.json";
 import osQuiz from "../seed/domain-os-quiz.json";
+import oopsQuiz from "../seed/domain-oops-quiz.json";
 
 // One entry per subject file. Add a subject by dropping its seed JSON in and
 // listing it here — the loader, index and UI are all data-driven from this.
@@ -34,7 +34,7 @@ const SUBJECT_FILES = [oopsData, dbmsData, osData, cnData, sqlData];
 
 // Practice questions, one file per subject that has them. A subject without a
 // quiz file simply shows its notes with no Practice tab.
-const QUIZ_FILES = [dbmsQuiz, cnQuiz, osQuiz];
+const QUIZ_FILES = [dbmsQuiz, cnQuiz, osQuiz, oopsQuiz];
 
 export type DomainTopicJson = {
   subject: string;
@@ -46,12 +46,13 @@ export type DomainTopicJson = {
   title: string;
   summary?: string;
   notes: string;
-  /**
-   * Inline copy-ready code. Subjects whose example ships with the extracted content
-   * (SQL) carry it here; the authored-Java subjects keep theirs in
-   * seed/domain-examples.json, keyed by slug.
-   */
+  /** Inline copy-ready code (SQL), appended to the notes as "## Example". */
   example?: string | null;
+  /**
+   * Markdown for the "Mini Project" tab — a hands-on design challenge. Only OOPS
+   * has these (its modules' Boss Challenges); absent/null means no tab.
+   */
+  miniProject?: string | null;
   /** Figure count, informational — the figure paths live inline in `notes`. */
   figures?: number;
 };
@@ -67,13 +68,6 @@ type DomainQuestionJson = {
   explanation?: string | null;
   difficulty?: string | null;
 };
-
-const examples = exampleData as Record<string, string>;
-
-/** Find the authored example for a topic slug, tolerating the "&"→"and" slug form. */
-function exampleFor(slug: string): string | null {
-  return examples[slug] ?? examples[slug.replace(/-and-/g, "-")] ?? null;
-}
 
 /**
  * Retry a DB op through transient connection drops. Hosted Postgres (Neon) auto-
@@ -95,7 +89,7 @@ async function withRetry<T>(fn: () => Promise<T>, label: string, tries = 6): Pro
 
 /**
  * The `notes` a topic's ROW carries, which is not the same string as the one in
- * the seed file: an authored code example is appended as a final "## Example"
+ * the seed file: an inline code example is appended as a final "## Example"
  * section (see the file header — there is no `example` column any more).
  *
  * Exported because anything that writes `domain_topics.notes` from the seed has
@@ -103,8 +97,7 @@ async function withRetry<T>(fn: () => Promise<T>, label: string, tries = 6): Pro
  * is the other such writer.
  */
 export function notesForTopic(t: DomainTopicJson): string {
-  // An inline example wins; otherwise fall back to the authored examples file.
-  const example = t.example ?? exampleFor(t.slug);
+  const example = t.example;
   return example ? `${t.notes.trimEnd()}\n\n## Example\n\n${example.trim()}\n` : t.notes;
 }
 
@@ -119,13 +112,14 @@ function toRow(t: DomainTopicJson) {
     groupOrder: t.groupOrder ?? t.phase ?? 0,
     summary: t.summary ?? null,
     notes,
+    miniProject: t.miniProject?.trim() ? t.miniProject : null,
     order: t.order,
   };
 }
 
-/** Does this topic ship a code example (inline or authored)? Reporting only. */
+/** Does this topic ship a code example? Reporting only. */
 function hasExample(t: DomainTopicJson): boolean {
-  return Boolean(t.example ?? exampleFor(t.slug));
+  return Boolean(t.example);
 }
 
 /**

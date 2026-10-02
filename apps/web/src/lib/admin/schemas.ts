@@ -80,6 +80,12 @@ export const domainTopicCreate = z.object({
   groupOrder: orderField,
   summary: optionalText,
   notes: requiredText, // markdown body — required by the model
+  // The "Mini Project" tab. Unlike `optionalText`, blank means CLEAR (null —
+  // the tab disappears), not "leave unchanged", so an admin can remove one.
+  miniProject: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? null : v),
+    z.string().nullable().optional(),
+  ),
   order: orderField,
   isPublished: z.boolean().optional(),
 });

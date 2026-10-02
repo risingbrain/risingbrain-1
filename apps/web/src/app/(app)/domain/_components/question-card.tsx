@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { CheckCircle2, Sparkles, XCircle, type LucideIcon } from "lucide-react";
 import { useDomainProgress } from "./progress-provider";
 import { usePracticeAttempt } from "./practice-attempt";
@@ -20,13 +21,20 @@ const DIFFICULTY_STYLE: Record<string, string> = {
  *
  * Visually the twin of Screening's `question-card.tsx`, minus its hint affordance
  * — domain questions explain themselves after grading instead.
+ *
+ * `prompt` is the question already rendered from markdown on the server (a C++
+ * listing or a diagram can lead an OOPS question); without it the raw string is
+ * shown as before. Options and explanations are short strings, so their only
+ * markup — `inline code` — is handled here by `withInlineCode`.
  */
 export function DomainQuestionCard({
   question,
   index,
+  prompt: renderedPrompt,
 }: {
   question: DomainPracticeQuestion;
   index: number;
+  prompt?: ReactNode;
 }) {
   const { id, prompt, options, difficulty } = question;
   const attempt = usePracticeAttempt();
@@ -76,9 +84,13 @@ export function DomainQuestionCard({
         <span className="shrink-0 text-sm font-bold tabular-nums text-accent">{index}.</span>
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-3">
-            <p className="whitespace-pre-line text-sm font-medium leading-relaxed text-foreground sm:text-[15px]">
-              {prompt}
-            </p>
+            {renderedPrompt ? (
+              <div className="min-w-0 flex-1">{renderedPrompt}</div>
+            ) : (
+              <p className="whitespace-pre-line text-sm font-medium leading-relaxed text-foreground sm:text-[15px]">
+                {prompt}
+              </p>
+            )}
             <div className="flex shrink-0 items-center gap-2">
               {difficulty ? (
                 <span
@@ -121,7 +133,7 @@ export function DomainQuestionCard({
                   >
                     {o.key}
                   </span>
-                  <span className="flex-1 leading-relaxed">{o.label}</span>
+                  <span className="min-w-0 flex-1 leading-relaxed">{withInlineCode(o.label)}</span>
                   {Icon ? (
                     <Icon
                       className={`mt-0.5 h-4 w-4 shrink-0 ${
@@ -142,7 +154,7 @@ export function DomainQuestionCard({
                 <Sparkles className="h-3.5 w-3.5" /> Explanation
               </p>
               <p className="whitespace-pre-line text-sm leading-relaxed text-muted">
-                {review.explanation}
+                {withInlineCode(review.explanation)}
               </p>
             </div>
           ) : null}
@@ -185,5 +197,26 @@ function StatusDot({ status }: { status: "correct" | "wrong" | "answered" | "non
     <span title="Not answered" className="grid h-5 w-5 place-items-center" aria-label="Not answered">
       <span className="h-3 w-3 rounded-full border-2 border-border" />
     </span>
+  );
+}
+
+/**
+ * `a` and `b` → <code>a</code> and <code>b</code>. Backticks are the one piece
+ * of markdown an option label or an explanation carries; anything without them
+ * (every CN / DBMS / OS question) comes back as the same plain string.
+ */
+function withInlineCode(text: string): ReactNode {
+  if (!text.includes("`")) return text;
+  return text.split(/(`[^`]+`)/g).map((part, i) =>
+    part.length > 2 && part.startsWith("`") && part.endsWith("`") ? (
+      <code
+        key={i}
+        className="rounded bg-background/70 px-1 py-px font-mono text-[0.88em] text-foreground"
+      >
+        {part.slice(1, -1)}
+      </code>
+    ) : (
+      part
+    )
   );
 }

@@ -52,9 +52,16 @@ function buildComponents(): Components {
   };
 }
 
-export function NotesMarkdown({ source }: { source: string }) {
+export function NotesMarkdown({
+  source,
+  variant = "notes",
+}: {
+  source: string;
+  /** "prompt" sets a practice question's prompt: the card's type, tight blocks. */
+  variant?: "notes" | "prompt";
+}) {
   return (
-    <div className="notes-prose">
+    <div className={variant === "prompt" ? "notes-prose notes-prompt" : "notes-prose"}>
       <Markdown remarkPlugins={[remarkGfm]} components={buildComponents()}>
         {source}
       </Markdown>

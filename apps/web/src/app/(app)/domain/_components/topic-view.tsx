@@ -13,7 +13,8 @@ import type { DomainTopicDetail } from "../_data";
 /**
  * One topic's content pane — rendered by the `[topicId]` segment, so it only ever
  * holds the topic in the URL (the lazy split). A header (subject → group → title)
- * over a Notes | Practice switch. The markdown is rendered on the SERVER; the
+ * over a Notes | Practice | Mini Project switch (the last two only when the topic
+ * has them). The markdown is rendered on the SERVER; the
  * client JS is the tab toggle, the practice attempt and the contents rail.
  *
  * LAYOUT. Two columns, centred in the pane:
@@ -48,7 +49,14 @@ export function TopicView({ topic }: { topic: DomainTopicDetail }) {
         <ol className="divide-y divide-border/60">
           {questions.map((q, i) => (
             <li key={q.id}>
-              <DomainQuestionCard question={q} index={i + 1} />
+              {/* The prompt is markdown (OOPS questions open on a C++ listing or
+                  a diagram), rendered HERE on the server like the notes, so the
+                  client card ships no markdown parser. */}
+              <DomainQuestionCard
+                question={q}
+                index={i + 1}
+                prompt={<NotesMarkdown source={q.prompt} variant="prompt" />}
+              />
             </li>
           ))}
         </ol>
@@ -88,6 +96,7 @@ export function TopicView({ topic }: { topic: DomainTopicDetail }) {
               notes={<NotesMarkdown source={topic.notes} />}
               practice={practice}
               questionCount={questions.length}
+              project={topic.miniProject ? <NotesMarkdown source={topic.miniProject} /> : null}
             />
 
             {/* Foot of the sheet, OUTSIDE the tabs on purpose: a learner who has

@@ -561,10 +561,10 @@ for (const file of dirty) {
 if (process.argv.includes("--db")) {
   const { PrismaClient } = await import("../generated/prisma/client");
   const { PrismaPg } = await import("@prisma/adapter-pg");
-  // The row's notes are NOT the seed file's notes: the loader appends an
-  // authored code example as a final "## Example" section. Writing the raw seed
-  // string here would silently delete that example from 40 OOPS topics — it did,
-  // once. Reusing the loader's own transform is what stops the two drifting.
+  // The row's notes are NOT always the seed file's notes: the loader appends an
+  // inline code example as a final "## Example" section. Writing the raw seed
+  // string here would silently delete it — that happened once. Reusing the
+  // loader's own transform is what stops the two drifting.
   const { notesForTopic } = await import("./domain-loader");
   const prisma = new PrismaClient({
     adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),

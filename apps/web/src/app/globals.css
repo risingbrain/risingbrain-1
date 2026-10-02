@@ -151,6 +151,21 @@ body::before {
   margin-bottom: 0;
 }
 
+/* A practice question's prompt (Domain MCQs) rendered through the same markdown
+   pipeline, so a C++ listing or a diagram in the question gets the notes' code
+   and figure treatment. The TEXT keeps the question card's own voice — 15px,
+   medium weight — and the blocks sit tight, since a prompt is a few lines, not
+   a document. */
+.notes-prose.notes-prompt {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  font-weight: 500;
+  color: var(--foreground);
+}
+.notes-prose.notes-prompt > * {
+  margin-block: 0 0.75rem;
+}
+
 /* --- ① The measure, applied ---------------------------------------------
    Capped blocks stay flush LEFT, sharing the left edge of the page header and
    the tab bar above them; wide blocks simply run further right. Centring the

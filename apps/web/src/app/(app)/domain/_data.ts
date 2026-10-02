@@ -160,11 +160,13 @@ export type DomainTopicDetail = {
   groupLabel: string;
   summary: string | null;
   notes: string;
+  /** Markdown for the "Mini Project" tab; null = the topic has none (no tab). */
+  miniProject: string | null;
   questions: DomainPracticeQuestion[];
 };
 
 /**
- * Per-topic loader — only this topic's notes + questions ship, and NO answer
+ * Per-topic loader — only this topic's notes, mini project and questions ship, and NO answer
  * key. It reads no cookies (the learner's marks come from the client provider),
  * so the `[subject]/[slug]` segment is statically prefetchable: hovering a nav
  * item warms and caches the content, making the click feel instant.
@@ -191,6 +193,7 @@ export async function getDomainTopic(
       groupLabel: true,
       summary: true,
       notes: true,
+      miniProject: true,
       questions: {
         orderBy: { order: "asc" },
         select: { id: true, prompt: true, options: true, difficulty: true },
@@ -208,6 +211,7 @@ export async function getDomainTopic(
     groupLabel: t.groupLabel,
     summary: t.summary,
     notes: t.notes,
+    miniProject: t.miniProject,
     questions: t.questions.map((q) => ({
       id: q.id,
       prompt: q.prompt,

@@ -1,0 +1,1042 @@
+[
+ {
+  "subject": "OOPS",
+  "topicSlug": "foundations",
+  "order": 1,
+  "prompt": "```cpp\nclass Counter {\npublic:\n    int value = 0;\n    void increment() { value++; }\n};\n\nint main() {\n    Counter a, b;\n    a.increment();\n    a.increment();\n    b.increment();\n    std::cout << a.value << \" \" << b.value;\n}\n```\n\nWhat does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`3 3`"
+   },
+   {
+    "key": "b",
+    "label": "`2 1`"
+   },
+   {
+    "key": "c",
+    "label": "`1 2`"
+   },
+   {
+    "key": "d",
+    "label": "`2 2`"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "(`2 1`) `a` and `b` are separate objects with separate `value` members. `a` was incremented twice and `b` once. Objects created from the same class never share data."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "foundations",
+  "order": 2,
+  "prompt": "```cpp\nclass Playlist {\npublic:\n    std::string title;\n    int songCount = 0;\n    void addSong() { songCount++; }\n};\n```\n\nWhich statement is correct?",
+  "options": [
+   {
+    "key": "a",
+    "label": "The class has three pieces of state and no behaviour."
+   },
+   {
+    "key": "b",
+    "label": "The class has two pieces of state and one behaviour."
+   },
+   {
+    "key": "c",
+    "label": "`songCount` is behaviour because its value changes."
+   },
+   {
+    "key": "d",
+    "label": "`addSong()` is state because it belongs to the class."
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "`title` and `songCount` are data, so they are state. `addSong()` is an operation, so it is behaviour. A member changing value does not make it behaviour — what matters is whether it holds data or performs an action."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "foundations",
+  "order": 3,
+  "prompt": "```cpp\nclass Door {\npublic:\n    bool isOpen = false;\n    void open() { isOpen = true; }\n};\n\nint main() {\n    Door front;\n    Door back;\n    front.open();\n    std::cout << front.isOpen << \" \" << back.isOpen;\n}\n```\n\nHow many objects exist, and what does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "1 object, prints `1 1`"
+   },
+   {
+    "key": "b",
+    "label": "2 objects, prints `1 1`"
+   },
+   {
+    "key": "c",
+    "label": "2 objects, prints `1 0`"
+   },
+   {
+    "key": "d",
+    "label": "3 objects, prints `1 0`"
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "(2 objects, prints `1 0`) `Door` is the class; `front` and `back` are two objects, each with its own `isOpen`. Opening `front` leaves `back` untouched, and `bool` prints as `1` and `0`."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "foundations",
+  "order": 4,
+  "prompt": "Two designs for the same feature:\n\n```cpp\n// Design A\ndouble balances[100];\nvoid applyFee(int i) { balances[i] -= 50; }\n\n// Design B\nclass Account {\npublic:\n    double balance = 0.0;\n    void applyFee() { if (balance >= 50) balance -= 50; }\n};\n```\n\nWhich statement best describes why Design B is stronger?",
+  "options": [
+   {
+    "key": "a",
+    "label": "Design B runs faster because there is no array indexing."
+   },
+   {
+    "key": "b",
+    "label": "Design B uses less memory than Design A."
+   },
+   {
+    "key": "c",
+    "label": "Design B keeps the rule next to the data it protects, so the rule cannot be bypassed by a different function writing directly."
+   },
+   {
+    "key": "d",
+    "label": "Design B is better only because classes are the modern approach."
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "In Design A, any function anywhere can write to `balances[i]` and skip the check entirely. In Design B the rule lives inside the method that changes the balance. A and B are wrong because performance and memory are not the point, and D is wrong because \"modern\" is not a design argument."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "foundations",
+  "order": 5,
+  "prompt": "A checkout screen calls `payment.process()`. Depending on the object passed in, a card charge, a wallet deduction or a bank transfer runs — and the checkout code never checks which one it is.\n\nWhich OOP idea is this?",
+  "options": [
+   {
+    "key": "a",
+    "label": "Encapsulation"
+   },
+   {
+    "key": "b",
+    "label": "Abstraction"
+   },
+   {
+    "key": "c",
+    "label": "Inheritance"
+   },
+   {
+    "key": "d",
+    "label": "Polymorphism"
+   }
+  ],
+  "answerKey": "d",
+  "explanation": "(Polymorphism) The same call produces different behaviour depending on the actual object, and the caller does not know or care which type it holds. That last part is what distinguishes polymorphism from simply having several similarly named functions."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "classes-and-objects",
+  "order": 1,
+  "prompt": "```cpp\nclass Elevator {\npublic:\n    static inline int buildingFloors = 12;\n    int currentFloor = 0;\n    void goTo(int f) { currentFloor = f; }\n};\n\nint main() {\n    Elevator a, b;\n    a.goTo(7);\n    Elevator::buildingFloors = 15;\n    std::cout << a.currentFloor << \" \" << b.currentFloor\n              << \" \" << b.buildingFloors;\n}\n```\n\nWhat does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`7 7 15`"
+   },
+   {
+    "key": "b",
+    "label": "`7 0 12`"
+   },
+   {
+    "key": "c",
+    "label": "`7 0 15`"
+   },
+   {
+    "key": "d",
+    "label": "`0 0 15`"
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "(`7 0 15`) `currentFloor` is an instance field, so `a` moving to floor 7 leaves `b` at 0. `buildingFloors` is static — one value shared by the class — so the update to 15 is visible through `b`."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "classes-and-objects",
+  "order": 2,
+  "prompt": "```cpp\nclass Subscription {\npublic:\n    std::string plan;\n    int months;\n    Subscription(std::string p, int m) : plan(p), months(m) {}\n};\n\nint main() {\n    Subscription a(\"Pro\", 6);\n    Subscription b;              // <-- this line\n    std::cout << a.plan;\n}\n```\n\nWhat happens?",
+  "options": [
+   {
+    "key": "a",
+    "label": "It prints `Pro`; `b` is simply left empty."
+   },
+   {
+    "key": "b",
+    "label": "It prints `Pro` followed by a blank line."
+   },
+   {
+    "key": "c",
+    "label": "It fails to compile, because declaring a constructor with parameters stops the compiler from generating a no-argument one."
+   },
+   {
+    "key": "d",
+    "label": "It compiles but crashes at runtime."
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "As soon as you declare any constructor yourself, the compiler stops supplying the implicit no-argument one. `Subscription b;` has no constructor to call, so this is a compile error, not a runtime problem. That is the language protecting you from a half-built object."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "classes-and-objects",
+  "order": 3,
+  "prompt": "```cpp\nclass Playlist {\npublic:\n    std::string name = \"Untitled\";\n    void rename(std::string name) { name = name; }\n};\n\nint main() {\n    Playlist p;\n    p.rename(\"Focus\");\n    std::cout << p.name;\n}\n```\n\nWhat does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`Focus`"
+   },
+   {
+    "key": "b",
+    "label": "`Untitled`"
+   },
+   {
+    "key": "c",
+    "label": "an empty string"
+   },
+   {
+    "key": "d",
+    "label": "it fails to compile"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "(`Untitled`) The parameter `name` shadows the field `name`, so `name = name;` assigns the parameter to itself. The field is never written. Adding `this->` on the left fixes it."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "classes-and-objects",
+  "order": 4,
+  "prompt": "```cpp\nclass Ticket {\npublic:\n    std::string seat = \"A1\";\n};\n\nint main() {\n    Ticket  t1;\n    Ticket  t2 = t1;\n    Ticket& t3 = t1;\n    t2.seat = \"B2\";\n    t3.seat = \"C3\";\n    std::cout << t1.seat << \" \" << t2.seat << \" \" << t3.seat;\n}\n```\n\nWhat does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`A1 B2 C3`"
+   },
+   {
+    "key": "b",
+    "label": "`C3 B2 C3`"
+   },
+   {
+    "key": "c",
+    "label": "`C3 C3 C3`"
+   },
+   {
+    "key": "d",
+    "label": "`B2 B2 C3`"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "(`C3 B2 C3`) `t2` is a copy — an independent object — so setting it to `B2` leaves `t1` alone. `t3` is a reference to `t1`, so setting `t3` to `C3` changes `t1` itself, and printing `t3` prints that same object."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "classes-and-objects",
+  "order": 5,
+  "prompt": "```cpp\nclass MovieScreening {\npublic:\n    std::string movieTitle;\n    int    screenNumber;\n    int    seatsSold;\n    double taxRate;      // 8%, identical for every screening in the cinema\n};\n```\n\nWhich field is the best candidate to become `static`?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`movieTitle`"
+   },
+   {
+    "key": "b",
+    "label": "`seatsSold`"
+   },
+   {
+    "key": "c",
+    "label": "`taxRate`"
+   },
+   {
+    "key": "d",
+    "label": "`screenNumber`"
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "(`taxRate`) It is one value that describes the cinema, not any individual screening, and it is identical everywhere. Making it static stores it once and gives you one place to change it. The other three differ from screening to screening and must stay per-object."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "encapsulation-and-abstraction",
+  "order": 1,
+  "prompt": "```cpp\nclass Locker {\nprivate:\n    bool locked = true;\npublic:\n    void unlock(int code) { if (code == 4417) locked = false; }\n    bool isLocked() const { return locked; }\n};\n\nint main() {\n    Locker l;\n    l.locked = false;\n    std::cout << l.isLocked();\n}\n```\n\nWhat happens?",
+  "options": [
+   {
+    "key": "a",
+    "label": "Prints `0`"
+   },
+   {
+    "key": "b",
+    "label": "Prints `1`"
+   },
+   {
+    "key": "c",
+    "label": "It does not compile, because `locked` is private"
+   },
+   {
+    "key": "d",
+    "label": "It compiles, but the assignment is quietly ignored"
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "`l.locked = false;` is a compile error — `locked` is private and `main()` is outside the class. The compiler refuses rather than letting an invalid write through, which is the entire mechanism at work."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "encapsulation-and-abstraction",
+  "order": 2,
+  "prompt": "```cpp\nclass Kiosk {\npublic:\n    void printTicket() { }\nprotected:\n    void calibrate()   { }\nprivate:\n    int  serial = 77;\n};\n\nclass SelfServeKiosk : public Kiosk {\npublic:\n    void setup() {\n        calibrate();      // 1\n        printTicket();    // 2\n        serial = 99;      // 3\n    }\n};\n\nint main() {\n    SelfServeKiosk k;\n    k.printTicket();      // 4\n    k.calibrate();        // 5\n}\n```\n\nWhich numbered lines fail to compile?",
+  "options": [
+   {
+    "key": "a",
+    "label": "3 only"
+   },
+   {
+    "key": "b",
+    "label": "3 and 5"
+   },
+   {
+    "key": "c",
+    "label": "1, 3 and 5"
+   },
+   {
+    "key": "d",
+    "label": "5 only"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "Line 3 fails because `serial` is private, and a derived class gets no access to private members. Line 5 fails because `calibrate()` is protected and `main()` is ordinary outside code. Line 1 is fine — a derived class may call a protected function of the class it was built from."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "encapsulation-and-abstraction",
+  "order": 3,
+  "prompt": "```cpp\nclass Thermostat {\nprivate:\n    int targetTemp = 21;\npublic:\n    void setTargetTemp(int t) { if (t >= 5 && t <= 30) targetTemp = t; }\n    int  getTargetTemp() const { return targetTemp; }\n};\n\nint main() {\n    Thermostat t;\n    t.setTargetTemp(24);\n    t.setTargetTemp(90);\n    std::cout << t.getTargetTemp();\n}\n```\n\nWhat does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`90`"
+   },
+   {
+    "key": "b",
+    "label": "`24`"
+   },
+   {
+    "key": "c",
+    "label": "`21`"
+   },
+   {
+    "key": "d",
+    "label": "`30`"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "(`24`) The range check accepts 24 and rejects 90, so the variable keeps the last valid value it was given. A rejected change leaves the value alone rather than resetting it."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "encapsulation-and-abstraction",
+  "order": 4,
+  "prompt": "```cpp\nclass Playlist {\nprivate:\n    int trackCount = 0;\npublic:\n    int  getTrackCount() const { return trackCount; }\n    void setTrackCount(int n)  { trackCount = n; }\n};\n```\n\n`p.setTrackCount(-5)` compiles and leaves the count at `-5`. Which change would improve this design the most?",
+  "options": [
+   {
+    "key": "a",
+    "label": "Make `trackCount` protected instead of private."
+   },
+   {
+    "key": "b",
+    "label": "Remove the getter, since exposing any value breaks encapsulation."
+   },
+   {
+    "key": "c",
+    "label": "Replace `setTrackCount()` with `addTrack()` and `removeTrack()`, so the count only changes when something real happens."
+   },
+   {
+    "key": "d",
+    "label": "Nothing — private with a getter and a setter is already correct encapsulation."
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "A track count should change because a track was added or removed, never by arbitrary assignment — and naming the real operations makes `-5` unreachable. A changes nothing meaningful, B throws away a legitimate read, and D describes exactly the boilerplate that guards nothing."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "encapsulation-and-abstraction",
+  "order": 5,
+  "prompt": "```cpp\nclass SecurityPanel {\npublic:\n    bool arm(int pin);        // checks the pin, polls sensors, enables the siren\nprivate:\n    int  pin;\n    bool armed = false;\n    void pollSensors();\n    void enableSiren();\n};\n```\n\nWhich statement describes this class best?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`arm()` is encapsulation, and the private `pin` is abstraction."
+   },
+   {
+    "key": "b",
+    "label": "Keeping `pin` and `armed` private and changeable only through `arm()` is encapsulation; offering one `arm()` call instead of three separate steps is abstraction."
+   },
+   {
+    "key": "c",
+    "label": "Abstraction only, since everything internal is hidden."
+   },
+   {
+    "key": "d",
+    "label": "Neither, because no inheritance is involved."
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "Both ideas are present and doing different jobs. One decides who may change the data; the other decides how much of the process the caller has to know about."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "inheritance",
+  "order": 1,
+  "prompt": "```cpp\nclass Sensor {\npublic:\n    Sensor()  { std::cout << \"S\"; }\n    ~Sensor() { std::cout << \"s\"; }\n};\n\nclass MotionSensor : public Sensor {\npublic:\n    MotionSensor()  { std::cout << \"M\"; }\n    ~MotionSensor() { std::cout << \"m\"; }\n};\n\nint main() {\n    MotionSensor m;\n}\n```\n\nWhat does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`SMsm`"
+   },
+   {
+    "key": "b",
+    "label": "`SMms`"
+   },
+   {
+    "key": "c",
+    "label": "`MSsm`"
+   },
+   {
+    "key": "d",
+    "label": "`MSms`"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "(`SMms`) Construction runs base first (`S`), then derived (`M`). Destruction reverses it: derived (`m`), then base (`s`)."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "inheritance",
+  "order": 2,
+  "prompt": "```cpp\nclass Player {\npublic:\n    void attack() { std::cout << \"Basic attack\\n\"; }\n};\n\nclass Archer : public Player {\npublic:\n    void attack() { std::cout << \"Fires an arrow\\n\"; }\n};\n\nint main() {\n    Player* p = new Archer();\n    p->attack();\n    delete p;\n}\n```\n\nWhat does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`Fires an arrow`"
+   },
+   {
+    "key": "b",
+    "label": "`Basic attack`"
+   },
+   {
+    "key": "c",
+    "label": "Both lines, parent first"
+   },
+   {
+    "key": "d",
+    "label": "It does not compile"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "(`Basic attack`) `attack()` is not virtual, so C++ chooses the function from the pointer's type, `Player*`, and never looks at the actual object. Adding `virtual` to `Player::attack()` would change the answer to A."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "inheritance",
+  "order": 3,
+  "prompt": "```cpp\nclass Report {\npublic:\n    virtual void render() = 0;\n    virtual ~Report() = default;\n};\n\nclass PdfReport : public Report {\npublic:\n    void render() override { std::cout << \"PDF\\n\"; }\n};\n\nint main() {\n    Report r;\n    r.render();\n}\n```\n\nWhat happens?",
+  "options": [
+   {
+    "key": "a",
+    "label": "Prints `PDF`"
+   },
+   {
+    "key": "b",
+    "label": "Prints nothing and returns 0"
+   },
+   {
+    "key": "c",
+    "label": "It does not compile, because `Report` is abstract"
+   },
+   {
+    "key": "d",
+    "label": "It compiles but crashes at run time"
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "`Report` has a pure virtual `render()`, which makes it abstract, and abstract classes cannot be used to create objects. The error appears at the declaration, before `render()` is ever called."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "inheritance",
+  "order": 4,
+  "prompt": "```cpp\nclass Track {\npublic:\n    Track(std::string t) : title(t) { std::cout << \"Track \"; }\nprotected:\n    std::string title;\n};\n\nclass PodcastEpisode : public Track {\npublic:\n    PodcastEpisode(std::string t, int n) : Track(t), episodeNo(n) {\n        std::cout << \"Episode \" << episodeNo << \"\\n\";\n    }\nprivate:\n    int episodeNo;\n};\n\nint main() {\n    PodcastEpisode e(\"Deep Work\", 7);\n}\n```\n\nWhat does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`Episode 7 Track`"
+   },
+   {
+    "key": "b",
+    "label": "`Track Episode 7`"
+   },
+   {
+    "key": "c",
+    "label": "`Track` only"
+   },
+   {
+    "key": "d",
+    "label": "It does not compile, because `Track` has no default constructor"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "(`Track Episode 7`) The initialisation list names `Track(t)`, so the base part is built and prints first. D is wrong precisely because the base constructor *was* called explicitly — leaving it out is what would have failed."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "inheritance",
+  "order": 5,
+  "prompt": "A warehouse system has `Robot` with `charge()` and `move()`. A new `ChargingDock` class also needs `charge()`, but it never moves — it is a fixed unit that robots drive into.\n\nWhich design is right?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`ChargingDock` inherits from `Robot`, to reuse `charge()`."
+   },
+   {
+    "key": "b",
+    "label": "`Robot` inherits from `ChargingDock`, since docks are simpler."
+   },
+   {
+    "key": "c",
+    "label": "Neither inherits. They are unrelated things that happen to share a function name; give each its own `charge()`, or extract a shared `Chargeable` contract."
+   },
+   {
+    "key": "d",
+    "label": "Both inherit from a common `Machine` base that provides `move()`."
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "*\"A ChargingDock is a Robot\"* is false, and inheriting would hand the dock a `move()` it must never use. A shared function name is not a relationship. Option D is worse: it forces `move()` onto a class that cannot move."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "polymorphism",
+  "order": 1,
+  "prompt": "```cpp\nclass Exporter {\npublic:\n    void write(int rows)         { std::cout << \"A\"; }\n    void write(double megabytes) { std::cout << \"B\"; }\n};\n\nint main() {\n    Exporter e;\n    e.write(5);\n    e.write(5.0);\n}\n```\n\nWhat does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`AA`"
+   },
+   {
+    "key": "b",
+    "label": "`AB`"
+   },
+   {
+    "key": "c",
+    "label": "`BB`"
+   },
+   {
+    "key": "d",
+    "label": "It does not compile — the names clash"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "(`AB`) `5` is an `int` and matches the first overload; `5.0` is a `double` and matches the second. The compiler chooses from the argument types before the program runs."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "polymorphism",
+  "order": 2,
+  "prompt": "```cpp\nclass Uploader {\npublic:\n    void send() { std::cout << \"generic\\n\"; }\n};\n\nclass S3Uploader : public Uploader {\npublic:\n    void send() { std::cout << \"s3\\n\"; }\n};\n\nint main() {\n    S3Uploader s;\n    Uploader* u = &s;\n    u->send();\n}\n```\n\nWhat does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`s3`"
+   },
+   {
+    "key": "b",
+    "label": "`generic`"
+   },
+   {
+    "key": "c",
+    "label": "Both lines"
+   },
+   {
+    "key": "d",
+    "label": "It does not compile"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "(`generic`) `send()` is not virtual, so the call is resolved from the pointer's type, `Uploader*`. Adding `virtual` to `Uploader::send()` would change the answer to A."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "polymorphism",
+  "order": 3,
+  "prompt": "```cpp\nclass Tracker {\npublic:\n    virtual void ping() { std::cout << \"base \"; }\n    virtual ~Tracker() = default;\n};\n\nclass GpsTracker : public Tracker {\npublic:\n    void ping() override { std::cout << \"gps \"; }\n};\n\nint main() {\n    GpsTracker g;\n    Tracker& t = g;\n    t.ping();\n    g.ping();\n}\n```\n\nWhat does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`base gps`"
+   },
+   {
+    "key": "b",
+    "label": "`gps gps`"
+   },
+   {
+    "key": "c",
+    "label": "`base base`"
+   },
+   {
+    "key": "d",
+    "label": "`gps base`"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "(`gps gps`) Virtual dispatch works through references just as it does through pointers, so `t.ping()` reaches the real object's version. The direct call on `g` obviously does too."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "polymorphism",
+  "order": 4,
+  "prompt": "```cpp\nclass Job {\npublic:\n    virtual void run() { std::cout << \"job\\n\"; }\n    virtual ~Job() = default;\n};\n\nclass BackupJob : public Job {\npublic:\n    void run() override { std::cout << \"backup\\n\"; }\n    void verify()       { std::cout << \"verifying\\n\"; }\n};\n\nint main() {\n    Job j;\n    Job* p = &j;\n    BackupJob* b = dynamic_cast<BackupJob*>(p);\n    std::cout << (b == nullptr ? \"null\" : \"ok\") << \"\\n\";\n}\n```\n\nWhat does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`ok`"
+   },
+   {
+    "key": "b",
+    "label": "`null`"
+   },
+   {
+    "key": "c",
+    "label": "It does not compile"
+   },
+   {
+    "key": "d",
+    "label": "It crashes at run time"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "(`null`) The object really is a plain `Job`, not a `BackupJob`, so the checked cast correctly refuses and returns `nullptr`. The hierarchy has a virtual function, so `dynamic_cast` is allowed here — it simply answers no."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "polymorphism",
+  "order": 5,
+  "prompt": "A logistics system has `Shipment` with a virtual `track()`, and `AirShipment` which overrides it and adds `checkCustoms()`. Code holds a `Shipment*` and needs customs checked only for air shipments.\n\nWhich approach is soundest?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`static_cast<AirShipment*>(ptr)->checkCustoms();` — the classes are related, so it is fine."
+   },
+   {
+    "key": "b",
+    "label": "`dynamic_cast` to `AirShipment*`, check for `nullptr`, and call `checkCustoms()` only if it succeeded."
+   },
+   {
+    "key": "c",
+    "label": "Make `checkCustoms()` public on `Shipment` and have every other shipment type leave it empty."
+   },
+   {
+    "key": "d",
+    "label": "Store everything as `AirShipment*` to avoid casting altogether."
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "It is the only option that asks whether the object really is an `AirShipment` before relying on it. A skips the check and misbehaves on any other shipment type; C puts air-specific behaviour on every shipment; D throws away the ability to hold mixed types, which is the reason for the base pointer in the first place."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "relationships",
+  "order": 1,
+  "prompt": "![Figure 14](/study-notes/oops/relationships/fig-14.png)\n\nLook at **fragment A**. What relationship does it show?",
+  "options": [
+   {
+    "key": "a",
+    "label": "Composition — the passenger owns the train"
+   },
+   {
+    "key": "b",
+    "label": "Aggregation — the train is part of the passenger"
+   },
+   {
+    "key": "c",
+    "label": "Association — the two are connected, with no ownership either way"
+   },
+   {
+    "key": "d",
+    "label": "Generalization — a passenger is a kind of train"
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "A plain solid line with nothing on either end is an association. A passenger boards a train and later gets off; neither creates or destroys the other."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "relationships",
+  "order": 2,
+  "prompt": "![Figure 14](/study-notes/oops/relationships/fig-14.png)\n\nLook at **fragment B**. What does the hollow diamond tell you?",
+  "options": [
+   {
+    "key": "a",
+    "label": "A `Team` has `Player` objects, and a player can exist without that team"
+   },
+   {
+    "key": "b",
+    "label": "A `Player` has `Team` objects"
+   },
+   {
+    "key": "c",
+    "label": "Destroying the `Team` must destroy every `Player`"
+   },
+   {
+    "key": "d",
+    "label": "`Team` and `Player` are unrelated"
+   }
+  ],
+  "answerKey": "a",
+  "explanation": "Hollow means loose ownership, and the diamond sits on `Team`, so the team is the whole. Players survive the team being disbanded. C describes a *filled* diamond, and B has the diamond on the wrong side."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "relationships",
+  "order": 3,
+  "prompt": "![Figure 14](/study-notes/oops/relationships/fig-14.png)\n\nLook at **fragment C**. Which class is the whole, and what happens when it is destroyed?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`OrderItem` is the whole; destroying it removes the order"
+   },
+   {
+    "key": "b",
+    "label": "`Order` is the whole; its `OrderItem` objects are destroyed with it"
+   },
+   {
+    "key": "c",
+    "label": "`Order` is the whole, but the items carry on independently"
+   },
+   {
+    "key": "d",
+    "label": "Neither is the whole — the filled diamond only means they are connected"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "The filled diamond is on `Order`, making it the whole, and filled means the parts' lifetime is tied to it. Cancel the order and its lines go with it."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "relationships",
+  "order": 4,
+  "prompt": "![Figure 14](/study-notes/oops/relationships/fig-14.png)\n\nLook at **fragment D**. Which class is the base class, and how do you know?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`Bike`, because it sits at the bottom"
+   },
+   {
+    "key": "b",
+    "label": "`Vehicle`, because the hollow triangle touches it"
+   },
+   {
+    "key": "c",
+    "label": "`Bike`, because the triangle points away from it"
+   },
+   {
+    "key": "d",
+    "label": "You cannot tell without seeing the code"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "The hollow triangle always touches the general class. Position on the page is not the rule — the symbol is. Read it in the direction the triangle points: *a Bike is a Vehicle.*"
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "relationships",
+  "order": 5,
+  "prompt": "Someone proposes `class ShoppingCart: public std::vector<Product>` so the cart gets every vector operation for free.\n\nWhat is the soundest objection?",
+  "options": [
+   {
+    "key": "a",
+    "label": "None — it saves a lot of code."
+   },
+   {
+    "key": "b",
+    "label": "\"A shopping cart is a vector\" is false; the cart should *hold* a vector, so it can expose only cart operations such as `addItem` and `total`."
+   },
+   {
+    "key": "c",
+    "label": "Inheritance is always worse than composition, so it is wrong by default."
+   },
+   {
+    "key": "d",
+    "label": "It would work only if `std::vector` had virtual functions."
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "The is-a sentence is false, and inheriting hands every vector operation to callers, including ones that make no sense for a cart. Holding a vector as a member keeps the cart's interface deliberate. C overstates the case — inheritance is right when is-a is genuinely true."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "solid-principles",
+  "order": 1,
+  "prompt": "![Figure 10](/study-notes/oops/solid-principles/fig-10.png)\n\nLook at **diagram A**. Which principle is it warning you about, and why?",
+  "options": [
+   {
+    "key": "a",
+    "label": "Open/Closed — the class cannot be extended"
+   },
+   {
+    "key": "b",
+    "label": "Single Responsibility — five jobs with five different reasons to change"
+   },
+   {
+    "key": "c",
+    "label": "Liskov Substitution — it has no base class"
+   },
+   {
+    "key": "d",
+    "label": "Interface Segregation — it has too many public methods to call"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "Pricing, persistence, email, invoicing and analytics are five separate concerns owned by five different people. Any one change forces an edit to a file holding the other four. D is a plausible trap — the issue is unrelated *reasons to change*, not the method count."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "solid-principles",
+  "order": 2,
+  "prompt": "![Figure 10](/study-notes/oops/solid-principles/fig-10.png)\n\nLook at **diagram B**. What design problem does the arrow show?",
+  "options": [
+   {
+    "key": "a",
+    "label": "None — a class has to use something to get work done"
+   },
+   {
+    "key": "b",
+    "label": "`ReportGenerator` is welded to one storage provider, so switching to another means editing the report logic itself"
+   },
+   {
+    "key": "c",
+    "label": "`S3Storage` should inherit from `ReportGenerator`"
+   },
+   {
+    "key": "d",
+    "label": "The arrow points the wrong way for composition"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "`ReportGenerator` names a concrete provider, so the important logic cannot move to another store without being edited. Introduce a storage contract and hand the provider in from outside."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "solid-principles",
+  "order": 3,
+  "prompt": "![Figure 10](/study-notes/oops/solid-principles/fig-10.png)\n\nLook at **diagram C**. Which principle suggests splitting `Machine`, and what is the giveaway?",
+  "options": [
+   {
+    "key": "a",
+    "label": "SRP — the interface has more than one method"
+   },
+   {
+    "key": "b",
+    "label": "OCP — adding a device means editing `Machine`"
+   },
+   {
+    "key": "c",
+    "label": "ISP — `SimplePrinter` must implement `scan()` and `fax()` it cannot perform"
+   },
+   {
+    "key": "d",
+    "label": "DIP — `SimplePrinter` should not depend on an interface"
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "`SimplePrinter` inherits `scan()` and `fax()` and has to write empty bodies for both. Empty functions written purely to satisfy a contract are the signal that the contract is too big. A is the common trap: the method count is not the test."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "solid-principles",
+  "order": 4,
+  "prompt": "```cpp\nclass Discount {\npublic:\n    virtual double apply(double total) const = 0;\n    virtual ~Discount() = default;\n};\n\nclass NoDiscount : public Discount {\npublic:\n    double apply(double t) const override { return t; }\n};\n\nclass FlatDiscount : public Discount {\npublic:\n    double apply(double t) const override { return t - 100; }\n};\n```\n\nA festive discount is needed next month. What does adding it require?",
+  "options": [
+   {
+    "key": "a",
+    "label": "Editing `Discount` to add a new virtual function"
+   },
+   {
+    "key": "b",
+    "label": "Editing every existing discount class"
+   },
+   {
+    "key": "c",
+    "label": "One new class; nothing existing changes"
+   },
+   {
+    "key": "d",
+    "label": "A new `if` branch wherever discounts are applied"
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "The contract already exists, so a festive discount is one new class implementing `apply()`. `NoDiscount` and `FlatDiscount` are never reopened — Open/Closed working as intended."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "solid-principles",
+  "order": 5,
+  "prompt": "A team puts an interface in front of every single class in a 300-line tool, including one wrapping `std::string`. Every class takes all its collaborators through its constructor.\n\nWhich statement is soundest?",
+  "options": [
+   {
+    "key": "a",
+    "label": "This is correct SOLID; more abstraction is always safer."
+   },
+   {
+    "key": "b",
+    "label": "Abstractions earn their place where the implementation may change or needs faking in tests. Wrapping `std::string` adds indirection with nothing in return."
+   },
+   {
+    "key": "c",
+    "label": "DIP requires an interface for every dependency, so this is required."
+   },
+   {
+    "key": "d",
+    "label": "The problem is the constructors; the interfaces are fine."
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "Abstraction is not free: each layer is another hop when reading the code. It pays for itself when the implementation may change or must be faked in a test, and `std::string` is neither. This is over-engineering wearing SOLID's name."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "design-patterns",
+  "order": 1,
+  "prompt": "```cpp\nclass GameSettings {\nprivate:\n    GameSettings() {}\npublic:\n    static GameSettings& getInstance() {\n        static GameSettings instance;\n        return instance;\n    }\n    int volume = 50;\n};\n\nint main() {\n    GameSettings& a = GameSettings::getInstance();\n    GameSettings& b = GameSettings::getInstance();\n    a.volume = 80;\n    std::cout << b.volume << \" \" << (&a == &b);\n}\n```\n\nWhat does this print?",
+  "options": [
+   {
+    "key": "a",
+    "label": "`50 0`"
+   },
+   {
+    "key": "b",
+    "label": "`80 1`"
+   },
+   {
+    "key": "c",
+    "label": "`50 1`"
+   },
+   {
+    "key": "d",
+    "label": "It does not compile"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "(`80 1`) `getInstance()` returns the same object both times, so `a` and `b` are two names for it. The change through `a` is visible through `b`, and the address comparison prints `1` for true."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "design-patterns",
+  "order": 2,
+  "prompt": "A music app must notify the now-playing bar, the lock screen widget and the listening-history logger whenever the track changes. The team expects more listeners later.\n\nWhich pattern fits best?",
+  "options": [
+   {
+    "key": "a",
+    "label": "Singleton — one shared player object"
+   },
+   {
+    "key": "b",
+    "label": "Factory — the listeners need creating"
+   },
+   {
+    "key": "c",
+    "label": "Observer — one change, many interested objects"
+   },
+   {
+    "key": "d",
+    "label": "Strategy — pick which listener to use"
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "One thing changes and several unrelated objects need to hear about it, with more expected — exactly the Observer shape. A new listener then subscribes instead of the player being edited."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "design-patterns",
+  "order": 3,
+  "prompt": "```cpp\nclass Report {\n    SortStrategy& s;\npublic:\n    Report(SortStrategy& st) : s(st) {}\n    void build() { s.sort(); }\n};\n```\n\nWhich statement is accurate?",
+  "options": [
+   {
+    "key": "a",
+    "label": "This is Observer — `Report` is notified by `SortStrategy`"
+   },
+   {
+    "key": "b",
+    "label": "This is Strategy — `Report` delegates one job to one interchangeable object"
+   },
+   {
+    "key": "c",
+    "label": "This is Factory — `Report` creates a sorter"
+   },
+   {
+    "key": "d",
+    "label": "This is Singleton — only one `SortStrategy` can exist"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "`Report` holds one object behind an interface and asks it to do a job. Observer would mean holding a *list* and telling all of them something happened, expecting nothing back."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "design-patterns",
+  "order": 4,
+  "prompt": "A team writes a helper that returns `new PdfExporter()`, `new CsvExporter()` or `new ExcelExporter()` based on a string argument, and calls it the Factory Method pattern.\n\nWhat is the most accurate response?",
+  "options": [
+   {
+    "key": "a",
+    "label": "Correct — any function that creates objects is Factory Method"
+   },
+   {
+    "key": "b",
+    "label": "It is a simple factory, which is useful but not the Factory Method pattern; in Factory Method a subclass decides by overriding a creation method"
+   },
+   {
+    "key": "c",
+    "label": "It is wrong to centralise creation like that at all"
+   },
+   {
+    "key": "d",
+    "label": "It is Factory Method only if it returns a smart pointer"
+   }
+  ],
+  "answerKey": "b",
+  "explanation": "Centralising creation is a good move and the helper is genuinely useful — it is just a simple factory, not the GoF pattern. Factory Method delegates the choice to a subclass overriding a creation method."
+ },
+ {
+  "subject": "OOPS",
+  "topicSlug": "design-patterns",
+  "order": 5,
+  "prompt": "A 200-line tool reads one config file, converts it, writes one output file. A reviewer asks for a Singleton config, a factory for the converter, a strategy for formatting and an observer for progress messages.\n\nWhat is the soundest reply?",
+  "options": [
+   {
+    "key": "a",
+    "label": "Agree — four patterns make the design professional"
+   },
+   {
+    "key": "b",
+    "label": "Agree about Singleton only, since config is always shared"
+   },
+   {
+    "key": "c",
+    "label": "Ask which problem each pattern solves here; with one converter and one format, they add classes and indirection without removing any difficulty"
+   },
+   {
+    "key": "d",
+    "label": "Refuse all patterns on principle, as they never help small tools"
+   }
+  ],
+  "answerKey": "c",
+  "explanation": "Each pattern must answer a problem that actually exists. With one converter and one output format there is nothing to swap and nothing to notify, so all four add files and indirection for no gain. D overcorrects: small tools sometimes do benefit, when the problem is real."
+ }
+]
