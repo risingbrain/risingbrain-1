@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Check, Lightbulb, Loader2 } from "lucide-react";
 import { DifficultyBadge } from "./difficulty-badge";
 import { NoteModal } from "./note-modal";
+import { HintText } from "./hint-text";
 import { useCelebrate } from "./celebration";
 import { useReportSolved, useSheetBookmarkReport, useSheetSignedIn } from "./sheet-progress";
 import { redirectToLogin } from "@/lib/auth/redirect";
@@ -29,42 +30,75 @@ function parseHint(raw: string | null): { hints: string[]; notes: string[] } | n
   return hints.length || notes.length ? { hints, notes } : null;
 }
 
-/** Inline hint panel: Hint 1 first, then one more per "Show hint N" click. */
+/**
+ * Inline hint panel, revealed one step at a time. Hints go from a gentle nudge
+ * to the concrete approach, so each is a numbered step on a rail and the next
+ * one stays behind an explicit "Reveal" row — the learner decides how much
+ * help they want. Notes (caveats like "the GfG version differs") are not
+ * spoilers, so they sit up front.
+ */
 function HintPanel({ id, hints, notes }: { id: string; hints: string[]; notes: string[] }) {
   const [shown, setShown] = useState(1);
   const total = hints.length;
   return (
     <div id={id} className="px-3 pb-4 sm:px-4 sm:pl-[4.75rem]">
-      <div className="space-y-3 rounded-xl border border-amber-400/25 bg-amber-400/[0.06] px-3.5 py-3">
+      <div className="rounded-xl border border-amber-400/20 bg-amber-400/[0.04] px-4 py-3.5">
+        <div className="flex items-center gap-2">
+          <Lightbulb className="h-4 w-4 text-amber-400" />
+          <span className="text-xs font-semibold uppercase tracking-wider text-amber-400">Hints</span>
+          {total > 1 && (
+            <span className="ml-auto flex items-center gap-1" aria-label={`${shown} of ${total} hints shown`}>
+              {hints.map((_, i) => (
+                <span
+                  key={i}
+                  className={`h-1.5 w-4 rounded-full transition-colors ${i < shown ? "bg-amber-400" : "bg-amber-400/20"}`}
+                />
+              ))}
+            </span>
+          )}
+        </div>
+
         {notes.map((n, i) => (
-          <p key={`n${i}`} className="text-xs leading-relaxed text-muted">
-            <span className="font-semibold text-foreground/80">Note: </span>
-            {n}
+          <p
+            key={`n${i}`}
+            className="mt-3 rounded-lg border border-border bg-surface-2/60 px-3 py-2 text-xs leading-relaxed text-muted"
+          >
+            <span className="font-semibold text-foreground/80">Heads up: </span>
+            <HintText text={n} />
           </p>
         ))}
-        {hints.slice(0, shown).map((h, i) => (
-          <div key={i} className="flex gap-2.5">
-            <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-            <div className="min-w-0">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-amber-400">
-                Hint {i + 1}
-                {total > 1 && <span className="text-amber-400/60"> of {total}</span>}
-              </p>
-              <p className="mt-1 text-sm leading-relaxed text-foreground/90">{h}</p>
-            </div>
-          </div>
-        ))}
-        {shown < total && (
-          <div className="flex justify-end">
-            <button
-              type="button"
-              onClick={() => setShown((n) => n + 1)}
-              className="rounded-lg border border-amber-400/30 px-3 py-1.5 text-xs font-medium text-amber-400 transition-colors hover:bg-amber-400/10"
-            >
-              Show hint {shown + 1} →
-            </button>
-          </div>
-        )}
+
+        <ol className="mt-3">
+          {hints.slice(0, shown).map((h, i) => {
+            const last = i === shown - 1 && shown === total;
+            return (
+              <li key={i} className="relative flex gap-3 pb-3 last:pb-0">
+                {/* rail connecting the steps */}
+                {!last && <span aria-hidden className="absolute left-[9px] top-6 bottom-0 w-px bg-amber-400/20" />}
+                <span className="relative grid h-5 w-5 shrink-0 place-items-center rounded-full bg-amber-400/15 text-[11px] font-semibold tabular-nums text-amber-400 ring-1 ring-amber-400/30">
+                  {i + 1}
+                </span>
+                <p className="min-w-0 pt-px text-sm leading-relaxed text-foreground/90">
+                  <HintText text={h} />
+                </p>
+              </li>
+            );
+          })}
+          {shown < total && (
+            <li className="flex gap-3">
+              <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full border border-dashed border-amber-400/40 text-[11px] font-semibold tabular-nums text-amber-400/60">
+                {shown + 1}
+              </span>
+              <button
+                type="button"
+                onClick={() => setShown((n) => n + 1)}
+                className="-mt-0.5 rounded-md px-2 py-0.5 text-sm font-medium text-amber-400 transition-colors hover:bg-amber-400/10"
+              >
+                {shown + 1 === total ? "Reveal the last hint" : `Reveal hint ${shown + 1}`} →
+              </button>
+            </li>
+          )}
+        </ol>
       </div>
     </div>
   );
