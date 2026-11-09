@@ -493,6 +493,7 @@ function ProblemEditor({
     leetcodeUrl: node.leetcodeUrl ?? "",
     gfgUrl: node.gfgUrl ?? "",
     youtubeUrl: node.youtubeUrl ?? "",
+    hint: node.hint ?? "",
     order: node.order,
     companyIds: [...node.companies.map((c) => c.companyId)].sort(),
   };
@@ -546,6 +547,17 @@ function ProblemEditor({
           </Field>
           <Field label="YouTube URL">
             <TextInput value={form.youtubeUrl} onChange={(e) => set("youtubeUrl", e.target.value)} className="font-sans" />
+          </Field>
+        </Section>
+
+        <Section title="Hint" description="A nudge toward the approach, shown when a learner opens it. Never the full solution. Leave empty to hide.">
+          <Field label="Hint">
+            <TextArea
+              value={form.hint}
+              onChange={(e) => set("hint", e.target.value)}
+              placeholder="e.g. The array is sorted — can two pointers from both ends replace the inner loop?"
+              className="font-sans"
+            />
           </Field>
         </Section>
 

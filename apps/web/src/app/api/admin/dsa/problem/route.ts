@@ -35,6 +35,7 @@ export async function POST(req: Request) {
         leetcodeUrl: d.leetcodeUrl ?? null,
         gfgUrl: d.gfgUrl ?? null,
         youtubeUrl: d.youtubeUrl ?? null,
+        hint: d.hint ?? null,
         order: d.order ?? siblingCount,
         ...(d.companyIds?.length && {
           companies: { create: d.companyIds.map((id) => ({ company: { connect: { id } } })) },
@@ -67,6 +68,7 @@ export async function PATCH(req: Request) {
           ...(d.leetcodeUrl !== undefined && { leetcodeUrl: d.leetcodeUrl ?? null }),
           ...(d.gfgUrl !== undefined && { gfgUrl: d.gfgUrl ?? null }),
           ...(d.youtubeUrl !== undefined && { youtubeUrl: d.youtubeUrl ?? null }),
+          ...(d.hint !== undefined && { hint: d.hint }),
           ...(d.order !== undefined && { order: d.order }),
         },
       });

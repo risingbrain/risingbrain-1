@@ -16,6 +16,11 @@ const optionalText = z.preprocess(
   (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
   z.string().trim().optional(),
 );
+// Like optionalText, but an emptied field becomes null so an update can clear it.
+const clearableText = z.preprocess(
+  (v) => (typeof v === "string" && v.trim() === "" ? null : v),
+  z.string().trim().max(2000).nullable().optional(),
+);
 
 const requiredText = z.string().trim().min(1, "Required");
 const orderField = z.coerce.number().int().min(0).optional();
@@ -58,6 +63,7 @@ export const dsaProblemCreate = z.object({
   leetcodeUrl: optionalText,
   gfgUrl: optionalText,
   youtubeUrl: optionalText,
+  hint: clearableText,
   order: orderField,
   companyIds: z.array(z.string()).optional(),
 });

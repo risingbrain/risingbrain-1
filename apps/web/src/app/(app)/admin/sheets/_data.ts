@@ -43,6 +43,7 @@ export async function getAdminDsaTree() {
                   leetcodeUrl: true,
                   gfgUrl: true,
                   youtubeUrl: true,
+                  hint: true,
                   order: true,
                   companies: { select: { companyId: true } },
                 },

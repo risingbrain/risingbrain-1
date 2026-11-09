@@ -327,6 +327,9 @@ model DsaProblem {
   leetcodeUrl String?
   gfgUrl      String?
   youtubeUrl  String?
+  // Optional nudge toward the approach, revealed on demand in the sheet. Never
+  // the full solution.
+  hint        String?
   order       Int        @default(0)
 
   pattern   DsaPattern            @relation(fields: [patternId], references: [id], onDelete: Cascade)

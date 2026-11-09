@@ -138,6 +138,7 @@ export async function SheetView({ activeSlug }: { activeSlug?: string }) {
             leetcodeUrl: pr.leetcodeUrl,
             gfgUrl: pr.gfgUrl,
             youtubeUrl: pr.youtubeUrl,
+            hint: pr.hint,
             companies: pr.companies.map((c) => ({
               name: c.company.name,
               logoUrl: c.company.logoUrl,

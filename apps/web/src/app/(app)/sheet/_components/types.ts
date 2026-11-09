@@ -11,6 +11,7 @@ export interface SheetProblem {
   leetcodeUrl: string | null;
   gfgUrl: string | null;
   youtubeUrl: string | null;
+  hint: string | null;
   companies: { name: string; logoUrl: string | null }[];
   status: ProblemStatusValue;
   hasNote: boolean;

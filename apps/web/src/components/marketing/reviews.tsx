@@ -17,7 +17,7 @@ const reviews: Review[] = [
   {
     name: "Harshit Pachauri",
     meta: "@harshitpachauri8849",
-    text: "I saw your sheet on my LinkedIn feed — it's incredibly well-organised, based on patterns. Thank you for making it. I'm using it to master every pattern concept.",
+    text: "I came across your sheet — it's incredibly well-organised, based on patterns. Thank you for making it. I'm using it to master every pattern concept.",
   },
   {
     name: "Sai Pothuraju",
@@ -73,6 +73,26 @@ const reviews: Review[] = [
     name: "Riya Batra",
     meta: "@Riyabatra",
     text: "This is the best pattern-wise sheet I've come across — the questions are categorised in the way that's best for someone just starting with DSA. Thank you so much to Rising Brain and Anjali ma'am; this is the real one.",
+  },
+  {
+    name: "Jayanth Latkari",
+    meta: "@jashwanthlatkari1949",
+    text: "Thank you so much for the Rising Brain DSA sheet — I've been following it consistently for a long time. Your teaching has given me a new perspective on consistency. Even on days I can't solve much, I tell myself, \"It's okay, let me solve at least one problem today.\" One problem a day compounds into 30 in a month. You always emphasise how small efforts compound over time — that's one of the biggest takeaways I've gained from you.",
+  },
+  {
+    name: "Hari Hara",
+    meta: "@mr_HariHara_03",
+    text: "Thank you, ma'am. I've watched a lot of channels, but I stuck with your videos. I'm learning consistently — such a good way of explaining. Lots of love from us.",
+  },
+  {
+    name: "Rahul Bhise",
+    meta: "@rahulbhise2493",
+    text: "Ma'am, you're better than my college teacher — the way you explain is stunning.",
+  },
+  {
+    name: "Jittu",
+    meta: "@jittuchinnu1418",
+    text: "Thank you for the Rising Brain sheet — it's really helpful, and you're giving it to us completely free.",
   },
 ];
 

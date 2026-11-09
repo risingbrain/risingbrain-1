@@ -48,6 +48,7 @@ export async function getDsaCatalog() {
                   leetcodeUrl: true,
                   gfgUrl: true,
                   youtubeUrl: true,
+                  hint: true,
                   companies: {
                     select: { company: { select: { name: true, logoUrl: true } } },
                   },

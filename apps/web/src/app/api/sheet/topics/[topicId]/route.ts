@@ -38,6 +38,7 @@ export async function GET(
           leetcodeUrl: true,
           gfgUrl: true,
           youtubeUrl: true,
+          hint: true,
           companies: {
             select: { company: { select: { name: true, logoUrl: true } } },
           },
@@ -82,6 +83,7 @@ export async function GET(
       leetcodeUrl: pr.leetcodeUrl,
       gfgUrl: pr.gfgUrl,
       youtubeUrl: pr.youtubeUrl,
+      hint: pr.hint,
       companies: pr.companies.map((c) => ({
         name: c.company.name,
         logoUrl: c.company.logoUrl,

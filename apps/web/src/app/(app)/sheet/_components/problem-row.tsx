@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Check, Loader2 } from "lucide-react";
+import { Check, Lightbulb, Loader2 } from "lucide-react";
 import { DifficultyBadge } from "./difficulty-badge";
 import { NoteModal } from "./note-modal";
 import { useCelebrate } from "./celebration";
@@ -189,6 +189,8 @@ export function ProblemRow({
   const [hasNote, setHasNote] = useState(problem.hasNote);
   const [noteOpen, setNoteOpen] = useState(false);
   const [bookmarking, setBookmarking] = useState(false);
+  const [hintOpen, setHintOpen] = useState(false);
+  const hint = problem.hint?.trim() || null;
   const reportSolved = useReportSolved();
   const reportBookmark = useSheetBookmarkReport();
   const signedIn = useSheetSignedIn();
@@ -340,6 +342,31 @@ export function ProblemRow({
             <YouTubeIcon className={`h-4 w-4 ${problem.youtubeUrl ? "text-[#FF0000]" : "text-muted"}`} />
           </ResourceSlot>
 
+          {/* Hint toggle — dimmed and inert when the problem has no hint */}
+          {hint ? (
+            <button
+              type="button"
+              onClick={() => setHintOpen((o) => !o)}
+              aria-expanded={hintOpen}
+              aria-controls={`hint-${problem.id}`}
+              aria-label={hintOpen ? "Hide hint" : "Show hint"}
+              title={hintOpen ? "Hide hint" : "Show a hint"}
+              className={`glass-pill grid h-8 w-8 place-items-center rounded-lg transition-all hover:scale-105 ${
+                hintOpen ? "text-amber-400" : "text-muted hover:text-amber-400"
+              }`}
+            >
+              <Lightbulb className="h-4 w-4" fill={hintOpen ? "currentColor" : "none"} />
+            </button>
+          ) : (
+            <span
+              title="Hint — not available"
+              aria-hidden
+              className="glass-pill grid h-8 w-8 cursor-default place-items-center rounded-lg text-muted opacity-20"
+            >
+              <Lightbulb className="h-4 w-4" />
+            </span>
+          )}
+
           {/* Bookmark toggle */}
           <button
             type="button"
@@ -371,6 +398,18 @@ export function ProblemRow({
           </button>
         </div>
       </div>
+
+      {hint && hintOpen && (
+        <div id={`hint-${problem.id}`} className="px-3 pb-4 sm:px-4 sm:pl-[4.75rem]">
+          <div className="flex gap-2.5 rounded-xl border border-amber-400/25 bg-amber-400/[0.06] px-3.5 py-3">
+            <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+            <div className="min-w-0">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-amber-400">Hint</p>
+              <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-foreground/90">{hint}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {noteOpen && (
         <NoteModal
