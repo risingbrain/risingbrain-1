@@ -14,6 +14,62 @@ import type { ProblemStatusValue, SheetProblem } from "./types";
 
 const MAX_COMPANIES = 3;
 
+/**
+ * The stored hint is one text field: one hint per line, revealed one at a time.
+ * Lines starting "Note:" are caveats (e.g. "the GfG version differs") rather
+ * than spoilers, so they are shown up front instead of behind a reveal.
+ */
+function parseHint(raw: string | null): { hints: string[]; notes: string[] } | null {
+  const lines = (raw ?? "")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean);
+  const notes = lines.filter((l) => /^note\s*:/i.test(l)).map((l) => l.replace(/^note\s*:\s*/i, ""));
+  const hints = lines.filter((l) => !/^note\s*:/i.test(l)).map((l) => l.replace(/^hint\s*\d+\s*:\s*/i, ""));
+  return hints.length || notes.length ? { hints, notes } : null;
+}
+
+/** Inline hint panel: Hint 1 first, then one more per "Show hint N" click. */
+function HintPanel({ id, hints, notes }: { id: string; hints: string[]; notes: string[] }) {
+  const [shown, setShown] = useState(1);
+  const total = hints.length;
+  return (
+    <div id={id} className="px-3 pb-4 sm:px-4 sm:pl-[4.75rem]">
+      <div className="space-y-3 rounded-xl border border-amber-400/25 bg-amber-400/[0.06] px-3.5 py-3">
+        {notes.map((n, i) => (
+          <p key={`n${i}`} className="text-xs leading-relaxed text-muted">
+            <span className="font-semibold text-foreground/80">Note: </span>
+            {n}
+          </p>
+        ))}
+        {hints.slice(0, shown).map((h, i) => (
+          <div key={i} className="flex gap-2.5">
+            <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+            <div className="min-w-0">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-amber-400">
+                Hint {i + 1}
+                {total > 1 && <span className="text-amber-400/60"> of {total}</span>}
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-foreground/90">{h}</p>
+            </div>
+          </div>
+        ))}
+        {shown < total && (
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={() => setShown((n) => n + 1)}
+              className="rounded-lg border border-amber-400/30 px-3 py-1.5 text-xs font-medium text-amber-400 transition-colors hover:bg-amber-400/10"
+            >
+              Show hint {shown + 1} →
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 /** LeetCode brand mark (single-path, inherits `currentColor`). */
 function LeetCodeIcon({ className = "" }: { className?: string }) {
   return (
@@ -190,7 +246,7 @@ export function ProblemRow({
   const [noteOpen, setNoteOpen] = useState(false);
   const [bookmarking, setBookmarking] = useState(false);
   const [hintOpen, setHintOpen] = useState(false);
-  const hint = problem.hint?.trim() || null;
+  const hint = useMemo(() => parseHint(problem.hint), [problem.hint]);
   const reportSolved = useReportSolved();
   const reportBookmark = useSheetBookmarkReport();
   const signedIn = useSheetSignedIn();
@@ -399,17 +455,7 @@ export function ProblemRow({
         </div>
       </div>
 
-      {hint && hintOpen && (
-        <div id={`hint-${problem.id}`} className="px-3 pb-4 sm:px-4 sm:pl-[4.75rem]">
-          <div className="flex gap-2.5 rounded-xl border border-amber-400/25 bg-amber-400/[0.06] px-3.5 py-3">
-            <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-            <div className="min-w-0">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-amber-400">Hint</p>
-              <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-foreground/90">{hint}</p>
-            </div>
-          </div>
-        </div>
-      )}
+      {hint && hintOpen && <HintPanel id={`hint-${problem.id}`} hints={hint.hints} notes={hint.notes} />}
 
       {noteOpen && (
         <NoteModal

@@ -550,8 +550,8 @@ function ProblemEditor({
           </Field>
         </Section>
 
-        <Section title="Hint" description="A nudge toward the approach, shown when a learner opens it. Never the full solution. Leave empty to hide.">
-          <Field label="Hint">
+        <Section title="Hint" description="One hint per line — learners reveal them one at a time. Start a line with 'Note:' for a caveat shown up front. Never the full solution. Leave empty to hide.">
+          <Field label="Hints" hint="one per line">
             <TextArea
               value={form.hint}
               onChange={(e) => set("hint", e.target.value)}
